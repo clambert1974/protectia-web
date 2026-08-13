@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
   <title>Protect(IA) — Seguridad residencial con Inteligencia Artificial | Santiago</title>
   <meta name="description" content="Seguridad residencial con inteligencia artificial en Santiago. Tu casa detecta, avisa, graba y llama sola. El equipo queda en tu casa, sin cuotas. La Florida, Peñalolén y Macul.">
@@ -19,6 +19,10 @@
 
   <!-- TODO: reemplazar por el favicon definitivo -->
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+
+  <!-- Space Grotesk (SIL OFL 1.1) — solo titulares. Ver fonts/OFL.txt -->
+  <link rel="preload" href="fonts/space-grotesk-variable-latin.woff2"
+        as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -74,9 +78,61 @@
     <section class="cuadricula" aria-label="Servicios">
 
       <article class="celda celda-home" id="servicio-home">
-        <div class="vista-camara" role="img" aria-label="Vista de cámara en vivo (imagen de ejemplo)">
-          <!-- TODO: reemplazar por la vista real de cámara -->
+        <!-- Simulación de vista de cámara: SVG + CSS, sin video ni imágenes. -->
+        <div class="vista-camara" role="img"
+             aria-label="Ilustración de una vista de cámara de seguridad en visión nocturna: la reja frontal de una casa, vegetación y una persona detectada dentro de un recuadro verde.">
+
+          <svg class="vista-escena" viewBox="0 0 320 180"
+               preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+            <defs>
+              <!-- Los barrotes de la reja, como patrón repetido -->
+              <pattern id="vc-reja" x="0" y="60" width="15" height="72"
+                       patternUnits="userSpaceOnUse">
+                <polygon points="7.4,0 10.2,7 4.6,7" fill="#223541"/>
+                <rect x="5.9" y="6" width="3" height="66" fill="#223541"/>
+              </pattern>
+            </defs>
+
+            <!-- Cielo / fondo -->
+            <rect width="320" height="180" fill="#0d1420"/>
+
+            <!-- Silueta del fondo: casa vecina y árbol lejano -->
+            <polygon points="196,60 232,42 268,60 268,74 196,74" fill="#111c27"/>
+            <path d="M40 62 q10-22 21 0 q9-6 6 12 h-33 q-4-14 6-12z" fill="#111c27"/>
+            <rect x="49" y="70" width="3" height="14" fill="#111c27"/>
+
+            <!-- Suelo -->
+            <path d="M0 128 q160-9 320 0 v52 H0z" fill="#101b26"/>
+
+            <!-- Reja frontal -->
+            <rect x="0" y="60" width="320" height="72" fill="url(#vc-reja)"/>
+            <rect x="0" y="70" width="320" height="2.6" fill="#223541"/>
+            <rect x="0" y="118" width="320" height="2.6" fill="#223541"/>
+            <rect x="182" y="58" width="3.4" height="74" fill="#2b414f"/>
+
+            <!-- Vegetación estilizada -->
+            <path d="M0 132 q14-26 30-20 q12-14 26 2 q14 0 12 18z" fill="#16242d"/>
+            <path d="M262 132 q10-22 26-16 q14-10 24 4 q8 2 8 12z" fill="#16242d"/>
+            <path d="M286 116 l4-18 M290 98 l-9 9 M290 98 l9 8" stroke="#16242d"
+                  stroke-width="2.4" fill="none" stroke-linecap="round"/>
+
+            <!-- Persona detectada -->
+            <g fill="#2f4551">
+              <circle cx="132" cy="83" r="6.6"/>
+              <path d="M124 93 q8.5-4.5 17 0 l2 21 h-21z"/>
+              <path d="M125.5 114 l2.5 20h4l.5-20z"/>
+              <path d="M133 114 l.5 20h4l2-20z"/>
+            </g>
+          </svg>
+
+          <span class="vista-reloj" id="vista-reloj">--/--/---- --:--:--</span>
           <span class="vista-camara-etiqueta">EN VIVO</span>
+
+          <div class="vista-deteccion">
+            <span class="vista-deteccion-etiqueta">PERSONA</span>
+          </div>
+
+          <span class="vista-camara-nombre">Reja frontal</span>
         </div>
         <h2>Home</h2>
         <p>

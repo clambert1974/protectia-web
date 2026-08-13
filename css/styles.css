@@ -3,6 +3,19 @@
    Mobile-first. La retícula editorial aparece desde 768px.
    ========================================================================== */
 
+/* Space Grotesk — variable (300–700), subset latin. SIL OFL 1.1: fonts/OFL.txt
+   Solo se usa en titulares; el cuerpo va en la stack del sistema. */
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../fonts/space-grotesk-variable-latin.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
   /* Colores */
   --color-fondo: #FFFFFF;
@@ -14,9 +27,16 @@
   --color-texto-suave: #5c5c56;
   --color-linea: #e2dfd6;
 
-  /* Tipografía — provisoria, se define la definitiva más adelante */
+  /* Vista de cámara */
+  --color-deteccion: #22C55E;
+  --color-vision-nocturna: #0d1420;
+
+  /* Tipografía — el cuerpo se queda en la stack del sistema a propósito */
   --fuente-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
                  "Helvetica Neue", Arial, sans-serif;
+  --fuente-titulos: "Space Grotesk", var(--fuente-base);
+  --fuente-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+                 "Liberation Mono", monospace;
 
   /* Ritmo */
   --espacio-1: 0.5rem;
@@ -45,12 +65,20 @@ body {
   font-size: 17px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  /* espacio para la barra fija en móvil */
-  padding-bottom: var(--alto-barra-movil);
+  /* Espacio para la barra fija en móvil: su alto útil, + 1px de su borde
+     superior, + el área segura del iPhone. Los tres, o el footer queda tapado. */
+  padding-bottom: calc(var(--alto-barra-movil) + 1px + env(safe-area-inset-bottom, 0px));
+  /* con viewport-fit=cover el contenido se mete bajo el notch en horizontal */
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
 }
 
 h1, h2, h3, p, ul {
   margin: 0;
+}
+
+h1, h2 {
+  font-family: var(--fuente-titulos);
 }
 
 ul {
@@ -140,7 +168,8 @@ html {
 /* Columna editorial --------------------------------------------------------- */
 
 .entrada {
-  font-size: 2rem;
+  /* el término en rem mantiene el escalado si el visitante agranda la letra */
+  font-size: clamp(1.85rem, 1.3rem + 2.6vw, 2.5rem);
   line-height: 1.15;
   font-weight: 600;
   letter-spacing: -0.015em;
@@ -207,29 +236,135 @@ html {
   background: var(--color-superficie);
 }
 
-/* Placeholder de la vista de cámara */
+/* Vista de cámara — simulación en SVG + CSS, sin video ni imágenes --------- */
+
 .vista-camara {
   position: relative;
   aspect-ratio: 16 / 9;
-  background: #d9d6cd;
-  background-image: linear-gradient(135deg,
-      rgba(0, 0, 0, 0.05) 25%, transparent 25%,
-      transparent 50%, rgba(0, 0, 0, 0.05) 50%,
-      rgba(0, 0, 0, 0.05) 75%, transparent 75%);
-  background-size: 16px 16px;
+  overflow: hidden;
+  background: var(--color-vision-nocturna);
   margin-bottom: var(--espacio-2);
 }
 
-.vista-camara-etiqueta {
+.vista-escena {
   position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Viñeta y líneas de barrido: lo que hace que se lea como pantalla */
+.vista-camara::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 100% at 50% 42%,
+        rgba(255, 255, 255, 0.05) 0%,
+        transparent 45%,
+        rgba(0, 0, 0, 0.55) 100%),
+    repeating-linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.035) 0 1px,
+        transparent 1px 3px);
+  animation: vc-parpadeo 7s ease-in-out infinite;
+}
+
+/* Textos sobreimpresos (OSD) */
+.vista-reloj,
+.vista-camara-nombre,
+.vista-deteccion-etiqueta {
+  font-family: var(--fuente-mono);
+  font-size: 0.62rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.vista-reloj,
+.vista-camara-nombre {
+  position: absolute;
+  z-index: 2;
+  color: #d7e6dd;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.vista-reloj {
   top: var(--espacio-1);
   left: var(--espacio-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.vista-camara-nombre {
+  right: var(--espacio-1);
+  bottom: var(--espacio-1);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* El reloj ocupa la esquina izquierda, así que el badge se va a la derecha */
+.vista-camara-etiqueta {
+  position: absolute;
+  z-index: 2;
+  top: var(--espacio-1);
+  right: var(--espacio-1);
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   padding: 0.15rem 0.4rem;
   background: var(--color-acento);
   color: #fff;
+}
+
+/* Recuadro de detección — encuadra la silueta del SVG */
+.vista-deteccion {
+  position: absolute;
+  z-index: 2;
+  left: 36.8%;
+  top: 39.5%;
+  width: 9.4%;
+  height: 37.5%;
+  border: 1.5px solid var(--color-deteccion);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.35),
+              inset 0 0 12px rgba(34, 197, 94, 0.12);
+  opacity: 0;
+  animation: vc-deteccion 6s ease-in-out infinite;
+}
+
+.vista-deteccion-etiqueta {
+  position: absolute;
+  left: -1.5px;
+  bottom: 100%;
+  margin-bottom: 3px;
+  padding: 0.12rem 0.3rem;
+  background: var(--color-deteccion);
+  color: #06140c;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  animation: vc-etiqueta 6s ease-in-out infinite;
+}
+
+/* Ciclo de 6 s: aparece, se queda ~2,5 s y se va. */
+@keyframes vc-deteccion {
+  0%        { opacity: 0; transform: scale(1.06); }
+  4%        { opacity: 1; }
+  7%, 40%   { opacity: 1; transform: scale(1); }
+  45%, 100% { opacity: 0; transform: scale(1.02); }
+}
+
+@keyframes vc-etiqueta {
+  0%, 6%    { opacity: 0; }
+  11%, 40%  { opacity: 1; }
+  45%, 100% { opacity: 0; }
+}
+
+@keyframes vc-parpadeo {
+  0%, 100% { opacity: 0.93; }
+  47%      { opacity: 1; }
+  62%      { opacity: 0.87; }
 }
 
 .badge {
@@ -267,8 +402,11 @@ html {
   left: 0;
   right: 0;
   z-index: 10;
-  height: var(--alto-barra-movil);
   padding: var(--espacio-1);
+  /* la barra crece hacia abajo con el área segura; el alto útil no cambia */
+  padding-bottom: calc(var(--espacio-1) + env(safe-area-inset-bottom, 0px));
+  padding-left: max(var(--espacio-1), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--espacio-1), env(safe-area-inset-right, 0px));
   background: var(--color-fondo);
   border-top: 1px solid var(--color-linea);
 }
@@ -277,7 +415,8 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  /* 64 − 8 − 8: la barra sigue midiendo --alto-barra-movil */
+  min-height: calc(var(--alto-barra-movil) - var(--espacio-1) * 2);
   background: var(--color-acento);
   color: #fff;
   font-weight: 600;
@@ -321,7 +460,7 @@ html {
   }
 
   .entrada {
-    font-size: 2.75rem;
+    font-size: clamp(2.4rem, 0.85rem + 3.2vw, 3.25rem);
   }
 
   .cuadricula {
@@ -338,10 +477,6 @@ html {
 }
 
 @media (min-width: 1100px) {
-  .entrada {
-    font-size: 3.25rem;
-  }
-
   .celda {
     padding: var(--espacio-4) var(--espacio-3);
   }
@@ -352,5 +487,18 @@ html {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  /* La cámara queda como un frame quieto, con el recuadro puesto. */
+  .vista-camara::after,
+  .vista-deteccion,
+  .vista-deteccion-etiqueta {
+    animation: none;
+  }
+
+  .vista-deteccion,
+  .vista-deteccion-etiqueta {
+    opacity: 1;
+    transform: none;
   }
 }

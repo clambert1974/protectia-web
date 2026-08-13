@@ -11,9 +11,13 @@ ni dependencias.
 ```
 index.html        Home
 css/styles.css    Estilos (variables al tope, mobile-first)
-js/main.js        Smooth-scroll de las anclas del nav
+js/main.js        Smooth-scroll de las anclas y reloj de la vista de cámara
+fonts/            Space Grotesk variable (SIL OFL 1.1, ver fonts/OFL.txt)
 img/              Imágenes (vacío por ahora)
 ```
+
+La vista de cámara de la celda Home es una simulación hecha con SVG y CSS
+—sin video ni imágenes—, con el recuadro de detección animado en CSS puro.
 
 ## Cómo se publica
 
@@ -38,10 +42,9 @@ Y abrir <http://localhost:8000>.
 
 ## Pendientes
 
-- Tipografía definitiva (hoy usa system font stack)
 - Favicon e imagen de Open Graph reales (`img/`)
-- Vista de cámara real en la celda Home (hoy es un placeholder)
-- Páginas interiores y animaciones
+- Menú hamburguesa en móvil (hoy el nav se oculta bajo 768px)
+- Páginas interiores
 
 ---
 
