@@ -1,10 +1,16 @@
 /* ==========================================================================
-   Protect(IA) — estilos base
-   Mobile-first. La retícula editorial aparece desde 768px.
+   Protect(IA) — sistema vivo
+   Traducción del spec visual. Los valores del spec son de escritorio, así que
+   la base es escritorio y los quiebres van con max-width, igual que el spec:
+     mob  ≤ 760px
+     mid  ≤ 1120px  (incluye mob)
+   Sin JS de layout.
    ========================================================================== */
 
-/* Space Grotesk — variable (300–700), subset latin. SIL OFL 1.1: fonts/OFL.txt
-   Solo se usa en titulares; el cuerpo va en la stack del sistema. */
+/* Tipografías self-hosted. Ambas SIL OFL 1.1 — ver fonts/OFL.txt (Space
+   Grotesk) y fonts/OFL-IBM-Plex.txt (IBM Plex Mono). Subset latin, el mismo
+   unicode-range que sirve Google Fonts. */
+
 @font-face {
   font-family: "Space Grotesk";
   src: url("../fonts/space-grotesk-variable-latin.woff2") format("woff2");
@@ -16,37 +22,68 @@
                  U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fonts/ibm-plex-mono-400-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fonts/ibm-plex-mono-500-latin.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../fonts/ibm-plex-mono-600-latin.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
-  /* Colores */
-  --color-fondo: #FFFFFF;
-  --color-texto: #1a1a18;
-  --color-acento: #1D9E75;
-  --color-superficie: #F1EFE8;
+  /* Paleta */
+  --fondo: #F2F6F3;
+  --tinta: #10221A;
+  --verde: #1D9E75;
+  --verde-oscuro: #178A65;
+  --verde-vivo: #22C55E;
+  --tarjeta: #FBFDFB;
 
-  /* Derivados */
-  --color-texto-suave: #5c5c56;
-  --color-linea: #e2dfd6;
+  --texto: #3D4A42;
+  --texto-mono: #5E7266;
 
-  /* Vista de cámara */
-  --color-deteccion: #22C55E;
-  --color-vision-nocturna: #0d1420;
+  --linea: #D8E4DA;
+  --linea-modulo: #D3E2D7;
+  --linea-modulo-fuerte: #C9DCCE;
+  --linea-cab: #E0EBE2;
+  --linea-chip: #C4D6C9;
+  --chip-accesorio: #E8F2EB;
 
-  /* Tipografía — el cuerpo se queda en la stack del sistema a propósito */
-  --fuente-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                 "Helvetica Neue", Arial, sans-serif;
-  --fuente-titulos: "Space Grotesk", var(--fuente-base);
-  --fuente-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
-                 "Liberation Mono", monospace;
+  --franja-fondo: #0B1D15;
+  --franja-texto: #7FC8A4;
 
-  /* Ritmo */
-  --espacio-1: 0.5rem;
-  --espacio-2: 1rem;
-  --espacio-3: 1.5rem;
-  --espacio-4: 2.5rem;
-  --espacio-5: 4rem;
+  /* Tipografía */
+  --fuente: "Space Grotesk", ui-sans-serif, system-ui, -apple-system,
+            "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+          "Liberation Mono", monospace;
 
   --ancho-max: 1280px;
-  --alto-barra-movil: 64px;
 }
 
 /* Reset mínimo -------------------------------------------------------------- */
@@ -57,28 +94,20 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  background: var(--color-fondo);
-  color: var(--color-texto);
-  font-family: var(--fuente-base);
-  font-size: 17px;
-  line-height: 1.6;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: var(--fuente);
   -webkit-font-smoothing: antialiased;
-  /* Espacio para la barra fija en móvil: su alto útil, + 1px de su borde
-     superior, + el área segura del iPhone. Los tres, o el footer queda tapado. */
-  padding-bottom: calc(var(--alto-barra-movil) + 1px + env(safe-area-inset-bottom, 0px));
-  /* con viewport-fit=cover el contenido se mete bajo el notch en horizontal */
-  padding-left: env(safe-area-inset-left, 0px);
-  padding-right: env(safe-area-inset-right, 0px);
 }
 
-h1, h2, h3, p, ul {
+h1, h2, p, ul {
   margin: 0;
-}
-
-h1, h2 {
-  font-family: var(--fuente-titulos);
 }
 
 ul {
@@ -91,414 +120,764 @@ a {
   text-decoration: none;
 }
 
-html {
-  scroll-behavior: smooth;
+a:hover {
+  color: var(--verde);
 }
 
-/* Header -------------------------------------------------------------------- */
+a:focus-visible {
+  outline: 2px solid var(--verde);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: rgba(34, 197, 94, 0.25);
+}
+
+/* El ancla no queda bajo la cabecera pegajosa */
+.layout,
+.modulo,
+.site-footer {
+  scroll-margin-top: 80px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.25; }
+}
+
+@keyframes sweep {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(340%); }
+}
+
+/* Franja de estado ---------------------------------------------------------- */
+
+.franja {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--franja-fondo);
+  color: var(--franja-texto);
+  /* las laterales respetan el notch en horizontal (viewport-fit=cover) */
+  padding: 7px max(24px, env(safe-area-inset-right, 0px))
+           7px max(24px, env(safe-area-inset-left, 0px));
+  font: 10.5px var(--mono);
+  letter-spacing: 0.12em;
+}
+
+.franja-estado {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.franja-punto {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--verde-vivo);
+  animation: blink 1.8s infinite;
+}
+
+.franja-texto {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.franja-ts {
+  flex: none;
+  white-space: nowrap;
+  margin-left: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Cabecera ------------------------------------------------------------------ */
 
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--espacio-2);
-  padding: var(--espacio-2) var(--espacio-3);
-  border-bottom: 1px solid var(--color-linea);
+  gap: 12px;
+  padding: 16px max(24px, env(safe-area-inset-right, 0px))
+           16px max(24px, env(safe-area-inset-left, 0px));
+  border-bottom: 1px solid var(--linea);
+  background: rgba(251, 253, 251, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .logo {
   font-weight: 700;
-  font-size: 1.05rem;
-  letter-spacing: 0.08em;
+  font-size: 19px;
+  letter-spacing: 0.01em;
 }
 
 .logo-ia {
-  color: var(--color-acento);
+  color: var(--verde);
 }
 
 .site-nav {
-  display: none; /* el menú aparece en escritorio */
-}
-
-.site-nav ul {
   display: flex;
-  gap: var(--espacio-3);
+  gap: 6px;
+  font: 500 12.5px var(--mono);
+  letter-spacing: 0.04em;
 }
 
-.site-nav a {
-  font-size: 0.9rem;
-  letter-spacing: 0.02em;
-  color: var(--color-texto-suave);
-  padding-bottom: 2px;
-  border-bottom: 1px solid transparent;
+.nav-link {
+  padding: 8px 14px;
+  border-radius: 6px;
 }
 
-.site-nav a:hover {
-  color: var(--color-texto);
-  border-bottom-color: var(--color-acento);
+.nav-link:hover {
+  background: #E3EEE6;
+  color: var(--tinta);
+}
+
+.nav-link-activo,
+.nav-link-activo:hover {
+  background: var(--tinta);
+  color: var(--fondo);
 }
 
 .btn-tel {
-  display: none; /* en móvil manda la barra fija de abajo */
-  font-size: 0.9rem;
+  flex: none;
   font-weight: 600;
-  letter-spacing: 0.02em;
-  padding: 0.5rem 0.9rem;
-  border: 1px solid var(--color-acento);
-  color: var(--color-acento);
-  border-radius: 2px;
+  font-size: 14px;
+  background: var(--verde);
+  color: #fff;
+  padding: 11px 18px;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px -4px rgba(29, 158, 117, 0.5);
 }
 
 .btn-tel:hover {
-  background: var(--color-acento);
-  color: var(--color-fondo);
+  background: var(--verde-oscuro);
+  color: #fff;
 }
 
-/* Layout principal ---------------------------------------------------------- */
+/* Retícula principal -------------------------------------------------------- */
 
 .layout {
   max-width: var(--ancho-max);
   margin: 0 auto;
-  padding: var(--espacio-4) var(--espacio-3);
-  display: flex;
-  flex-direction: column;
-  gap: var(--espacio-4);
+  display: grid;
+  /* minmax(0,1fr) en la segunda columna: los módulos no empujan la retícula */
+  grid-template-columns: minmax(380px, 440px) minmax(0, 1fr);
+  gap: 56px;
+  padding: 58px max(24px, env(safe-area-inset-right, 0px))
+           76px max(24px, env(safe-area-inset-left, 0px));
 }
 
 /* Columna editorial --------------------------------------------------------- */
 
-.entrada {
-  /* el término en rem mantiene el escalado si el visitante agranda la letra */
-  font-size: clamp(1.85rem, 1.3rem + 2.6vw, 2.5rem);
-  line-height: 1.15;
-  font-weight: 600;
-  letter-spacing: -0.015em;
-  margin-bottom: var(--espacio-3);
-}
-
 .fonetica {
-  display: block;
-  font-size: 0.95rem;
-  font-weight: 400;
-  font-style: italic;
-  letter-spacing: 0.02em;
-  color: var(--color-texto-suave);
-  margin-bottom: var(--espacio-1);
+  font: 500 13px var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--verde);
 }
 
-.definicion {
-  display: block;
-}
-
-.editorial p {
-  max-width: 46ch;
-  margin-bottom: var(--espacio-2);
-  color: var(--color-texto-suave);
-}
-
-.editorial p.cobertura {
-  margin-top: var(--espacio-3);
-  font-size: 0.85rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-texto);
-}
-
-/* Cuadrícula ---------------------------------------------------------------- */
-
-.cuadricula {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1px;
-  background: var(--color-linea);
-  border: 1px solid var(--color-linea);
-}
-
-.celda {
-  position: relative;
-  background: var(--color-fondo);
-  padding: var(--espacio-3);
-}
-
-.celda h2 {
-  font-size: 1.15rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  margin-bottom: var(--espacio-1);
-}
-
-.celda p {
-  font-size: 0.95rem;
-  color: var(--color-texto-suave);
-}
-
-.celda-home {
-  background: var(--color-superficie);
-}
-
-/* Vista de cámara — simulación en SVG + CSS, sin video ni imágenes --------- */
-
-.vista-camara {
-  position: relative;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  background: var(--color-vision-nocturna);
-  margin-bottom: var(--espacio-2);
-}
-
-.vista-escena {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-/* Viñeta y líneas de barrido: lo que hace que se lea como pantalla */
-.vista-camara::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background:
-    radial-gradient(120% 100% at 50% 42%,
-        rgba(255, 255, 255, 0.05) 0%,
-        transparent 45%,
-        rgba(0, 0, 0, 0.55) 100%),
-    repeating-linear-gradient(to bottom,
-        rgba(255, 255, 255, 0.035) 0 1px,
-        transparent 1px 3px);
-  animation: vc-parpadeo 7s ease-in-out infinite;
-}
-
-/* Textos sobreimpresos (OSD) */
-.vista-reloj,
-.vista-camara-nombre,
-.vista-deteccion-etiqueta {
-  font-family: var(--fuente-mono);
-  font-size: 0.62rem;
-  line-height: 1;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-}
-
-.vista-reloj,
-.vista-camara-nombre {
-  position: absolute;
-  z-index: 2;
-  color: #d7e6dd;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
-}
-
-.vista-reloj {
-  top: var(--espacio-1);
-  left: var(--espacio-1);
-  font-variant-numeric: tabular-nums;
-}
-
-.vista-camara-nombre {
-  right: var(--espacio-1);
-  bottom: var(--espacio-1);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-/* El reloj ocupa la esquina izquierda, así que el badge se va a la derecha */
-.vista-camara-etiqueta {
-  position: absolute;
-  z-index: 2;
-  top: var(--espacio-1);
-  right: var(--espacio-1);
-  font-size: 0.65rem;
+.titular {
+  margin: 16px 0 28px;
+  font-size: 64px;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
   font-weight: 700;
-  letter-spacing: 0.14em;
-  padding: 0.15rem 0.4rem;
-  background: var(--color-acento);
+}
+
+.resalte {
+  box-shadow: inset 0 -0.22em 0 rgba(34, 197, 94, 0.22);
+}
+
+.parrafo {
+  margin: 0 0 18px;
+  font-size: 15.5px;
+  line-height: 1.68;
+  color: var(--texto);
+  text-wrap: pretty;
+}
+
+.parrafo:last-of-type {
+  margin-bottom: 28px;
+}
+
+.cta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.btn-llamar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  align-self: flex-start;
+  font-weight: 600;
+  font-size: 16px;
+  background: var(--tinta);
+  color: var(--fondo);
+  padding: 14px 24px;
+  border-radius: 9px;
+}
+
+.btn-llamar:hover {
+  background: var(--verde);
   color: #fff;
 }
 
-/* Recuadro de detección — encuadra la silueta del SVG */
-.vista-deteccion {
+.btn-llamar-punto {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2FD08B;
+  animation: blink 2s infinite;
+}
+
+.cta-nota {
+  font: 10.5px var(--mono);
+  letter-spacing: 0.1em;
+  color: var(--texto-mono);
+}
+
+.comunas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font: 10.5px var(--mono);
+  letter-spacing: 0.1em;
+  color: var(--texto);
+}
+
+.comunas li {
+  border: 1px solid var(--linea-chip);
+  border-radius: 6px;
+  padding: 6px 10px;
+  background: var(--tarjeta);
+}
+
+/* Módulos ------------------------------------------------------------------- */
+
+.modulos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px;
+  align-content: start;
+}
+
+.modulo {
+  background: var(--tarjeta);
+  border: 1px solid var(--linea-modulo);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+/* MOD.01 no reacciona al hover: es la pieza fija de la retícula */
+.modulo:not(.modulo-home):hover {
+  border-color: var(--verde);
+}
+
+.modulo-home,
+.modulo-accesorios {
+  grid-column: 1 / -1;
+}
+
+.modulo-home {
+  position: relative;
+  border-color: var(--linea-modulo-fuerte);
+}
+
+/* Esquinas de encuadre de MOD.01 */
+.esquina {
   position: absolute;
   z-index: 2;
-  left: 36.8%;
-  top: 39.5%;
-  width: 9.4%;
-  height: 37.5%;
-  border: 1.5px solid var(--color-deteccion);
-  box-shadow: 0 0 12px rgba(34, 197, 94, 0.35),
-              inset 0 0 12px rgba(34, 197, 94, 0.12);
-  opacity: 0;
-  animation: vc-deteccion 6s ease-in-out infinite;
+  width: 14px;
+  height: 14px;
 }
 
-.vista-deteccion-etiqueta {
-  position: absolute;
-  left: -1.5px;
-  bottom: 100%;
-  margin-bottom: 3px;
-  padding: 0.12rem 0.3rem;
-  background: var(--color-deteccion);
-  color: #06140c;
-  font-size: 0.55rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  animation: vc-etiqueta 6s ease-in-out infinite;
-}
+.esquina-si { top: -1px; left: -1px;  border-top: 2px solid var(--verde);    border-left: 2px solid var(--verde); }
+.esquina-sd { top: -1px; right: -1px; border-top: 2px solid var(--verde);    border-right: 2px solid var(--verde); }
+.esquina-ii { bottom: -1px; left: -1px;  border-bottom: 2px solid var(--verde); border-left: 2px solid var(--verde); }
+.esquina-id { bottom: -1px; right: -1px; border-bottom: 2px solid var(--verde); border-right: 2px solid var(--verde); }
 
-/* Ciclo de 6 s: aparece, se queda ~2,5 s y se va. */
-@keyframes vc-deteccion {
-  0%        { opacity: 0; transform: scale(1.06); }
-  4%        { opacity: 1; }
-  7%, 40%   { opacity: 1; transform: scale(1); }
-  45%, 100% { opacity: 0; transform: scale(1.02); }
-}
-
-@keyframes vc-etiqueta {
-  0%, 6%    { opacity: 0; }
-  11%, 40%  { opacity: 1; }
-  45%, 100% { opacity: 0; }
-}
-
-@keyframes vc-parpadeo {
-  0%, 100% { opacity: 0.93; }
-  47%      { opacity: 1; }
-  62%      { opacity: 0.87; }
-}
-
-.badge {
-  position: absolute;
-  top: var(--espacio-2);
-  right: var(--espacio-2);
-  font-size: 0.65rem;
-  font-weight: 700;
+.modulo-cab {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--linea-cab);
+  font: 10px var(--mono);
   letter-spacing: 0.14em;
-  padding: 0.2rem 0.45rem;
-  border: 1px solid var(--color-acento);
-  color: var(--color-acento);
+  color: var(--texto-mono);
+}
+
+.modulo-id {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modulo-estado {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--verde);
+}
+
+.punto-estado {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--verde-vivo);
+}
+
+.punto-estado-vivo {
+  animation: blink 1.4s infinite;
+}
+
+.modulo-marca {
+  flex: none;
+  color: var(--verde);
+  border: 1px solid var(--verde);
+  border-radius: 4px;
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+
+.modulo-marca-plana {
+  color: inherit;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+}
+
+.modulo-cuerpo {
+  padding: 18px;
+}
+
+.modulo-titulo {
+  margin: 0 0 8px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.modulo-titulo-grande {
+  margin-bottom: 10px;
+  font-size: 26px;
+}
+
+.modulo-texto {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.62;
+  color: var(--texto);
+}
+
+/* Cuando algo sigue al párrafo (el enlace de Catalina, la lista de Home) */
+.modulo-texto:not(:last-child) {
+  margin-bottom: 14px;
+}
+
+.enlace-mono {
+  font: 500 11px var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--tinta);
+  border-bottom: 1px solid var(--verde);
+  padding-bottom: 2px;
+}
+
+.enlace-mono:hover {
+  color: var(--verde);
+}
+
+/* MOD.01 — Home ------------------------------------------------------------- */
+
+.home-cuerpo {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}
+
+.home-visual {
+  flex: 1.2;
+  min-width: 0;
+}
+
+.home-texto {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.home-texto .modulo-texto:not(:last-child) {
+  font-size: 14.5px;
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+
+.home-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font: 10.5px var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--texto-mono);
+}
+
+.home-lista li::before {
+  content: "→ ";
+}
+
+/* Vista de cámara — gradientes y cajas, sin video ni imágenes --------------- */
+
+.camara {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #0B1512, #15251C);
+  font-family: var(--mono);
+  aspect-ratio: 16 / 10;
+}
+
+.cam-lineas {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg,
+      rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 3px);
+}
+
+.cam-barrido {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 34%;
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.06), transparent);
+  animation: sweep 5s linear infinite;
+}
+
+.cam-pasto {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 44%;
+  background: repeating-linear-gradient(90deg,
+      rgba(206, 228, 211, 0.14) 0 3px, transparent 3px 15px);
+}
+
+.cam-borde-pasto {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 44%;
+  height: 4px;
+  background: rgba(206, 228, 211, 0.13);
+}
+
+.cam-vineta {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(130% 100% at 50% 35%,
+      transparent 55%, rgba(0, 0, 0, 0.5) 100%);
+}
+
+.cam-caja {
+  position: absolute;
+  left: 55%;
+  bottom: 12%;
+  width: 14.5%;
+  height: 41.5%;
+  border: 1.5px solid var(--verde-vivo);
+  box-shadow: 0 0 14px rgba(34, 197, 94, 0.35);
+}
+
+.cam-caja-etq {
+  position: absolute;
+  top: -19px;
+  left: -1.5px;
+  background: var(--verde-vivo);
+  color: #06130C;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 3px 7px;
+  white-space: nowrap;
+}
+
+.cam-figura {
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  transform: translateX(-50%);
+  width: 55%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.cam-cabeza {
+  width: 47%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #2C3D33;
+}
+
+.cam-cuerpo {
+  width: 73%;
+  height: 64%;
+  border-radius: 9px 9px 5px 5px;
+  background: #2C3D33;
+  margin-top: 4%;
+}
+
+.cam-osd {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.cam-osd-arriba {
+  top: 10px;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: #C9E4D2;
+}
+
+.cam-osd-abajo {
+  bottom: 10px;
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  color: #8FB39D;
+}
+
+.cam-fuente {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.cam-punto {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--verde-vivo);
+  animation: blink 1.6s infinite;
+}
+
+.cam-hora {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.cam-rec {
+  flex: none;
+  white-space: nowrap;
+}
+
+/* Log de eventos ------------------------------------------------------------ */
+
+.log {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 10px;
+  font: 10px var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--texto-mono);
+}
+
+.log-activo {
+  color: var(--verde);
+}
+
+.log-hora {
+  font-variant-numeric: tabular-nums;
+}
+
+/* MOD.04 — Accesorios ------------------------------------------------------- */
+
+.accesorios-cuerpo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
 }
 
 .lista-accesorios {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--espacio-1);
-  margin-top: var(--espacio-2);
+  gap: 8px;
+  font: 10.5px var(--mono);
+  letter-spacing: 0.1em;
+  color: var(--texto);
 }
 
 .lista-accesorios li {
-  font-size: 0.8rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 0.25rem 0.6rem;
-  background: var(--color-superficie);
+  background: var(--chip-accesorio);
+  border-radius: 6px;
+  padding: 6px 11px;
 }
 
-/* Barra fija solo móvil ------------------------------------------------------ */
-
-.barra-movil {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-  padding: var(--espacio-1);
-  /* la barra crece hacia abajo con el área segura; el alto útil no cambia */
-  padding-bottom: calc(var(--espacio-1) + env(safe-area-inset-bottom, 0px));
-  padding-left: max(var(--espacio-1), env(safe-area-inset-left, 0px));
-  padding-right: max(var(--espacio-1), env(safe-area-inset-right, 0px));
-  background: var(--color-fondo);
-  border-top: 1px solid var(--color-linea);
-}
-
-.btn-llamar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* 64 − 8 − 8: la barra sigue midiendo --alto-barra-movil */
-  min-height: calc(var(--alto-barra-movil) - var(--espacio-1) * 2);
-  background: var(--color-acento);
-  color: #fff;
-  font-weight: 600;
-  font-size: 1rem;
-  letter-spacing: 0.04em;
-  border-radius: 2px;
-}
-
-/* Footer --------------------------------------------------------------------- */
+/* Pie ----------------------------------------------------------------------- */
 
 .site-footer {
-  border-top: 1px solid var(--color-linea);
-  padding: var(--espacio-3);
-  font-size: 0.8rem;
-  letter-spacing: 0.02em;
-  color: var(--color-texto-suave);
+  border-top: 1px solid var(--linea);
+  background: var(--tarjeta);
 }
 
-/* Escritorio — aquí aparece la retícula -------------------------------------- */
+.footer-inner {
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 18px max(24px, env(safe-area-inset-right, 0px))
+           18px max(24px, env(safe-area-inset-left, 0px));
+  font: 11px var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--texto-mono);
+}
 
-@media (min-width: 768px) {
-  body {
-    padding-bottom: 0;
+.footer-enlaces {
+  display: flex;
+  gap: 18px;
+}
+
+.footer-enlaces a:hover {
+  color: var(--verde);
+}
+
+/* Barra fija solo móvil ----------------------------------------------------- */
+
+.barra-movil {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  background: var(--verde);
+  color: #fff;
+  /* crece hacia abajo con el área segura; el alto útil no cambia */
+  padding: 13px max(16px, env(safe-area-inset-right, 0px))
+           calc(16px + env(safe-area-inset-bottom, 0px))
+           max(16px, env(safe-area-inset-left, 0px));
+  text-align: center;
+  box-shadow: 0 -8px 24px rgba(11, 29, 21, 0.18);
+}
+
+.barra-movil:hover {
+  color: #fff;
+}
+
+.barra-movil-titulo {
+  display: block;
+  font: 600 16px var(--fuente);
+}
+
+.barra-movil-nota {
+  display: block;
+  font: 9.5px var(--mono);
+  letter-spacing: 0.09em;
+  color: #CDEEDD;
+  margin-top: 3px;
+}
+
+/* Quiebres ------------------------------------------------------------------ */
+
+/* mid: la pieza de cámara ya no cabe al lado del texto */
+@media (max-width: 1120px) {
+  .home-cuerpo {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+/* mob */
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 36px max(20px, env(safe-area-inset-right, 0px))
+             48px max(20px, env(safe-area-inset-left, 0px));
   }
 
-  .site-nav,
-  .btn-tel {
-    display: block;
+  .titular {
+    font-size: 45px;
   }
 
-  .barra-movil {
+  .modulos {
+    grid-template-columns: 1fr;
+  }
+
+  /* el menú se oculta; el menú móvil sigue pendiente */
+  .site-nav {
     display: none;
   }
 
-  .layout {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: var(--espacio-5);
-    align-items: start;
-    padding: var(--espacio-5) var(--espacio-4);
+  .accesorios-cuerpo {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .entrada {
-    font-size: clamp(2.4rem, 0.85rem + 3.2vw, 3.25rem);
+  /* en la franja queda solo la hora */
+  .franja-fecha,
+  .franja-lugar {
+    display: none;
   }
 
-  .cuadricula {
-    grid-template-columns: 1fr 1fr;
+  .barra-movil {
+    display: block;
   }
 
-  .celda {
-    padding: var(--espacio-3);
-  }
-
+  /* espacio para que la barra fija no tape el pie */
   .site-footer {
-    padding: var(--espacio-3) var(--espacio-4);
+    padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px));
   }
 }
 
-@media (min-width: 1100px) {
-  .celda {
-    padding: var(--espacio-4) var(--espacio-3);
-  }
-}
-
-/* Accesibilidad -------------------------------------------------------------- */
+/* Accesibilidad ------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
-  /* La cámara queda como un frame quieto, con el recuadro puesto. */
-  .vista-camara::after,
-  .vista-deteccion,
-  .vista-deteccion-etiqueta {
+  /* sin parpadeos y sin barrido; el log lo congela main.js */
+  .franja-punto,
+  .btn-llamar-punto,
+  .punto-estado-vivo,
+  .cam-punto {
     animation: none;
   }
 
-  .vista-deteccion,
-  .vista-deteccion-etiqueta {
-    opacity: 1;
-    transform: none;
+  .cam-barrido {
+    display: none;
   }
 }

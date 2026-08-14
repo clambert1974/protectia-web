@@ -20,173 +20,227 @@
   <!-- TODO: reemplazar por el favicon definitivo -->
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 
-  <!-- Space Grotesk (SIL OFL 1.1) — solo titulares. Ver fonts/OFL.txt -->
+  <!-- Tipografías self-hosted (SIL OFL 1.1). Ver fonts/OFL.txt y fonts/OFL-IBM-Plex.txt.
+       Se precargan las tres que se usan sobre la línea de flotación; el peso 600
+       de la mono lo pide el CSS y solo aparece en la etiqueta de la detección. -->
   <link rel="preload" href="fonts/space-grotesk-variable-latin.woff2"
+        as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/ibm-plex-mono-400-latin.woff2"
+        as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/ibm-plex-mono-500-latin.woff2"
         as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-  <header class="site-header">
-    <a class="logo" href="#home">PROTECT<span class="logo-ia">(IA)</span></a>
+  <!-- Franja de estado ---------------------------------------------------- -->
+  <div class="franja">
+    <span class="franja-estado">
+      <span class="franja-punto" aria-hidden="true"></span>
+      <span class="franja-texto">SISTEMA ACTIVO — LOS VIDEOS SE PROCESAN EN TU CASA, NO EN LA NUBE</span>
+    </span>
+    <!-- El reloj es decorativo: no se anuncia. En móvil queda solo la hora. -->
+    <span class="franja-ts" aria-hidden="true"><span class="franja-fecha"
+      id="franja-fecha"></span><span id="franja-hora"></span><span
+      class="franja-lugar"> · SANTIAGO CL</span></span>
+  </div>
 
+  <!-- Cabecera ------------------------------------------------------------- -->
+  <header class="site-header">
+    <a class="logo" href="#top">PROTECT<span class="logo-ia">(IA)</span></a>
+
+    <!-- El nav se oculta bajo 760px; el menú móvil sigue pendiente. -->
     <nav class="site-nav" aria-label="Navegación principal">
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#vecinal">Vecinal</a></li>
-        <li><a href="#catalina">Catalina</a></li>
-        <li><a href="#accesorios">Accesorios</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-      </ul>
+      <a class="nav-link nav-link-activo" href="#top" aria-current="page">HOME</a>
+      <a class="nav-link" href="#vecinal">VECINAL</a>
+      <a class="nav-link" href="#catalina">CATALINA</a>
+      <a class="nav-link" href="#accesorios">ACCESORIOS</a>
+      <a class="nav-link" href="#contacto">CONTACTO</a>
     </nav>
 
     <a class="btn-tel" href="tel:+566009142219">600 914 2219</a>
   </header>
 
-  <main class="layout" id="home">
+  <main class="layout" id="top">
 
-    <!-- Columna editorial -->
+    <!-- Columna editorial -------------------------------------------------- -->
     <section class="editorial">
-      <h1 class="entrada">
-        <span class="fonetica">/pro-tek-tí-a/:</span>
-        <span class="definicion">tu casa se defiende sola</span>
-      </h1>
+      <p class="fonetica">/pro-tek-tí-a/:</p>
 
-      <p>
+      <h1 class="titular">tu casa se <span class="resalte">defiende sola</span></h1>
+
+      <p class="parrafo">
         Detecta a quien se acerca, advierte en voz alta, graba lo que pasa
         y te llama al teléfono. Todo en segundos y sin que nadie tenga que
         estar mirando una pantalla.
       </p>
 
-      <p>
+      <p class="parrafo">
         El equipo queda instalado en tu casa y es tuyo: no hay cuotas
         mensuales ni contratos amarrados. Los videos también se quedan
         en tu casa, no en un servidor ajeno.
       </p>
 
-      <p>
+      <p class="parrafo">
         Si necesitas algo, llamas al 600 y te contesta Catalina, nuestra
         asistente con inteligencia artificial. Responde al tiro, a
         cualquier hora, y deriva a una persona cuando hace falta.
       </p>
 
-      <p class="cobertura">La Florida · Peñalolén · Macul</p>
+      <div class="cta">
+        <a class="btn-llamar" href="tel:+566009142219">
+          <span class="btn-llamar-punto" aria-hidden="true"></span>Llamar al 600 914 2219
+        </a>
+        <span class="cta-nota">TE CONTESTA CATALINA, NUESTRA IA — LLAMAR YA ES PROBAR EL PRODUCTO</span>
+      </div>
+
+      <ul class="comunas">
+        <li>LA FLORIDA</li>
+        <li>PEÑALOLÉN</li>
+        <li>MACUL</li>
+      </ul>
     </section>
 
-    <!-- Cuadrícula -->
-    <section class="cuadricula" aria-label="Servicios">
+    <!-- Módulos ------------------------------------------------------------ -->
+    <div class="modulos">
 
-      <article class="celda celda-home" id="servicio-home">
-        <!-- Simulación de vista de cámara: SVG + CSS, sin video ni imágenes. -->
-        <div class="vista-camara" role="img"
-             aria-label="Ilustración de una vista de cámara de seguridad en visión nocturna: la reja frontal de una casa, vegetación y una persona detectada dentro de un recuadro verde.">
+      <article class="modulo modulo-home">
+        <span class="esquina esquina-si" aria-hidden="true"></span>
+        <span class="esquina esquina-sd" aria-hidden="true"></span>
+        <span class="esquina esquina-ii" aria-hidden="true"></span>
+        <span class="esquina esquina-id" aria-hidden="true"></span>
 
-          <svg class="vista-escena" viewBox="0 0 320 180"
-               preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
-            <defs>
-              <!-- Los barrotes de la reja, como patrón repetido -->
-              <pattern id="vc-reja" x="0" y="60" width="15" height="72"
-                       patternUnits="userSpaceOnUse">
-                <polygon points="7.4,0 10.2,7 4.6,7" fill="#223541"/>
-                <rect x="5.9" y="6" width="3" height="66" fill="#223541"/>
-              </pattern>
-            </defs>
+        <div class="modulo-cab">
+          <span class="modulo-id">MOD.01 — HOME · PRODUCTO PRINCIPAL</span>
+          <span class="modulo-estado">OPERATIVO<span class="punto-estado" aria-hidden="true"></span></span>
+        </div>
 
-            <!-- Cielo / fondo -->
-            <rect width="320" height="180" fill="#0d1420"/>
+        <div class="modulo-cuerpo home-cuerpo">
+          <div class="home-visual">
 
-            <!-- Silueta del fondo: casa vecina y árbol lejano -->
-            <polygon points="196,60 232,42 268,60 268,74 196,74" fill="#111c27"/>
-            <path d="M40 62 q10-22 21 0 q9-6 6 12 h-33 q-4-14 6-12z" fill="#111c27"/>
-            <rect x="49" y="70" width="3" height="14" fill="#111c27"/>
+            <!-- Vista de cámara: gradientes y cajas en CSS, sin video ni imágenes. -->
+            <div class="camara" role="img"
+                 aria-label="Ilustración de una vista de cámara de seguridad en visión nocturna: la reja frontal de una casa, con una persona encuadrada en un recuadro verde etiquetado «persona 98%» y el rótulo de grabación en curso.">
+              <span class="cam-lineas" aria-hidden="true"></span>
+              <span class="cam-barrido" aria-hidden="true"></span>
+              <span class="cam-pasto" aria-hidden="true"></span>
+              <span class="cam-borde-pasto" aria-hidden="true"></span>
+              <span class="cam-vineta" aria-hidden="true"></span>
 
-            <!-- Suelo -->
-            <path d="M0 128 q160-9 320 0 v52 H0z" fill="#101b26"/>
+              <span class="cam-caja" aria-hidden="true">
+                <span class="cam-caja-etq">PERSONA 98%</span>
+                <span class="cam-figura">
+                  <span class="cam-cabeza"></span>
+                  <span class="cam-cuerpo"></span>
+                </span>
+              </span>
 
-            <!-- Reja frontal -->
-            <rect x="0" y="60" width="320" height="72" fill="url(#vc-reja)"/>
-            <rect x="0" y="70" width="320" height="2.6" fill="#223541"/>
-            <rect x="0" y="118" width="320" height="2.6" fill="#223541"/>
-            <rect x="182" y="58" width="3.4" height="74" fill="#2b414f"/>
+              <span class="cam-osd cam-osd-arriba" aria-hidden="true">
+                <span class="cam-fuente"><span class="cam-punto"></span>REJA FRONTAL</span>
+                <span class="cam-hora" id="cam-hora"></span>
+              </span>
 
-            <!-- Vegetación estilizada -->
-            <path d="M0 132 q14-26 30-20 q12-14 26 2 q14 0 12 18z" fill="#16242d"/>
-            <path d="M262 132 q10-22 26-16 q14-10 24 4 q8 2 8 12z" fill="#16242d"/>
-            <path d="M286 116 l4-18 M290 98 l-9 9 M290 98 l9 8" stroke="#16242d"
-                  stroke-width="2.4" fill="none" stroke-linecap="round"/>
+              <span class="cam-osd cam-osd-abajo" aria-hidden="true">
+                <span>IR · VISIÓN NOCTURNA</span>
+                <span class="cam-rec">REC ●</span>
+              </span>
+            </div>
 
-            <!-- Persona detectada -->
-            <g fill="#2f4551">
-              <circle cx="132" cy="83" r="6.6"/>
-              <path d="M124 93 q8.5-4.5 17 0 l2 21 h-21z"/>
-              <path d="M125.5 114 l2.5 20h4l.5-20z"/>
-              <path d="M133 114 l.5 20h4l2-20z"/>
-            </g>
-          </svg>
-
-          <span class="vista-reloj" id="vista-reloj">--/--/---- --:--:--</span>
-          <span class="vista-camara-etiqueta">EN VIVO</span>
-
-          <div class="vista-deteccion">
-            <span class="vista-deteccion-etiqueta">PERSONA</span>
+            <ul class="log">
+              <li><span class="log-hora" aria-hidden="true"></span>PERSONA DETECTADA — ADVERTENCIA POR VOZ EMITIDA</li>
+              <li><span class="log-hora" aria-hidden="true"></span>GRABANDO · EVIDENCIA RESPALDADA FUERA DE LA CASA</li>
+              <li class="log-activo"><span class="log-hora" aria-hidden="true"></span>LLAMANDO EN CADENA A LA FAMILIA…</li>
+            </ul>
           </div>
 
-          <span class="vista-camara-nombre">Reja frontal</span>
+          <div class="home-texto">
+            <h2 class="modulo-titulo modulo-titulo-grande">Home</h2>
+            <p class="modulo-texto">
+              Cámaras con inteligencia artificial para tu casa. Distingue a una
+              persona de un perro o de un auto que pasa, y solo te avisa cuando
+              de verdad importa.
+            </p>
+            <ul class="home-lista">
+              <li>DESCARTA FALSAS ALARMAS</li>
+              <li>RECONOCE ROSTROS CONOCIDOS</li>
+              <li>LLAMA EN CADENA A LA FAMILIA</li>
+            </ul>
+          </div>
         </div>
-        <h2>Home</h2>
-        <p>
-          Cámaras con inteligencia artificial para tu casa. Distingue a una
-          persona de un perro o de un auto que pasa, y solo te avisa cuando
-          de verdad importa.
-        </p>
       </article>
 
-      <article class="celda celda-vecinal" id="vecinal">
-        <span class="badge">GRATIS</span>
-        <h2>Vecinal</h2>
-        <p>
-          La app del barrio para avisarse entre vecinos. Alertas, fotos y
-          novedades de tu sector, en un grupo cerrado y verificado. Sin
-          costo para los vecinos.
-        </p>
+      <article class="modulo" id="vecinal">
+        <div class="modulo-cab">
+          <span class="modulo-id">MOD.02 — VECINAL</span>
+          <span class="modulo-marca">GRATIS</span>
+        </div>
+        <div class="modulo-cuerpo">
+          <h2 class="modulo-titulo">Vecinal</h2>
+          <p class="modulo-texto">
+            La app del barrio para avisarse entre vecinos. Alertas, fotos y
+            novedades de tu sector, en un grupo cerrado y verificado. Sin
+            costo para los vecinos.
+          </p>
+        </div>
       </article>
 
-      <article class="celda celda-catalina" id="catalina">
-        <h2>Catalina</h2>
-        <p>
-          Nuestra asistente con inteligencia artificial. Atiende el 600,
-          entiende lo que necesitas, agenda visitas y resuelve dudas.
-          Y si prefieres hablar con una persona, coordinamos que te llamemos.
-        </p>
+      <article class="modulo" id="catalina">
+        <div class="modulo-cab">
+          <span class="modulo-id">MOD.03 — CATALINA</span>
+          <span class="modulo-estado">EN LÍNEA<span class="punto-estado punto-estado-vivo" aria-hidden="true"></span></span>
+        </div>
+        <div class="modulo-cuerpo">
+          <h2 class="modulo-titulo">Catalina</h2>
+          <p class="modulo-texto">
+            Nuestra asistente con inteligencia artificial. Atiende el 600,
+            entiende lo que necesitas, agenda visitas y resuelve dudas.
+            Y si prefieres hablar con una persona, coordinamos que te llamemos.
+          </p>
+          <a class="enlace-mono" href="tel:+566009142219">LLAMAR ES PROBARLA → 600 914 2219</a>
+        </div>
       </article>
 
-      <article class="celda celda-accesorios" id="accesorios">
-        <h2>Accesorios</h2>
-        <p>
-          Todo lo que le suma al sistema, instalado y configurado por
-          nosotros.
-        </p>
-        <ul class="lista-accesorios">
-          <li>Cámaras</li>
-          <li>UPS</li>
-          <li>Bocinas</li>
-          <li>Sensores</li>
-        </ul>
+      <article class="modulo modulo-accesorios" id="accesorios">
+        <div class="modulo-cab">
+          <span class="modulo-id">MOD.04 — ACCESORIOS</span>
+          <span class="modulo-marca modulo-marca-plana">INSTALACIÓN INCLUIDA</span>
+        </div>
+        <div class="modulo-cuerpo accesorios-cuerpo">
+          <div>
+            <h2 class="modulo-titulo">Accesorios</h2>
+            <p class="modulo-texto">
+              Todo lo que le suma al sistema, instalado y configurado por
+              nosotros.
+            </p>
+          </div>
+          <ul class="lista-accesorios">
+            <li>CÁMARAS</li>
+            <li>UPS</li>
+            <li>BOCINAS</li>
+            <li>SENSORES</li>
+          </ul>
+        </div>
       </article>
 
-    </section>
-
+    </div>
   </main>
 
-  <!-- Barra fija solo móvil -->
-  <div class="barra-movil">
-    <a class="btn-llamar" href="tel:+566009142219">Llamar al 600</a>
-  </div>
-
   <footer class="site-footer" id="contacto">
-    <p>© 2026 Protect(IA) — L&amp;F IT Consulting SpA · @protectia.cl</p>
+    <div class="footer-inner">
+      <span>© 2026 PROTECT(IA) — L&amp;F IT CONSULTING SPA</span>
+      <span class="footer-enlaces">
+        <a href="tel:+566009142219">600 914 2219</a>
+        <a href="https://instagram.com/protectia.cl" target="_blank" rel="noopener">@PROTECTIA.CL</a>
+      </span>
+    </div>
   </footer>
+
+  <!-- Barra fija solo móvil -->
+  <a class="barra-movil" href="tel:+566009142219">
+    <span class="barra-movil-titulo">Llamar al 600 914 2219</span>
+    <span class="barra-movil-nota">TE CONTESTA CATALINA, NUESTRA IA</span>
+  </a>
 
   <script src="js/main.js"></script>
 </body>

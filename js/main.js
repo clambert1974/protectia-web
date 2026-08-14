@@ -1,5 +1,7 @@
-/* Protect(IA) — smooth-scroll de las anclas del nav y el reloj de la cámara.
-   El recuadro de detección es CSS puro; aquí no hay nada de eso. */
+/* Protect(IA) — reloj del visitante.
+   Lo único que hace este archivo: pintar la hora local en la franja de estado,
+   en el OSD de la cámara y en el log de eventos. El layout es todo CSS y el
+   smooth-scroll de las anclas lo hace `scroll-behavior`, no JS. */
 
 (function () {
   'use strict';
@@ -8,31 +10,12 @@
     '(prefers-reduced-motion: reduce)'
   ).matches;
 
-  document.querySelectorAll('a[href^="#"]').forEach(function (enlace) {
-    enlace.addEventListener('click', function (evento) {
-      var id = enlace.getAttribute('href');
-      if (id === '#') return;
+  var franjaFecha = document.getElementById('franja-fecha');
+  var franjaHora = document.getElementById('franja-hora');
+  var camHora = document.getElementById('cam-hora');
+  var logHoras = document.querySelectorAll('.log-hora');
 
-      var destino = document.querySelector(id);
-      if (!destino) return;
-
-      evento.preventDefault();
-      destino.scrollIntoView({
-        behavior: prefiereMenosMovimiento ? 'auto' : 'smooth',
-        block: 'start'
-      });
-
-      // Deja la URL consistente con el ancla, sin salto extra.
-      history.pushState(null, '', id);
-    });
-  });
-
-  /* Reloj sobreimpreso de la vista de cámara --------------------------------
-     Muestra la hora local del visitante como DD/MM/AAAA HH:MM:SS.
-     Sigue corriendo con prefers-reduced-motion: es un dato, no una animación,
-     y congelarlo mostraría una hora falsa. */
-
-  var reloj = document.getElementById('vista-reloj');
+  var logEstampado = false;
 
   function dosDigitos(numero) {
     return numero < 10 ? '0' + numero : String(numero);
@@ -41,20 +24,35 @@
   function pintarReloj() {
     var ahora = new Date();
 
-    reloj.textContent =
-      dosDigitos(ahora.getDate()) + '/' +
-      dosDigitos(ahora.getMonth() + 1) + '/' +
-      ahora.getFullYear() + ' ' +
+    var fecha =
+      dosDigitos(ahora.getDate()) + '-' +
+      dosDigitos(ahora.getMonth() + 1) + '-' +
+      ahora.getFullYear();
+
+    var hora =
       dosDigitos(ahora.getHours()) + ':' +
       dosDigitos(ahora.getMinutes()) + ':' +
       dosDigitos(ahora.getSeconds());
+
+    /* Los relojes siguen corriendo con prefers-reduced-motion: son un dato, no
+       una animación, y congelarlos mostraría una hora falsa. */
+    if (franjaFecha) franjaFecha.textContent = fecha + ' ';
+    if (franjaHora) franjaHora.textContent = hora;
+    if (camHora) camHora.textContent = hora;
+
+    /* El log sí se congela: con movimiento reducido se estampa una vez y se
+       queda quieto. */
+    if (!logEstampado) {
+      logHoras.forEach(function (marca) {
+        marca.textContent = hora + ' · ';
+      });
+      logEstampado = prefiereMenosMovimiento;
+    }
 
     // Se reagenda al filo del segundo siguiente, no cada 1000 ms exactos:
     // así no acumula deriva ni se salta un segundo a la vista.
     setTimeout(pintarReloj, 1000 - (ahora.getTime() % 1000));
   }
 
-  if (reloj) {
-    pintarReloj();
-  }
+  pintarReloj();
 })();

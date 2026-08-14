@@ -10,14 +10,19 @@ ni dependencias.
 
 ```
 index.html        Home
-css/styles.css    Estilos (variables al tope, mobile-first)
-js/main.js        Smooth-scroll de las anclas y reloj de la vista de cámara
-fonts/            Space Grotesk variable (SIL OFL 1.1, ver fonts/OFL.txt)
+css/styles.css    Estilos (variables al tope; base escritorio, quiebres en 1120 y 760)
+js/main.js        Reloj del visitante (franja, OSD de la cámara y log)
+fonts/            Space Grotesk variable + IBM Plex Mono 400/500/600
+                  (SIL OFL 1.1: fonts/OFL.txt y fonts/OFL-IBM-Plex.txt)
 img/              Imágenes (vacío por ahora)
 ```
 
-La vista de cámara de la celda Home es una simulación hecha con SVG y CSS
-—sin video ni imágenes—, con el recuadro de detección animado en CSS puro.
+La vista de cámara del MOD.01 es una simulación hecha solo con CSS —sin video,
+sin imágenes y sin SVG—: capas de gradiente para el ruido, el pasto y la viñeta,
+más la caja de detección con su etiqueta.
+
+El layout no usa JS: donde el diseño original decidía con `matchMedia`, aquí
+hay media queries.
 
 ## Cómo se publica
 
