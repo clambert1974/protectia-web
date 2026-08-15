@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Protect(IA)">
+  <rect width="64" height="64" rx="14" fill="#10221A"/>
+  <g fill="none" stroke="#1D9E75" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M11 16Q5.5 32 11 48" stroke-width="4"/>
+    <path d="M53 16Q58.5 32 53 48" stroke-width="4"/>
+    <path d="M22 19V45" stroke-width="5"/>
+    <path d="M30 45 37.5 19 45 45" stroke-width="5"/>
+    <path d="M32 39.5H43" stroke-width="4"/>
+  </g>
+</svg>
