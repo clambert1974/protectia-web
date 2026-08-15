@@ -112,7 +112,7 @@
 
         <div class="modulo-cab">
           <span class="modulo-id">MOD.01 — HOME · PRODUCTO PRINCIPAL</span>
-          <span class="modulo-estado">OPERATIVO<span class="punto-estado" aria-hidden="true"></span></span>
+          <span class="modulo-estado"><span class="modulo-estado-txt">OPERATIVO</span><span class="punto-estado" aria-hidden="true"></span></span>
         </div>
 
         <div class="modulo-cuerpo home-cuerpo">
@@ -120,18 +120,26 @@
 
             <!-- Vista de cámara: gradientes y cajas en CSS, sin video ni imágenes. -->
             <div class="camara" role="img"
-                 aria-label="Ilustración de una vista de cámara de seguridad en visión nocturna: la reja frontal de una casa, con una persona encuadrada en un recuadro verde etiquetado «persona 98%» y el rótulo de grabación en curso.">
+                 aria-label="Ilustración animada de una cámara de seguridad en visión nocturna sobre la reja frontal de una casa, que repite en bucle tres escenas. Primero un perro cruza el jardín: el sistema lo encuadra en gris, lo identifica como animal y descarta la falsa alarma sin avisar. Después llega una persona conocida: el sistema la encuadra en verde, la reconoce por su rostro y tampoco alerta. Por último una persona desconocida se queda junto a la reja: el módulo pasa a estado de alerta, la encuadra en ámbar y entonces emite una advertencia por voz, activa la sirena, graba, respalda la evidencia fuera de la casa y llama en cadena a la familia.">
               <span class="cam-lineas" aria-hidden="true"></span>
               <span class="cam-barrido" aria-hidden="true"></span>
               <span class="cam-pasto" aria-hidden="true"></span>
               <span class="cam-borde-pasto" aria-hidden="true"></span>
               <span class="cam-vineta" aria-hidden="true"></span>
 
+              <!-- Una sola caja: cambia de color, tamaño y contenido según la
+                   escena que js/main.js tenga puesta en el <article>. -->
               <span class="cam-caja" aria-hidden="true">
                 <span class="cam-caja-etq">PERSONA 98%</span>
                 <span class="cam-figura">
                   <span class="cam-cabeza"></span>
                   <span class="cam-cuerpo"></span>
+                </span>
+                <span class="cam-perro">
+                  <span class="perro-cuerpo"></span>
+                  <span class="perro-cabeza"></span>
+                  <span class="perro-cola"></span>
+                  <span class="perro-patas"></span>
                 </span>
               </span>
 
@@ -146,10 +154,15 @@
               </span>
             </div>
 
-            <ul class="log">
-              <li><span class="log-hora" aria-hidden="true"></span>PERSONA DETECTADA — ADVERTENCIA POR VOZ EMITIDA</li>
-              <li><span class="log-hora" aria-hidden="true"></span>GRABANDO · EVIDENCIA RESPALDADA FUERA DE LA CASA</li>
-              <li class="log-activo"><span class="log-hora" aria-hidden="true"></span>LLAMANDO EN CADENA A LA FAMILIA…</li>
+            <!-- Estas tres líneas son el caso sin JS: js/main.js las borra al
+                 arrancar y desde ahí escribe el log del loop. Van sin hora
+                 porque sin JS no hay forma honesta de saber la del visitante.
+                 El <ul> va aria-hidden entero: el aria-label de la cámara ya
+                 narra la secuencia, y estas líneas cambian solas. -->
+            <ul class="log" id="log" aria-hidden="true">
+              <li>PERSONA DESCONOCIDA — ADVERTENCIA POR VOZ EMITIDA</li>
+              <li>SIRENA ACTIVADA · GRABANDO · EVIDENCIA RESPALDADA FUERA DE LA CASA</li>
+              <li class="log-activo">LLAMANDO EN CADENA A LA FAMILIA…</li>
             </ul>
           </div>
 
