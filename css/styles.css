@@ -136,8 +136,7 @@ a:focus-visible {
 }
 
 /* El ancla no queda bajo la cabecera pegajosa */
-.layout,
-.modulo,
+.seccion,
 .site-footer {
   scroll-margin-top: 80px;
 }
@@ -145,11 +144,6 @@ a:focus-visible {
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50%      { opacity: 0.25; }
-}
-
-@keyframes sweep {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(340%); }
 }
 
 /* Franja de estado ---------------------------------------------------------- */
@@ -241,12 +235,6 @@ a:focus-visible {
   color: var(--tinta);
 }
 
-.nav-link-activo,
-.nav-link-activo:hover {
-  background: var(--tinta);
-  color: var(--fondo);
-}
-
 .btn-tel {
   flex: none;
   font-weight: 600;
@@ -263,33 +251,78 @@ a:focus-visible {
   color: #fff;
 }
 
-/* Retícula principal -------------------------------------------------------- */
+/* Teléfono y "Comenzar" van juntos y no se separan: el número tiene que
+   quedar a la vista en todo el scroll (la cabecera es sticky). */
+.cabecera-acciones {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-.layout {
+.btn-comenzar {
+  flex: none;
+  font-weight: 600;
+  font-size: 14px;
+  background: var(--tinta);
+  color: var(--fondo);
+  padding: 11px 18px;
+  border-radius: 8px;
+}
+
+.btn-comenzar:hover {
+  background: #1B3226;
+  color: var(--fondo);
+}
+
+/* Secciones — el esqueleto de la home ---------------------------------------
+   Todo el largo de la página son secciones apiladas del mismo ancho útil. El
+   ritmo lo dan .seccion (aire vertical) y .seccion-inner (ancho y laterales
+   con área segura), así ninguna sección inventa su propia caja. */
+
+.seccion {
+  padding: 72px 0;
+}
+
+.seccion-inner {
   max-width: var(--ancho-max);
   margin: 0 auto;
-  display: grid;
-  /* minmax(0,1fr) en la segunda columna: los módulos no empujan la retícula */
-  grid-template-columns: minmax(380px, 440px) minmax(0, 1fr);
-  gap: 56px;
-  padding: 58px max(24px, env(safe-area-inset-right, 0px))
-           76px max(24px, env(safe-area-inset-left, 0px));
+  padding: 0 max(24px, env(safe-area-inset-right, 0px))
+           0 max(24px, env(safe-area-inset-left, 0px));
 }
 
-/* Columna editorial --------------------------------------------------------- */
+/* Las secciones alternan fondo para que se lean como bloques distintos sin
+   necesidad de líneas divisorias. */
+.seccion-momento,
+.seccion-plan,
+.seccion-faq {
+  background: var(--tarjeta);
+  border-top: 1px solid var(--linea);
+  border-bottom: 1px solid var(--linea);
+}
 
-.fonetica {
-  font: 500 13px var(--mono);
-  letter-spacing: 0.08em;
+.seccion-kicker {
+  font: 500 11px var(--mono);
+  letter-spacing: 0.14em;
   color: var(--verde);
+  margin-bottom: 12px;
 }
 
-.titular {
-  margin: 16px 0 28px;
-  font-size: 64px;
-  line-height: 0.98;
-  letter-spacing: -0.025em;
+.seccion-titulo {
+  font-size: 38px;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
   font-weight: 700;
+  margin-bottom: 36px;
+  text-wrap: balance;
+}
+
+/* El h1 de la doble puerta pesa más que el resto de los títulos. */
+.seccion-titulo-h1 {
+  font-size: 56px;
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  max-width: 15ch;
 }
 
 .resalte {
@@ -304,100 +337,104 @@ a:focus-visible {
   text-wrap: pretty;
 }
 
-.parrafo:last-of-type {
-  margin-bottom: 28px;
+.parrafo-destacado {
+  margin-bottom: 0;
+  color: var(--tinta);
+  font-weight: 500;
+  border-left: 2px solid var(--verde);
+  padding-left: 14px;
 }
 
-.cta {
+/* Para el <caption> de la tabla: lo necesita un lector de pantalla, no la vista. */
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Doble puerta de entrada ---------------------------------------------------
+   Dos caminos lado a lado, del mismo peso visual: quien llega se reconoce en
+   uno de los dos y sigue por ahí. Bajo 760px se apilan. */
+
+.puertas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.puerta {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 32px;
-}
-
-.btn-llamar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  align-self: flex-start;
-  font-weight: 600;
-  font-size: 16px;
-  background: var(--tinta);
-  color: var(--fondo);
-  padding: 14px 24px;
-  border-radius: 9px;
-}
-
-.btn-llamar:hover {
-  background: var(--verde);
-  color: #fff;
-}
-
-.btn-llamar-punto {
-  flex: none;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #2FD08B;
-  animation: blink 2s infinite;
-}
-
-.cta-nota {
-  font: 10.5px var(--mono);
-  letter-spacing: 0.1em;
-  color: var(--texto-mono);
-}
-
-.comunas {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  font: 10.5px var(--mono);
-  letter-spacing: 0.1em;
-  color: var(--texto);
-}
-
-.comunas li {
-  border: 1px solid var(--linea-chip);
-  border-radius: 6px;
-  padding: 6px 10px;
+  align-items: flex-start;
   background: var(--tarjeta);
-}
-
-/* Módulos ------------------------------------------------------------------- */
-
-.modulos {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 14px;
-  align-content: start;
-}
-
-.modulo {
-  background: var(--tarjeta);
-  border: 1px solid var(--linea-modulo);
+  border: 1px solid var(--linea-modulo-fuerte);
   border-radius: 10px;
-  overflow: hidden;
+  padding: 30px 28px 28px;
   transition: border-color 0.2s;
 }
 
-/* MOD.01 no reacciona al hover: es la pieza fija de la retícula */
-.modulo:not(.modulo-home):hover {
+.puerta:hover {
   border-color: var(--verde);
 }
 
-.modulo-home,
-.modulo-accesorios {
-  grid-column: 1 / -1;
+.puerta-alterna {
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--linea-chip);
 }
 
-.modulo-home {
-  position: relative;
-  border-color: var(--linea-modulo-fuerte);
+.puerta-titulo {
+  font-size: 25px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin-bottom: 12px;
 }
 
-/* Esquinas de encuadre de MOD.01 */
+.puerta-texto {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--texto);
+  /* empuja el botón al pie de la tarjeta para que ambos queden alineados */
+  flex: 1;
+  margin-bottom: 22px;
+  text-wrap: pretty;
+}
+
+.btn-puerta {
+  font-weight: 600;
+  font-size: 15px;
+  background: var(--verde);
+  color: #fff;
+  padding: 13px 22px;
+  border-radius: 9px;
+  box-shadow: 0 4px 14px -4px rgba(29, 158, 117, 0.5);
+}
+
+.btn-puerta:hover {
+  background: var(--verde-oscuro);
+  color: #fff;
+}
+
+.btn-puerta-plano {
+  background: transparent;
+  color: var(--tinta);
+  border: 1px solid var(--tinta);
+  box-shadow: none;
+}
+
+.btn-puerta-plano:hover {
+  background: var(--tinta);
+  color: var(--fondo);
+}
+
+/* Esquinas de encuadre: marcan la pieza principal de cada sección (la primera
+   puerta y la tarjeta del plan). Son el guiño de cámara del branding. */
 .esquina {
   position: absolute;
   z-index: 2;
@@ -410,7 +447,33 @@ a:focus-visible {
 .esquina-ii { bottom: -1px; left: -1px;  border-bottom: 2px solid var(--verde); border-left: 2px solid var(--verde); }
 .esquina-id { bottom: -1px; right: -1px; border-bottom: 2px solid var(--verde); border-right: 2px solid var(--verde); }
 
-.modulo-cab {
+/* Cuando cada segundo importa ----------------------------------------------
+   Texto a la izquierda y la demo de cámara a la derecha. Bajo 1120px la
+   cámara ya no cabe al lado y se pasa abajo. */
+
+.momento-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 48px;
+  align-items: center;
+}
+
+.momento-texto .seccion-titulo {
+  margin-bottom: 24px;
+  font-size: 34px;
+}
+
+/* Pieza de la demo. Conserva la cabecera de módulo del diseño original: es la
+   que lleva el chip OPERATIVO/ALERTA que mueve js/main.js. */
+.demo {
+  position: relative;
+  background: var(--fondo);
+  border: 1px solid var(--linea-modulo-fuerte);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.demo-cab {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -422,7 +485,7 @@ a:focus-visible {
   color: var(--texto-mono);
 }
 
-.modulo-id {
+.demo-id {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -443,150 +506,22 @@ a:focus-visible {
   background: var(--verde-vivo);
 }
 
-.punto-estado-vivo {
-  animation: blink 1.4s infinite;
-}
-
-.modulo-marca {
-  flex: none;
-  color: var(--verde);
-  border: 1px solid var(--verde);
-  border-radius: 4px;
-  padding: 1px 6px;
-  white-space: nowrap;
-}
-
-.modulo-marca-plana {
-  color: inherit;
-  border: 0;
-  border-radius: 0;
-  padding: 0;
-}
-
-.modulo-cuerpo {
+.demo-cuerpo {
   padding: 18px;
 }
-
-.modulo-titulo {
-  margin: 0 0 8px;
-  font-size: 22px;
-  font-weight: 600;
-}
-
-.modulo-titulo-grande {
-  margin-bottom: 10px;
-  font-size: 26px;
-}
-
-.modulo-texto {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.62;
-  color: var(--texto);
-}
-
-/* Cuando algo sigue al párrafo (el enlace de Catalina, la lista de Home) */
-.modulo-texto:not(:last-child) {
-  margin-bottom: 14px;
-}
-
-.enlace-mono {
-  font: 500 11px var(--mono);
-  letter-spacing: 0.08em;
-  color: var(--tinta);
-  border-bottom: 1px solid var(--verde);
-  padding-bottom: 2px;
-}
-
-.enlace-mono:hover {
-  color: var(--verde);
-}
-
-/* MOD.01 — Home ------------------------------------------------------------- */
-
-.home-cuerpo {
-  display: flex;
-  flex-direction: row;
-  gap: 24px;
-}
-
-.home-visual {
-  flex: 1.2;
-  min-width: 0;
-}
-
-.home-texto {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.home-texto .modulo-texto:not(:last-child) {
-  font-size: 14.5px;
-  line-height: 1.65;
-  margin-bottom: 16px;
-}
-
-.home-lista {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  font: 10.5px var(--mono);
-  letter-spacing: 0.08em;
-  color: var(--texto-mono);
-}
-
-.home-lista li::before {
-  content: "→ ";
-}
-
-/* Vista de cámara — gradientes y cajas, sin video ni imágenes --------------- */
+/* Vista de cámara — frame real con las capas del sistema encima -------------
+   Antes esto era una simulación dibujada con gradientes (pasto, ruido, barrido).
+   Ahora el fondo es un fotograma de la propia reja frontal y solo quedan encima
+   las capas que SÍ son del sistema: viñeta, caja de detección, OSD y log.
+   El JPEG ya viene recortado a 16:10, así que `cover` no recorta nada más. */
 
 .camara {
   position: relative;
   border-radius: 6px;
   overflow: hidden;
-  background: linear-gradient(180deg, #0B1512, #15251C);
+  background: #0B1512 url("../img/camara-reja-frontal.jpg") center / cover no-repeat;
   font-family: var(--mono);
   aspect-ratio: 16 / 10;
-}
-
-.cam-lineas {
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(0deg,
-      rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 3px);
-}
-
-.cam-barrido {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 34%;
-  background: linear-gradient(180deg, rgba(34, 197, 94, 0.06), transparent);
-  animation: sweep 5s linear infinite;
-}
-
-.cam-pasto {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 44%;
-  background: repeating-linear-gradient(90deg,
-      rgba(206, 228, 211, 0.14) 0 3px, transparent 3px 15px);
-}
-
-.cam-borde-pasto {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 44%;
-  height: 4px;
-  background: rgba(206, 228, 211, 0.13);
 }
 
 .cam-vineta {
@@ -596,56 +531,33 @@ a:focus-visible {
       transparent 55%, rgba(0, 0, 0, 0.5) 100%);
 }
 
+/* Caja fija sobre el perro. Las medidas salen de medirlo en el frame
+   (x 4-72, y 596-770 del original 1280x960) y pasarlo a % del recorte
+   (x0=0, y0=315, 960x600). Gris y sin glow: el color dice "esto no amerita
+   alerta" antes que el texto. */
 .cam-caja {
   position: absolute;
-  left: 55%;
-  bottom: 12%;
-  width: 14.5%;
-  height: 41.5%;
-  border: 1.5px solid var(--verde-vivo);
-  box-shadow: 0 0 14px rgba(34, 197, 94, 0.35);
-  transition: opacity .45s, border-color .45s, box-shadow .45s;
+  left: 0.42%;
+  top: 46.8%;
+  width: 7.1%;
+  height: 29%;
+  border: 1.5px solid rgba(206, 228, 211, 0.65);
+  box-shadow: none;
 }
 
+/* La etiqueta desborda la caja hacia la derecha a propósito: el perro ocupa
+   apenas un 5% del ancho y "ANIMAL" no cabe dentro del recuadro. */
 .cam-caja-etq {
   position: absolute;
   top: -19px;
   left: -1.5px;
-  background: var(--verde-vivo);
-  color: #06130C;
+  background: #8CA095;
+  color: #0B1512;
   font-size: 9.5px;
   font-weight: 600;
   letter-spacing: 0.08em;
   padding: 3px 7px;
   white-space: nowrap;
-}
-
-.cam-figura {
-  position: absolute;
-  left: 50%;
-  bottom: 5%;
-  transform: translateX(-50%);
-  width: 55%;
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.cam-cabeza {
-  width: 47%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #2C3D33;
-}
-
-.cam-cuerpo {
-  width: 73%;
-  height: 64%;
-  border-radius: 9px 9px 5px 5px;
-  background: #2C3D33;
-  margin-top: 4%;
 }
 
 .cam-osd {
@@ -726,120 +638,14 @@ a:focus-visible {
   font-variant-numeric: tabular-nums;
 }
 
-/* Demo narrativa de MOD.01 — animal / conocido / intruso -------------------
-   Acá vive el *aspecto* de cada escena, colgando de la clase (.esc-1, .esc-2,
-   .esc-3, .esc-0) que js/main.js le pone al <article>. Cuándo cambia cada
-   escena lo decide el guión en el JS; este archivo no sabe de tiempos. */
-
-/* Escena 1 — el animal cruza por abajo. Caja gris y sin glow: no es una
-   detección que valga una alerta, y el color lo dice antes que el texto. */
-.esc-1 .cam-caja {
-  left: 0;
-  bottom: 7%;
-  width: 21%;
-  height: 15%;
-  border-color: rgba(206, 228, 211, 0.5);
-  box-shadow: none;
-  animation: cruza 6s linear forwards;
-}
-
-.esc-1 .cam-caja-etq {
-  background: #8CA095;
-  color: #0B1512;
-}
-
-.esc-1 .cam-figura { display: none; }
-.esc-1 .cam-perro  { display: block; }
-
-/* Escena 2 — la conocida camina hasta la reja y se queda. */
-.esc-2 .cam-caja {
-  animation: camina 4s cubic-bezier(0.33, 0.7, 0.3, 1) forwards;
-}
-
-/* Escena 3 — la desconocida no se mueve; el módulo entero pasa a alerta. */
-.esc-3 .cam-caja {
-  border-color: var(--ambar);
-  box-shadow: 0 0 14px rgba(245, 158, 11, 0.35);
-}
-
-.esc-3 .cam-caja-etq {
-  background: var(--ambar);
-  color: #1A1206;
-}
-
-.esc-3 .modulo-estado {
-  color: var(--ambar);
-}
-
-.esc-3 .punto-estado {
-  background: var(--ambar);
-  animation: blink 1.1s infinite;
-}
-
-/* Cierre — se desvanecen caja y silueta, y el módulo vuelve a vigilancia. */
-.esc-0 .cam-caja {
-  opacity: 0;
-}
-
-/* La sirena enciende el REC del overlay. */
-.rec-on .cam-rec {
-  color: #F87171;
-  animation: blink 1s infinite;
-}
-
-/* Cada escena resalta la capacidad que está demostrando. */
-.esc-1 .home-lista li:nth-child(1),
-.esc-2 .home-lista li:nth-child(2),
-.esc-3 .home-lista li:nth-child(3) {
-  color: var(--verde);
-}
+/* La caja, el OSD y el log ya no cambian de escena: el fondo es un frame fijo.
+   Se fueron con la simulación las reglas .esc-1/.esc-2/.esc-3/.esc-0 y el perro
+   que estaba dibujado con divs (.cam-perro y sus partes). */
 
 /* Silueta de perro — las mismas primitivas que la persona, acostadas.
    Todo en % del alto de la caja, así escala igual en móvil. */
-.cam-perro {
-  display: none;
-  position: absolute;
-  inset: 18% 8% 12%;
-}
-
-.perro-cuerpo {
-  position: absolute;
-  inset: 0 14% 34% 16%;
-  border-radius: 7px 8px 4px 4px;
-  background: #2C3D33;
-}
-
-.perro-cabeza {
-  position: absolute;
-  right: 0;
-  top: -14%;
-  width: 30%;
-  aspect-ratio: 1;
-  border-radius: 50% 50% 40% 40%;
-  background: #2C3D33;
-}
-
-.perro-cola {
-  position: absolute;
-  left: 4%;
-  top: 4%;
-  width: 15%;
-  height: 34%;
-  border-radius: 3px;
-  background: #2C3D33;
-  transform: rotate(28deg);
-}
 
 /* Las cuatro patas son un solo elemento rayado. */
-.perro-patas {
-  position: absolute;
-  left: 16%;
-  right: 14%;
-  bottom: 0;
-  height: 36%;
-  background: repeating-linear-gradient(90deg,
-      #2C3D33 0 22%, transparent 22% 39%);
-}
 
 /* Entrada y salida de las líneas del log. */
 .log-gris  { opacity: 0.68; }
@@ -851,16 +657,6 @@ a:focus-visible {
 .log-puntos {
   display: inline-block;
   animation: puntos 1.6s steps(4, jump-none) infinite;
-}
-
-@keyframes cruza {
-  from { transform: translateX(-120%); }
-  to   { transform: translateX(500%); }
-}
-
-@keyframes camina {
-  from { transform: translateX(-250%); }
-  to   { transform: translateX(0); }
 }
 
 @keyframes entra {
@@ -875,31 +671,614 @@ a:focus-visible {
   from { clip-path: inset(0 100% 0 0); }
 }
 
-/* MOD.04 — Accesorios ------------------------------------------------------- */
+/* Cuatro pilares ------------------------------------------------------------ */
 
-.accesorios-cuerpo {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
+.pilares {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
 }
 
-.lista-accesorios {
+.pilar {
+  background: var(--tarjeta);
+  border: 1px solid var(--linea-modulo);
+  border-radius: 10px;
+  padding: 24px 22px;
+  transition: border-color 0.2s;
+}
+
+.pilar:hover {
+  border-color: var(--verde);
+}
+
+.pilar-icono {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  font: 10.5px var(--mono);
-  letter-spacing: 0.1em;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--chip-accesorio);
+  color: var(--verde);
+  margin-bottom: 16px;
+}
+
+.pilar-icono svg {
+  width: 22px;
+  height: 22px;
+}
+
+.pilar-titulo {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-wrap: balance;
+}
+
+.pilar-texto {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--texto);
+  text-wrap: pretty;
+}
+
+/* Cómo funciona — cuatro pasos ----------------------------------------------
+   La línea que une los pasos es un ::after del <li>, no un borde del contenedor:
+   así el último paso no la arrastra y en móvil desaparece sola. */
+
+.pasos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  counter-reset: paso;
+}
+
+.paso {
+  position: relative;
+  padding: 4px 18px 0 0;
+}
+
+.paso::after {
+  content: "";
+  position: absolute;
+  top: 17px;
+  left: 46px;
+  right: 0;
+  height: 1px;
+  background: var(--linea-chip);
+}
+
+.paso:last-child::after {
+  display: none;
+}
+
+.paso-n {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--tinta);
+  color: var(--fondo);
+  font: 600 14px var(--mono);
+  margin-bottom: 16px;
+}
+
+.paso-titulo {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-wrap: balance;
+}
+
+.paso-texto {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--texto);
+  text-wrap: pretty;
+}
+
+/* Plan y precios ------------------------------------------------------------ */
+
+.tarjeta-plan {
+  position: relative;
+  max-width: 520px;
+  margin: 0 auto;
+  background: var(--fondo);
+  border: 1px solid var(--linea-modulo-fuerte);
+  border-radius: 12px;
+  padding: 36px 34px 30px;
+  text-align: center;
+}
+
+.plan-rotulo {
+  font: 500 11px var(--mono);
+  letter-spacing: 0.14em;
+  color: var(--texto-mono);
+}
+
+.plan-precio {
+  margin: 14px 0 6px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+}
+
+.plan-monto {
+  font-size: 68px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.plan-periodo {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--texto-mono);
+}
+
+.plan-bajada {
+  font-size: 15px;
+  color: var(--texto);
+  margin-bottom: 26px;
+}
+
+.plan-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  text-align: left;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--texto);
+  margin-bottom: 28px;
+}
+
+.plan-lista li {
+  display: flex;
+  gap: 10px;
+}
+
+/* El visto va como ::before y no como carácter en el HTML: es decoración y no
+   tiene por qué leerlo un lector de pantalla. */
+.plan-lista li::before {
+  content: "✓";
+  flex: none;
+  color: var(--verde);
+  font-weight: 700;
+}
+
+.btn-plan {
+  display: block;
+  font-weight: 600;
+  font-size: 16px;
+  background: var(--verde);
+  color: #fff;
+  padding: 15px 24px;
+  border-radius: 9px;
+  box-shadow: 0 4px 14px -4px rgba(29, 158, 117, 0.5);
+}
+
+.btn-plan:hover {
+  background: var(--verde-oscuro);
+  color: #fff;
+}
+
+.plan-extras {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--linea);
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.6;
   color: var(--texto);
 }
 
-.lista-accesorios li {
-  background: var(--chip-accesorio);
-  border-radius: 6px;
-  padding: 6px 11px;
+.plan-extras strong {
+  color: var(--tinta);
+  font-weight: 600;
 }
 
+/* Comparación ---------------------------------------------------------------
+   El marco scrollea en horizontal por si la tabla no cabe; bajo 760px la tabla
+   se apila (ver quiebres) y el scroll deja de hacer falta. */
+
+.tabla-marco {
+  overflow-x: auto;
+  border: 1px solid var(--linea-modulo);
+  border-radius: 10px;
+  background: var(--tarjeta);
+}
+
+.tabla-comp {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14.5px;
+}
+
+.tabla-comp th,
+.tabla-comp td {
+  text-align: left;
+  padding: 15px 18px;
+  border-bottom: 1px solid var(--linea);
+  line-height: 1.5;
+  color: var(--texto);
+}
+
+.tabla-comp tbody tr:last-child th,
+.tabla-comp tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.tabla-comp thead th {
+  font: 500 10.5px var(--mono);
+  letter-spacing: 0.12em;
+  color: var(--texto-mono);
+  background: var(--chip-accesorio);
+  white-space: nowrap;
+}
+
+.tabla-comp tbody th {
+  font-weight: 600;
+  color: var(--tinta);
+  white-space: nowrap;
+}
+
+/* Nuestra columna va marcada: es la lectura que importa. */
+.tabla-comp .col-nuestra {
+  color: var(--tinta);
+  font-weight: 500;
+  background: rgba(34, 197, 94, 0.06);
+}
+
+.tabla-comp thead .col-nuestra {
+  color: var(--verde);
+  background: rgba(34, 197, 94, 0.12);
+}
+
+/* Garantía ------------------------------------------------------------------ */
+
+.garantia {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  background: var(--tarjeta);
+  border: 1px solid var(--verde);
+  border-radius: 12px;
+  padding: 28px 32px;
+}
+
+.garantia-sello {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 2px dashed var(--verde);
+  color: var(--verde);
+  font: 600 15px var(--mono);
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.garantia-titulo {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.garantia-texto {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--texto);
+  text-wrap: pretty;
+}
+
+/* Formulario ----------------------------------------------------------------
+   Tres pasos. Sin JS se ven los tres de corrido y el formulario sigue siendo
+   legible; js/main.js agrega .wizard-activo y recién ahí se muestra uno a la
+   vez. Por eso el ocultamiento cuelga de esa clase y no del .wizard a secas. */
+
+.contacto-bajada {
+  margin-top: -22px;
+  margin-bottom: 32px;
+  font-size: 15.5px;
+  color: var(--texto);
+}
+
+.wizard {
+  max-width: 560px;
+  background: var(--tarjeta);
+  border: 1px solid var(--linea-modulo-fuerte);
+  border-radius: 12px;
+  padding: 30px 30px 26px;
+}
+
+.wizard-progreso {
+  font: 500 11px var(--mono);
+  letter-spacing: 0.12em;
+  color: var(--texto-mono);
+  margin-bottom: 18px;
+}
+
+.wizard-paso {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+/* Solo con JS: un paso a la vez. */
+.wizard-activo .wizard-paso {
+  display: none;
+}
+
+.wizard-activo .wizard-paso-visible {
+  display: block;
+}
+
+/* Sin JS los tres pasos van seguidos y necesitan aire entre ellos. */
+.wizard-paso + .wizard-paso {
+  margin-top: 28px;
+}
+
+.wizard-activo .wizard-paso + .wizard-paso {
+  margin-top: 0;
+}
+
+.wizard-pregunta {
+  padding: 0;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 18px;
+}
+
+.wizard-opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* El radio real queda invisible pero presente: sigue recibiendo foco y el
+   teclado, y :checked/:focus-visible pintan la cara visible. */
+.opcion input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.opcion-cara {
+  display: block;
+  border: 1px solid var(--linea-chip);
+  border-radius: 9px;
+  background: var(--fondo);
+  padding: 14px 26px;
+  font-size: 15.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.opcion-cara:hover {
+  border-color: var(--verde);
+}
+
+.opcion input:checked + .opcion-cara {
+  border-color: var(--verde);
+  background: var(--chip-accesorio);
+  color: var(--verde-oscuro);
+}
+
+.opcion input:focus-visible + .opcion-cara {
+  outline: 2px solid var(--verde);
+  outline-offset: 3px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.campo label {
+  font: 500 11px var(--mono);
+  letter-spacing: 0.1em;
+  color: var(--texto-mono);
+}
+
+.campo input {
+  font: 15.5px var(--fuente);
+  color: var(--tinta);
+  background: var(--fondo);
+  border: 1px solid var(--linea-chip);
+  border-radius: 9px;
+  padding: 13px 14px;
+}
+
+.campo input:focus-visible {
+  outline: 2px solid var(--verde);
+  outline-offset: 1px;
+  border-color: var(--verde);
+}
+
+/* Trampa para bots: fuera de la vista y fuera del flujo, pero sin display:none
+   ni visibility:hidden — hay bots que se saltan justamente esos dos. */
+.trampa {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.wizard-cierre {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.btn-enviar {
+  font: 600 16px var(--fuente);
+  background: var(--verde);
+  color: #fff;
+  border: 0;
+  padding: 15px 26px;
+  border-radius: 9px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px -4px rgba(29, 158, 117, 0.5);
+}
+
+.btn-enviar:hover:not(:disabled) {
+  background: var(--verde-oscuro);
+}
+
+.btn-enviar:disabled {
+  background: var(--linea-chip);
+  color: var(--texto-mono);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.wizard-atras {
+  font: 500 11px var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--texto-mono);
+  background: none;
+  border: 0;
+  padding: 6px 0;
+  cursor: pointer;
+}
+
+.wizard-atras:hover {
+  color: var(--verde);
+}
+
+/* Solo con JS tiene sentido "volver": sin él los tres pasos ya están a la vista. */
+.wizard-atras {
+  display: none;
+}
+
+.wizard-activo .wizard-atras {
+  display: inline-block;
+}
+
+.wizard-nota {
+  margin-top: 18px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--texto);
+  border-left: 2px solid var(--ambar);
+  padding-left: 14px;
+}
+
+.wizard-nota a {
+  font-weight: 600;
+  border-bottom: 1px solid var(--verde);
+}
+
+.wizard .btn-llamar {
+  margin-top: 20px;
+}
+
+.btn-llamar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  background: var(--tinta);
+  color: var(--fondo);
+  padding: 14px 24px;
+  border-radius: 9px;
+}
+
+.btn-llamar:hover {
+  background: var(--verde);
+  color: #fff;
+}
+
+.btn-llamar-punto {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2FD08B;
+  animation: blink 2s infinite;
+}
+
+/* Preguntas frecuentes ------------------------------------------------------
+   <details> nativo: abre y cierra sin JS y ya viene con la semántica puesta. */
+
+.faq {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 800px;
+}
+
+.faq-item {
+  background: var(--fondo);
+  border: 1px solid var(--linea-modulo);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.faq-item[open] {
+  border-color: var(--verde);
+}
+
+.faq-pregunta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 17px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+/* El triángulo por defecto se saca en los dos motores y se pone uno propio. */
+.faq-pregunta::-webkit-details-marker {
+  display: none;
+}
+
+.faq-pregunta::after {
+  content: "+";
+  flex: none;
+  font: 400 22px var(--mono);
+  line-height: 1;
+  color: var(--verde);
+}
+
+.faq-item[open] .faq-pregunta::after {
+  content: "−";
+}
+
+.faq-pregunta:hover {
+  color: var(--verde);
+}
+
+.faq-respuesta {
+  padding: 0 20px 18px;
+  font-size: 14.5px;
+  line-height: 1.68;
+  color: var(--texto);
+  text-wrap: pretty;
+}
 /* Pie ----------------------------------------------------------------------- */
 
 .site-footer {
@@ -971,27 +1350,162 @@ a:focus-visible {
 
 /* mid: la pieza de cámara ya no cabe al lado del texto */
 @media (max-width: 1120px) {
-  .home-cuerpo {
-    flex-direction: column;
+  .momento-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .seccion-titulo-h1 {
+    font-size: 46px;
+  }
+
+  .pilares,
+  .pasos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
+  }
+
+  /* La línea que une los pasos solo tiene sentido en una fila de cuatro. */
+  .paso::after {
+    display: none;
+  }
+
+  .paso {
+    padding-right: 0;
   }
 }
 
 /* mob */
 @media (max-width: 760px) {
-  .layout {
-    grid-template-columns: 1fr;
-    gap: 36px;
-    padding: 36px max(20px, env(safe-area-inset-right, 0px))
-             48px max(20px, env(safe-area-inset-left, 0px));
+  .seccion {
+    padding: 48px 0;
   }
 
-  .titular {
-    font-size: 45px;
+  .seccion-inner {
+    padding: 0 max(20px, env(safe-area-inset-right, 0px))
+             0 max(20px, env(safe-area-inset-left, 0px));
   }
 
-  .modulos {
+  .seccion-titulo {
+    font-size: 30px;
+    margin-bottom: 26px;
+  }
+
+  .seccion-titulo-h1 {
+    font-size: 36px;
+    max-width: none;
+  }
+
+  .momento-texto .seccion-titulo {
+    font-size: 28px;
+  }
+
+  .puertas,
+  .pilares,
+  .pasos {
     grid-template-columns: 1fr;
+  }
+
+  .puerta {
+    padding: 24px 22px;
+  }
+
+  .btn-puerta {
+    align-self: stretch;
+    text-align: center;
+  }
+
+  .demo-cuerpo {
+    padding: 14px;
+  }
+
+  .tarjeta-plan {
+    padding: 28px 22px 24px;
+  }
+
+  .plan-monto {
+    font-size: 54px;
+  }
+
+  .wizard {
+    padding: 24px 20px 22px;
+  }
+
+  .wizard-opciones .opcion {
+    flex: 1 1 100%;
+  }
+
+  .opcion-cara {
+    text-align: center;
+  }
+
+  .btn-enviar {
+    flex: 1 1 100%;
+  }
+
+  .garantia {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 24px 22px;
+  }
+
+  /* La tabla se apila: cada fila queda como una tarjeta y el data-col hace de
+     rótulo de la columna que se acaba de perder. */
+  .tabla-marco {
+    overflow-x: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .tabla-comp thead {
+    display: none;
+  }
+
+  .tabla-comp,
+  .tabla-comp tbody,
+  .tabla-comp tr,
+  .tabla-comp th,
+  .tabla-comp td {
+    display: block;
+  }
+
+  .tabla-comp tr {
+    background: var(--tarjeta);
+    border: 1px solid var(--linea-modulo);
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  .tabla-comp tbody th {
+    font: 500 10.5px var(--mono);
+    letter-spacing: 0.12em;
+    color: var(--texto-mono);
+    background: var(--chip-accesorio);
+    border-bottom: 1px solid var(--linea);
+  }
+
+  .tabla-comp tbody td,
+  .tabla-comp tbody tr:last-child td {
+    border-bottom: 1px solid var(--linea);
+  }
+
+  .tabla-comp tbody tr td:last-child {
+    border-bottom: 0;
+  }
+
+  .tabla-comp td::before {
+    content: attr(data-col);
+    display: block;
+    font: 500 10px var(--mono);
+    letter-spacing: 0.12em;
+    color: var(--texto-mono);
+    margin-bottom: 5px;
+  }
+
+  .tabla-comp .col-nuestra::before {
+    color: var(--verde);
   }
 
   /* el menú se oculta; el menú móvil sigue pendiente */
@@ -999,9 +1513,15 @@ a:focus-visible {
     display: none;
   }
 
-  .accesorios-cuerpo {
-    flex-direction: column;
-    align-items: flex-start;
+  /* El número queda; se va la palabra que lo introduce. */
+  .btn-tel-rotulo {
+    display: none;
+  }
+
+  /* "Comenzar" sale de la cabecera: la barra fija de abajo y el botón de cada
+     sección ya cubren la conversión, y el teléfono tiene que respirar. */
+  .btn-comenzar {
+    display: none;
   }
 
   /* en la franja queda solo la hora */
@@ -1027,21 +1547,13 @@ a:focus-visible {
     scroll-behavior: auto;
   }
 
-  /* Sin parpadeos y sin barrido. La demo de MOD.01 no corre: main.js deja
-     puesto el frame de la escena 3 y acá le apagamos lo que late. */
+  /* Sin parpadeos. El fondo de la cámara ya es un frame fijo; acá se apaga
+     lo que late y main.js pinta el log completo de una vez, sin bucle. */
   .franja-punto,
   .btn-llamar-punto,
-  .punto-estado-vivo,
   .cam-punto,
-  .cam-caja,
-  .esc-3 .punto-estado,
-  .rec-on .cam-rec,
   .log-entra,
   .log-puntos {
     animation: none;
-  }
-
-  .cam-barrido {
-    display: none;
   }
 }
