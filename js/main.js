@@ -248,20 +248,25 @@
      legible: acá se le agrega .wizard-activo al <form> y recién entonces el
      CSS muestra un paso a la vez. */
 
-  /* TODO(ventas-backend): ENVÍO DESHABILITADO A PROPÓSITO.
-     Todavía no existe un endpoint público de leads en ventas-backend: hoy solo
-     está el webhook de VAPI (con secreto compartido, no invocable desde el
-     navegador) y el resto de ventas.protectia.cl va detrás de Cloudflare Access.
-     Para conectarlo hacen falta tres cosas, en este orden:
-       1. Un POST público en ventas-app (sin la dependencia exigir_access), con
-          rate limit por IP propio y honeypot — el campo `empresa` del marcado.
-       2. CORS que permita el origin https://protectia.cl.
-       3. Una regla de bypass de Cloudflare Access para ese path, igual que la
-          que ya necesita el path del webhook.
-     Hecho eso, poner acá la URL absoluta y revisar que los nombres de los
-     campos de abajo calcen con los que espera el endpoint. Mientras sea null,
-     el botón queda deshabilitado y la nota del formulario lo explica. */
-  var ENDPOINT_LEADS = null;
+  /* Endpoint público de leads en ventas-backend. Los tres requisitos que este
+     TODO listaba ya están:
+       1. POST /api/lead-web, sin la dependencia exigir_access, con honeypot
+          (el campo `empresa` de abajo), rate limit por IP, tope diario y
+          validación — toda la política vive en ventas-app/backend/web.py.
+       2. CORS a https://protectia.cl y https://www.protectia.cl. Son los DOS:
+          el sitio responde igual en ambos, sin redirección entre ellos, así que
+          permitir solo el apex dejaría a media base con el envío bloqueado.
+       3. Una aplicación de Cloudflare Access con política Bypass acotada a
+          /api/lead-web. El resto de ventas.protectia.cl sigue pidiendo login.
+
+     Vive en ventas.protectia.cl y no en protectia.cl porque el apex lo ocupa
+     Pages y Cloudflare no acepta montar ahí un path del túnel. O sea que la
+     llamada es cross-origin y el CORS es obligatorio, no un adorno.
+
+     Si algún día esto vuelve a null, el botón se deshabilita solo y la nota del
+     formulario lo explica: el sitio sigue siendo usable, con el teléfono como
+     vía de conversión. */
+  var ENDPOINT_LEADS = 'https://ventas.protectia.cl/api/lead-web';
 
   var form = document.getElementById('wizard');
   if (!form) return;
@@ -383,12 +388,17 @@
         nota.hidden = false;
         nota.textContent = 'Listo: recibimos tus datos y te llamamos a la brevedad.';
       }
-    }).catch(function () {
+    }).catch(function (e) {
       if (enviar) enviar.disabled = false;
-      if (nota) {
-        nota.hidden = false;
-        nota.textContent = 'No pudimos enviar el formulario. Llámanos al 600 914 2219.';
-      }
+      if (!nota) return;
+      nota.hidden = false;
+      /* El 429 es el ÚNICO rechazo que el backend distingue: todo lo demás que
+         descarta responde 200, para no enseñarle a un bot qué lo delató. Acá se
+         traduce a algo accionable — reintentar no sirve hasta que se libere la
+         ventana, así que se ofrece el teléfono. */
+      nota.textContent = String(e && e.message) === '429'
+        ? 'Recibimos varios envíos desde tu conexión. Llámanos al 600 914 2219 y te atendemos al tiro.'
+        : 'No pudimos enviar el formulario. Llámanos al 600 914 2219.';
     });
   });
 

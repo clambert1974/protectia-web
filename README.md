@@ -54,23 +54,34 @@ hay media queries. Lo único que el JS hace fuera del reloj y de la demo es
 mostrar el formulario de a un paso; sin JS los tres pasos se ven de corrido y
 el formulario sigue siendo legible.
 
-## El formulario está deshabilitado a propósito
+## El formulario
 
-El botón de envío viene `disabled` y `ENDPOINT_LEADS` en `js/main.js` es `null`.
-Todavía no existe un endpoint público de leads en `ventas-backend`: hoy solo
-está el webhook de VAPI (con secreto compartido, no invocable desde el
-navegador) y el resto de `ventas.protectia.cl` va detrás de Cloudflare Access.
+Manda a `POST https://ventas.protectia.cl/api/lead-web`, que deja el lead en
+`leads.db` y dispara un push al panel de ventas — el mismo aviso que los leads
+que captura Catalina por teléfono, con el título prefijado "Nuevo lead web:"
+para distinguirlos.
 
-Para conectarlo hacen falta tres cosas, en este orden:
+Vive en `ventas.protectia.cl` y no en `protectia.cl` porque el apex lo ocupa
+Cloudflare Pages y no acepta montar ahí un path del túnel. Por eso la llamada es
+cross-origin y el CORS es obligatorio: el backend permite `https://protectia.cl`
+y `https://www.protectia.cl` — **los dos**, porque el sitio responde igual en
+ambos y sin redirección entre ellos.
 
-1. Un POST público en `ventas-app` (sin la dependencia `exigir_access`), con
-   rate limit por IP propio y honeypot — el campo `empresa` del marcado.
-2. CORS que permita el origin `https://protectia.cl`.
-3. Una regla de bypass de Cloudflare Access para ese path, igual que la que ya
-   necesita el path del webhook.
+Queda público por una aplicación de Cloudflare Access con política **Bypass**
+acotada a `/api/lead-web`; el resto de `ventas.protectia.cl` sigue pidiendo
+login. Ojo si se toca esa política: tiene que cubrir también el preflight
+`OPTIONS`, o el navegador recibe un 302 al login y el `POST` no se llega a
+mandar — y el síntoma es un error de CORS, que no se parece en nada a un
+problema de autenticación.
 
-Mientras tanto la conversión va por el teléfono: **600 914 2219**, que contesta
-Catalina y sí deja el lead en `leads.db`.
+La protección anti-abuso vive toda del lado del servidor
+(`ventas-app/backend/web.py`): honeypot —el campo `empresa` del marcado—, rate
+limit por IP, tope diario y validación. Todo lo que rechaza responde 200 menos
+el 429, que el formulario traduce a un mensaje propio ofreciendo el teléfono.
+
+Si `ENDPOINT_LEADS` vuelve a `null`, el botón se deshabilita solo y el sitio
+sigue siendo usable: la conversión se va al teléfono **600 914 2219**, que
+contesta Catalina y también deja el lead en `leads.db`.
 
 ## Cómo se publica
 
@@ -95,7 +106,6 @@ Y abrir <http://localhost:8000>.
 
 ## Pendientes
 
-- Conectar el formulario (ver arriba)
 - Páginas de Política de Privacidad y Términos y Condiciones: hoy el pie tiene
   marcadores sin destino
 - Imagen de Open Graph real (`img/og-protectia.jpg`)
