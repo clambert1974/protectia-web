@@ -135,26 +135,40 @@
           </p>
         </div>
 
+
         <!-- La secuencia de eventos de la escena que se está mostrando. Antes vivía
              chica bajo la cámara; ahora ocupa la mitad izquierda y es lo que tiene
              que impactar. js/main.js la escribe línea a línea; estas de acá son el
              caso sin JS, y van sin hora porque sin JS no hay forma honesta de saber
-             cuál corresponde. aria-hidden: el aria-label de la cámara ya narra las
-             dos secuencias, y estas líneas cambian solas. -->
+             cuál corresponde.
+
+             Son las de la ESCENA 1, que es la que el contenedor trae puesta con su
+             clase esc-1. Tienen que ser la misma escena: si el <ol> describe una y
+             la cámara muestra otra, sin JS se lee una contradicción. aria-hidden:
+             el aria-label de la cámara ya narra las dos secuencias. -->
+        <!-- El CTA ocupa la mitad derecha a la altura de la cabecera: ese hueco
+             estaba vacio y es el sitio donde el visitante ya leyo de que va la
+             seccion pero todavia no empezo a mirar el bucle.
+
+             Queda uno solo. Un segundo CTA al cierre caeria pegado a los dos
+             botones de la doble puerta, que es la seccion siguiente y cuyo
+             "Verificar compatibilidad" lleva al mismo formulario: seria el
+             tercer llamado a la accion en pantalla y media. -->
+        <div class="demo-cta">
+          <a class="btn-demo-cta" href="#contacto">Programa tu consulta gratuita hoy mismo</a>
+          <a class="demo-cta-tel" href="tel:+566009142219">o llámanos: 600 914 2219</a>
+        </div>
+
         <ol class="linea-tiempo" id="log" aria-hidden="true">
           <li><span class="lt-txt">MOVIMIENTO DETECTADO → VERIFICANDO CON IA</span></li>
-          <li class="lt-clave"><span class="lt-txt">PERSONA DESCONOCIDA · ROSTRO NO RECONOCIDO</span></li>
-          <li class="lt-voz"><span class="lt-txt">«Carlos, hay una persona desconocida en la entrada, de pie junto a la reja»</span></li>
-          <li class="lt-clave"><span class="lt-txt">ADVERTENCIA POR VOZ EMITIDA · GRABANDO</span></li>
-          <li class="lt-clave"><span class="lt-txt">LLAMANDO AL CLIENTE</span></li>
-          <li class="lt-clave"><span class="lt-txt">ALERTA ENVIADA A VECINOS CONECTADOS</span></li>
-          <li class="lt-remate"><span class="lt-txt">POR ESTO SÍ ACTUAMOS · EN SEGUNDOS</span></li>
+          <li class="lt-clave"><span class="lt-txt">ANIMAL · FALSA ALARMA DESCARTADA</span></li>
+          <li class="lt-remate"><span class="lt-txt">NO TE INTERRUMPIMOS POR UN PERRO</span></li>
         </ol>
 
         <div class="demo">
           <div class="demo-cab">
-            <span class="demo-id">DEMOSTRACIÓN — REJA FRONTAL</span>
-            <span class="modulo-estado"><span class="modulo-estado-txt">OPERATIVO</span><span class="punto-estado" aria-hidden="true"></span></span>
+          <span class="demo-id">DEMOSTRACIÓN — REJA FRONTAL</span>
+          <span class="modulo-estado"><span class="modulo-estado-txt">OPERATIVO</span><span class="punto-estado" aria-hidden="true"></span></span>
           </div>
 
           <div class="demo-cuerpo">
@@ -166,7 +180,7 @@
 
                  La escena 2 lleva la cara difuminada de forma irrecuperable. Es una
                  persona real que pasó por la reja: al sitio va tapada, y punto. -->
-            <div class="camara esc-1" id="camara" role="img"
+            <div class="camara" id="camara" role="img"
                  aria-label="Ilustración con dos fotogramas reales de una cámara de seguridad sobre la reja frontal de una casa, que se alternan en bucle. En el primero, de día y en color, un perro claro camina por el sendero: el sistema lo encuadra en gris con la etiqueta ANIMAL, descarta la falsa alarma y no avisa a nadie. En el segundo, también de día, una persona con la cabeza difuminada está de pie en la vereda, al otro lado de la reja, junto a un auto plateado estacionado. El sistema la encuadra en ámbar con la etiqueta PERSONA —la detecta antes de que entre—, verifica que no reconoce su rostro, le emite una advertencia por voz, graba, llama al cliente y avisa a los vecinos conectados. Debajo, un registro de actividad va escribiendo cada paso de las dos escenas.">
 
               <!-- Dos capas de fondo superpuestas: el fundido entre escenas es un
@@ -202,6 +216,7 @@
             </div>
 
           </div>
+
         </div>
 
       </div>

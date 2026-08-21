@@ -59,8 +59,15 @@
   /* Paleta */
   --fondo: #F2F6F3;
   --tinta: #10221A;
-  --verde: #1D9E75;
-  --verde-oscuro: #178A65;
+  /* Verde de marca oscurecido para que los botones pasen AA. Con el anterior
+     (#1D9E75) el texto blanco daba 3.39:1 y hacen falta 4.5 — fallaban los
+     cuatro botones verdes del sitio: btn-tel, btn-puerta, btn-plan y btn-enviar.
+     Ahora dan 4.65:1. El hover baja lo mismo que bajaba antes (5,1% de
+     luminosidad) y llega a 6.21:1.
+     De paso el verde como TEXTO sobre tarjeta pasa de 3.31 a 4.55:1; sobre el
+     fondo base se queda en 4.26 y sigue sin llegar — ver nota abajo. */
+  --verde: #188462;
+  --verde-oscuro: #146E52;
   --verde-vivo: #22C55E;
   --ambar: #F59E0B;
   --tarjeta: #FBFDFB;
@@ -487,19 +494,31 @@ main {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   grid-template-areas:
-    "cab    cab"
+    "cab    cta"
     "tiempo demo";
   gap: 34px 48px;
   align-items: start;
 }
 
-.momento-cab   { grid-area: cab; max-width: 780px; }
+/* La cabecera ya no cruza las dos columnas: ocupa solo la izquierda, con el CTA
+   enfrente ocupando el hueco que antes quedaba vacio sobre la tarjeta. */
+.momento-cab   { grid-area: cab; }
 .linea-tiempo  { grid-area: tiempo; }
 .momento-inner .demo { grid-area: demo; }
 
+/* El CTA se centra en vertical contra la cabecera, que es mas alta que el, y
+   hereda el ancho de la columna — el mismo de la camara. No hay medidas que
+   sincronizar a mano. */
+.demo-cta {
+  grid-area: cta;
+  align-self: center;
+}
+
 .momento-cab .seccion-titulo {
   margin-bottom: 14px;
-  font-size: 38px;
+  /* Un punto menos que antes: ahora vive en media columna y a 38px el titular
+     se partia en cuatro lineas. */
+  font-size: 34px;
 }
 
 /* Lo que antes eran tres párrafos y una cita. Se conserva porque es el
@@ -509,13 +528,56 @@ main {
   font-size: 16px;
   line-height: 1.6;
   color: var(--texto);
-  max-width: 74ch;
 }
 
 .momento-resumen strong {
   color: var(--tinta);
   font-weight: 600;
 }
+
+/* Llamado a la accion de la demo -------------------------------------------
+   Encima de la tarjeta de la camara y a su mismo ancho. Quien llega decidido no
+   tiene que mirar 24 segundos de bucle para encontrar donde pinchar, y el boton
+   queda pegado a la pieza que lo justifica. */
+.demo-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* En tinta y no en verde, por dos razones que apuntan al mismo lado:
+   - contraste: blanco sobre --verde da 3.39:1, que NO pasa AA para texto normal
+     (hace falta 4.5). Tinta sobre fondo da 15.21:1.
+   - jerarquia: es el CTA principal de la seccion y tiene que pesar mas que los
+     botones verdes que ya hay repartidos por la pagina. */
+.btn-demo-cta {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 17px;
+  background: var(--tinta);
+  color: var(--fondo);
+  padding: 15px 26px;
+  border-radius: 9px;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.15s;
+}
+
+.btn-demo-cta:hover {
+  background: #1B3226;
+  color: var(--fondo);
+  transform: translateY(-1px);
+}
+
+/* La salida de baja friccion, para quien no quiere llenar un formulario. */
+.demo-cta-tel {
+  font: 500 15px var(--mono);
+  color: var(--texto-mono);
+  text-decoration: none;
+  border-bottom: 1px solid var(--linea-modulo-fuerte);
+}
+
+.demo-cta-tel:hover { color: var(--tinta); border-bottom-color: var(--tinta); }
 
 /* La secuencia de eventos ---------------------------------------------------
    Es lo que tiene que impactar, así que manda en tamaño: la línea normal es
@@ -1555,6 +1617,7 @@ main {
     grid-template-columns: 1fr;
     grid-template-areas:
       "cab"
+      "cta"
       "demo"
       "tiempo";
     gap: 28px;
@@ -1611,6 +1674,17 @@ main {
 
   /* En móvil la secuencia baja de tamaño pero sigue mandando sobre el cuerpo
      de texto: 17px contra los 16 del resumen, y el remate a 26. */
+  /* El CTA se apila: el boton a todo el ancho es mas facil de tocar con el
+     pulgar que uno alineado a la izquierda. */
+  .demo-cta {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .btn-demo-cta { text-align: center; }
+  .demo-cta-tel { text-align: center; border-bottom: 0; }
+
   .linea-tiempo li      { font-size: 17px; margin-bottom: 15px; }
   .linea-tiempo .lt-clave { font-size: 19px; }
   .linea-tiempo .lt-voz   { font-size: 18px; }

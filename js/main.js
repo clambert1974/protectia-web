@@ -174,8 +174,19 @@
     var ponerEscena = function (esc) {
       /* La clase va al contenedor de la SECCIÓN, que es ancestro de la cámara y
          de la línea de tiempo: así una sola clase gobierna el fondo, la caja, el
-         chip de la cabecera y el color del remate, sin repetirla en tres sitios. */
-      ESCENAS.forEach(function (e) { escenario.classList.remove(e.clase); });
+         chip de la cabecera y el color del remate, sin repetirla en tres sitios.
+
+         Se limpia también de la cámara y del módulo por si quedó ahí de una
+         versión anterior del marcado. No es paranoia: las reglas del CSS son de
+         descendencia (.esc-1 .cam-fondo-1), así que una clase perdida en la
+         propia cámara la convierte en su propio ancestro y activa la escena
+         equivocada — con las dos escenas superpuestas y sin ningún error en la
+         consola que lo delate. Ya pasó una vez. */
+      ESCENAS.forEach(function (e) {
+        escenario.classList.remove(e.clase);
+        camara.classList.remove(e.clase);
+        demo.classList.remove(e.clase);
+      });
       escenario.classList.add(esc.clase);
       if (chip) chip.textContent = esc.chip;
     };
