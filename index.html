@@ -105,32 +105,51 @@
     </section>
 
     <!-- Cuando cada segundo importa ----------------------------------------
-         La pieza de cámara es la misma simulación en CSS de siempre (sin
-         video, sin imágenes, sin SVG): acá ilustra el argumento de la
-         sección, que es la diferencia entre avisar y verificar. -->
-    <section class="seccion seccion-momento" id="momento" aria-labelledby="momento-titulo">
-      <div class="seccion-inner momento-inner">
+         Abre la home: se ve primera aunque en el DOM vaya segunda, para que el
+         <h1> de la doble puerta siga siendo el primer encabezado del documento.
+         El reorden es solo visual, con `order` — ver css/styles.css.
 
-        <div class="momento-texto">
+         La pieza de cámara ya no es una simulación en CSS: son dos fotogramas
+         reales de la reja frontal que se alternan, y la secuencia de eventos de
+         al lado es el argumento de la sección — la diferencia entre avisar y
+         verificar, mostrada en vez de explicada. -->
+    <section class="seccion seccion-momento" id="momento" aria-labelledby="momento-titulo">
+      <div class="seccion-inner momento-inner esc-1" id="momento-inner">
+
+        <!-- Cabecera a todo el ancho: enmarca lo que el visitante va a ver antes
+             de que empiece a moverse. -->
+        <div class="momento-cab">
           <p class="seccion-kicker">CUANDO CADA SEGUNDO IMPORTA</p>
           <h2 class="seccion-titulo" id="momento-titulo">
-            50 alertas al día y ninguna importa
+            Dos detecciones. Una sola te interrumpe.
           </h2>
-          <p class="parrafo">
-            Las cámaras comunes te avisan de todo y de nada: el gato, una rama,
-            un auto que pasa. A la semana ya no miras el teléfono, y el día que
-            de verdad pasa algo, esa alerta se pierde entre las otras cuarenta y
-            nueve.
-          </p>
-          <p class="parrafo">
-            Protect(IA) verifica cada movimiento con inteligencia artificial en
-            segundos, y solo te interrumpe cuando es real — y actúa: le habla al
-            intruso, te llama, y avisa a tus vecinos.
-          </p>
-          <p class="parrafo parrafo-destacado">
-            Todo el análisis ocurre en tu casa, no en una nube ajena.
+          <!-- El argumento de las "50 alertas al día" no se pierde: eran tres
+               párrafos y una cita, y ahora es esta línea. El protagonista pasa a
+               ser la secuencia de eventos, que lo demuestra en vez de contarlo. -->
+          <p class="momento-resumen">
+            Una cámara común te avisa de todo y de nada — el gato, una rama, un auto
+            que pasa. A la semana ya no miras el teléfono, y el día que pasa algo de
+            verdad esa alerta se pierde entre las otras cuarenta y nueve.
+            <strong>Protect(IA) verifica cada movimiento con inteligencia artificial,
+            dentro de tu casa y en segundos</strong>, y solo te interrumpe cuando es real.
           </p>
         </div>
+
+        <!-- La secuencia de eventos de la escena que se está mostrando. Antes vivía
+             chica bajo la cámara; ahora ocupa la mitad izquierda y es lo que tiene
+             que impactar. js/main.js la escribe línea a línea; estas de acá son el
+             caso sin JS, y van sin hora porque sin JS no hay forma honesta de saber
+             cuál corresponde. aria-hidden: el aria-label de la cámara ya narra las
+             dos secuencias, y estas líneas cambian solas. -->
+        <ol class="linea-tiempo" id="log" aria-hidden="true">
+          <li><span class="lt-txt">MOVIMIENTO DETECTADO → VERIFICANDO CON IA</span></li>
+          <li class="lt-clave"><span class="lt-txt">PERSONA DESCONOCIDA · ROSTRO NO RECONOCIDO</span></li>
+          <li class="lt-voz"><span class="lt-txt">«Carlos, hay una persona desconocida en la entrada, de pie junto a la reja»</span></li>
+          <li class="lt-clave"><span class="lt-txt">ADVERTENCIA POR VOZ EMITIDA · GRABANDO</span></li>
+          <li class="lt-clave"><span class="lt-txt">LLAMANDO AL CLIENTE</span></li>
+          <li class="lt-clave"><span class="lt-txt">ALERTA ENVIADA A VECINOS CONECTADOS</span></li>
+          <li class="lt-remate"><span class="lt-txt">POR ESTO SÍ ACTUAMOS · EN SEGUNDOS</span></li>
+        </ol>
 
         <div class="demo">
           <div class="demo-cab">
@@ -139,19 +158,33 @@
           </div>
 
           <div class="demo-cuerpo">
-            <!-- Vista de cámara: un frame real de la reja frontal (16-ago-2026,
-                 15:51) con las capas del sistema encima. El JPEG viene recortado
-                 a 16:10 desde el original 4:3, lo que de paso se lleva el OSD
-                 quemado de la cámara —fecha arriba, "Reja frontal" abajo— que si
-                 no chocaría con el OSD del sitio. -->
-            <div class="camara" role="img"
-                 aria-label="Fotograma de una cámara de seguridad sobre la reja frontal de una casa, de día y en color. Un perro claro camina por el sendero de baldosas, en el borde izquierdo de la imagen. El sistema lo encuadra en un recuadro gris con la etiqueta ANIMAL: lo identifica como animal y descarta la falsa alarma sin avisar a nadie. Debajo, un registro de actividad va escribiendo que detectó movimiento y lo está verificando con inteligencia artificial, que se trata de un animal y descarta la falsa alarma, que no te interrumpe por un perro, y que el sistema sigue en vigilancia.">
+            <!-- Vista de cámara: DOS escenas reales que rotan en bucle, cada una
+                 con su fotograma de la reja frontal y las capas del sistema encima.
+                 Los dos JPEG vienen recortados a 16:10 desde el original 4:3, lo que
+                 de paso se lleva el OSD que la cámara quema en el frame —fecha arriba,
+                 "Reja frontal" abajo— que si no chocaría con el del sitio.
+
+                 La escena 2 lleva la cara difuminada de forma irrecuperable. Es una
+                 persona real que pasó por la reja: al sitio va tapada, y punto. -->
+            <div class="camara esc-1" id="camara" role="img"
+                 aria-label="Ilustración con dos fotogramas reales de una cámara de seguridad sobre la reja frontal de una casa, que se alternan en bucle. En el primero, de día y en color, un perro claro camina por el sendero: el sistema lo encuadra en gris con la etiqueta ANIMAL, descarta la falsa alarma y no avisa a nadie. En el segundo, también de día, una persona con la cabeza difuminada está de pie en la vereda, al otro lado de la reja, junto a un auto plateado estacionado. El sistema la encuadra en ámbar con la etiqueta PERSONA —la detecta antes de que entre—, verifica que no reconoce su rostro, le emite una advertencia por voz, graba, llama al cliente y avisa a los vecinos conectados. Debajo, un registro de actividad va escribiendo cada paso de las dos escenas.">
+
+              <!-- Dos capas de fondo superpuestas: el fundido entre escenas es un
+                   cambio de opacidad entre ellas, no un cambio de background, que
+                   no se puede animar. -->
+              <span class="cam-fondo cam-fondo-1" aria-hidden="true"></span>
+              <span class="cam-fondo cam-fondo-2" aria-hidden="true"></span>
               <span class="cam-vineta" aria-hidden="true"></span>
 
-              <!-- Caja fija sobre el perro. Gris y sin glow: no es una detección
-                   que valga una alerta, y el color lo dice antes que el texto. -->
-              <span class="cam-caja" aria-hidden="true">
+              <!-- Una caja por escena, con posición propia MEDIDA sobre su frame.
+                   Dos cajas y no una que se mueve: son dos sujetos distintos, en
+                   sitios distintos, y una transición de posición entre ellos daría
+                   la idea falsa de que es el mismo que se desplazó. -->
+              <span class="cam-caja cam-caja-1" aria-hidden="true">
                 <span class="cam-caja-etq">ANIMAL</span>
+              </span>
+              <span class="cam-caja cam-caja-2" aria-hidden="true">
+                <span class="cam-caja-etq">PERSONA</span>
               </span>
 
               <span class="cam-osd cam-osd-arriba" aria-hidden="true">
@@ -160,24 +193,14 @@
               </span>
 
               <span class="cam-osd cam-osd-abajo" aria-hidden="true">
-                <!-- El frame es diurno y en color: decir "IR · VISIÓN NOCTURNA"
-                     acá sería describir mal lo que el visitante está viendo. -->
+                <!-- Los dos frames son diurnos y en color (15:51 y 15:43), así que
+                     el rótulo no cambia entre escenas. Y no dice "IR": ninguno de
+                     los dos es infrarrojo, y decirlo describiría mal lo que se ve. -->
                 <span>COLOR · DIURNO</span>
                 <span class="cam-rec">REC ●</span>
               </span>
             </div>
 
-            <!-- Estas tres líneas son el caso sin JS: js/main.js las borra al
-                 arrancar y desde ahí escribe el log del loop. Van sin hora
-                 porque sin JS no hay forma honesta de saber la del visitante.
-                 El <ul> va aria-hidden entero: el aria-label de la cámara ya
-                 narra la secuencia, y estas líneas cambian solas. -->
-            <ul class="log" id="log" aria-hidden="true">
-              <li>MOVIMIENTO DETECTADO → VERIFICANDO CON IA...</li>
-              <li class="log-gris">ANIMAL · FALSA ALARMA DESCARTADA</li>
-              <li class="log-verde">NO TE INTERRUMPIMOS POR UN PERRO</li>
-              <li class="log-activo">SISTEMA EN VIGILANCIA</li>
-            </ul>
           </div>
         </div>
 

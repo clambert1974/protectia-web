@@ -292,13 +292,45 @@ a:focus-visible {
 }
 
 /* Las secciones alternan fondo para que se lean como bloques distintos sin
-   necesidad de líneas divisorias. */
-.seccion-momento,
+   necesidad de líneas divisorias.
+
+   La demo abre la home, así que va sobre el fondo base como cualquier hero, y
+   el bloque de la doble puerta —que ahora es el segundo— toma el tratamiento de
+   tarjeta. Antes era al revés; al intercambiarlas también se intercambia esto,
+   si no la página abriría con el bloque "hundido" y seguiría con tres secciones
+   seguidas del mismo color. */
+.seccion-puertas,
 .seccion-plan,
 .seccion-faq {
   background: var(--tarjeta);
   border-top: 1px solid var(--linea);
   border-bottom: 1px solid var(--linea);
+}
+
+/* Reorden SOLO visual -------------------------------------------------------
+   La demo se ve primera, pero en el DOM sigue segunda. Es a propósito:
+
+   - el <h1> real ("Tus cámaras ya ven...") sigue siendo el primer encabezado
+     del documento, que es lo que leen los lectores de pantalla y lo que indexa
+     un buscador;
+   - el visitante ve primero la demo, que es lo que tiene que impactar.
+
+   Se hace con `order` sobre <main> convertido en columna flex. Las demás
+   secciones se quedan en order:0 y conservan su orden del DOM entre ellas.
+
+   CAVEAT conocido de reordenar con CSS: el foco del teclado sigue el DOM, no lo
+   que se ve. Acá el costo es nulo porque la demo NO tiene nada enfocable —es
+   imagen y texto— así que no hay ningún salto de foco hacia atrás. Si alguna
+   vez se le agrega un botón, esto hay que replantearlo. */
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+.seccion-momento {
+  order: -1;
+  padding-top: 56px;
+  border-top: 0;
 }
 
 .seccion-kicker {
@@ -454,13 +486,143 @@ a:focus-visible {
 .momento-inner {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  gap: 48px;
-  align-items: center;
+  grid-template-areas:
+    "cab    cab"
+    "tiempo demo";
+  gap: 34px 48px;
+  align-items: start;
 }
 
-.momento-texto .seccion-titulo {
-  margin-bottom: 24px;
-  font-size: 34px;
+.momento-cab   { grid-area: cab; max-width: 780px; }
+.linea-tiempo  { grid-area: tiempo; }
+.momento-inner .demo { grid-area: demo; }
+
+.momento-cab .seccion-titulo {
+  margin-bottom: 14px;
+  font-size: 38px;
+}
+
+/* Lo que antes eran tres párrafos y una cita. Se conserva porque es el
+   argumento comercial, pero deja de competir con la secuencia de eventos. */
+.momento-resumen {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--texto);
+  max-width: 74ch;
+}
+
+.momento-resumen strong {
+  color: var(--tinta);
+  font-weight: 600;
+}
+
+/* La secuencia de eventos ---------------------------------------------------
+   Es lo que tiene que impactar, así que manda en tamaño: la línea normal es
+   19px contra los 11px que tenía el log viejo bajo la cámara, y el remate llega
+   a 32. El riel vertical con puntos la lee como línea de tiempo y no como lista.
+
+   min-height fija la altura para las dos escenas: sin eso el bloque crece y
+   encoge al cambiar de escena y la cámara de al lado da saltos. */
+.linea-tiempo {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0 0 28px;
+  position: relative;
+  min-height: 356px;
+  border-left: 2px solid var(--linea-modulo);
+  font-family: var(--mono);
+}
+
+.linea-tiempo li {
+  position: relative;
+  margin-bottom: 18px;
+  font-size: 19px;
+  line-height: 1.34;
+  letter-spacing: 0.005em;
+  color: var(--texto-mono);
+}
+
+/* El punto del riel. Se recorta contra el borde izquierdo del <ol>. */
+.linea-tiempo li::before {
+  content: "";
+  position: absolute;
+  left: -35px;
+  top: 0.45em;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--linea-modulo-fuerte);
+}
+
+.lt-hora {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--texto-mono);
+  opacity: 0.65;
+  margin-bottom: 3px;
+}
+
+.lt-txt { display: block; }
+
+/* Las líneas que son una SALIDA del sistema —no un paso de análisis— pesan más:
+   son las que el visitante tiene que recordar. */
+.linea-tiempo .lt-clave {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--tinta);
+}
+
+.linea-tiempo .lt-clave::before {
+  background: var(--ambar);
+  width: 11px;
+  height: 11px;
+  left: -36px;
+}
+
+/* La voz no es un registro: es lo que el sistema DICE por el parlante y manda al
+   teléfono. Va en la tipografía del sitio y en cursiva para que se lea como
+   habla y no como log. */
+.linea-tiempo .lt-voz {
+  font-family: var(--fuente);
+  font-style: italic;
+  font-size: 21px;
+  letter-spacing: 0;
+  color: var(--tinta);
+}
+
+.linea-tiempo .lt-voz::before {
+  background: var(--verde);
+}
+
+/* El remate: es un titular, no una línea de lista. Sin punto en el riel — cierra
+   la secuencia, no es un paso más de ella. */
+.linea-tiempo .lt-remate {
+  margin-top: 26px;
+  margin-bottom: 0;
+  font-family: var(--fuente);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  color: var(--verde-oscuro);
+}
+
+.linea-tiempo .lt-remate::before { display: none; }
+
+/* Cada escena tiñe su remate y sus líneas clave: verde cuando el sistema decide
+   NO molestar, ámbar cuando actúa. */
+.esc-2 .linea-tiempo .lt-remate { color: var(--ambar); }
+.esc-1 .linea-tiempo .lt-clave::before { background: var(--verde); }
+
+/* Entrada de cada línea. Más recorrido que el log viejo: acá el movimiento es
+   parte del mensaje, no un adorno. */
+.lt-entra { animation: ltEntra 0.5s cubic-bezier(0.16, 0.84, 0.44, 1) both; }
+
+@keyframes ltEntra {
+  from { opacity: 0; transform: translate3d(-14px, 6px, 0); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* Pieza de la demo. Conserva la cabecera de módulo del diseño original: es la
@@ -509,20 +671,43 @@ a:focus-visible {
 .demo-cuerpo {
   padding: 18px;
 }
-/* Vista de cámara — frame real con las capas del sistema encima -------------
+/* Vista de cámara — dos frames reales con las capas del sistema encima ------
    Antes esto era una simulación dibujada con gradientes (pasto, ruido, barrido).
-   Ahora el fondo es un fotograma de la propia reja frontal y solo quedan encima
-   las capas que SÍ son del sistema: viñeta, caja de detección, OSD y log.
-   El JPEG ya viene recortado a 16:10, así que `cover` no recorta nada más. */
+   Ahora son dos fotogramas de la propia reja frontal que se alternan en bucle,
+   y encima solo van las capas que SÍ son del sistema: viñeta, caja de detección,
+   OSD y log. Los JPEG ya vienen recortados a 16:10, así que `cover` no recorta
+   nada más.
+
+   Qué escena está puesta lo dice la clase .esc-1 / .esc-2 que js/main.js le pone
+   al contenedor; los tiempos viven allá y este archivo no sabe de ellos. */
 
 .camara {
   position: relative;
   border-radius: 6px;
   overflow: hidden;
-  background: #0B1512 url("../img/camara-reja-frontal.jpg") center / cover no-repeat;
+  background: #0B1512;
   font-family: var(--mono);
   aspect-ratio: 16 / 10;
 }
+
+/* Los dos fondos conviven superpuestos y el fundido es un cambio de opacidad
+   entre ellos: `background-image` no es animable, así que cambiarlo daría un
+   corte seco. */
+.cam-fondo {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.9s ease-in-out;
+}
+
+.cam-fondo-1 { background-image: url("../img/camara-reja-frontal.jpg"); }
+.cam-fondo-2 { background-image: url("../img/camara-reja-frontal-afuera.jpg"); }
+
+.esc-1 .cam-fondo-1,
+.esc-2 .cam-fondo-2 { opacity: 1; }
 
 .cam-vineta {
   position: absolute;
@@ -531,33 +716,88 @@ a:focus-visible {
       transparent 55%, rgba(0, 0, 0, 0.5) 100%);
 }
 
-/* Caja fija sobre el perro. Las medidas salen de medirlo en el frame
-   (x 4-72, y 596-770 del original 1280x960) y pasarlo a % del recorte
-   (x0=0, y0=315, 960x600). Gris y sin glow: el color dice "esto no amerita
-   alerta" antes que el texto. */
+/* Las cajas: una por escena, cada una con su posición MEDIDA sobre su propio
+   frame. Aparecen y desaparecen con la escena, con un pelo de retardo para que
+   entren cuando el fondo ya se ve. */
 .cam-caja {
   position: absolute;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out 0.35s;
+}
+
+.esc-1 .cam-caja-1,
+.esc-2 .cam-caja-2 { opacity: 1; }
+
+/* Escena 1 — el perro. Medido en el frame original 1280x960 (x 4-72,
+   y 596-770) y pasado a % del recorte (x0=0, y0=315, 960x600).
+   Gris y sin glow: el color dice "esto no amerita alerta" antes que el texto. */
+.cam-caja-1 {
   left: 0.42%;
   top: 46.8%;
   width: 7.1%;
   height: 29%;
   border: 1.5px solid rgba(206, 228, 211, 0.65);
-  box-shadow: none;
 }
 
-/* La etiqueta desborda la caja hacia la derecha a propósito: el perro ocupa
-   apenas un 5% del ancho y "ANIMAL" no cabe dentro del recuadro. */
+.cam-caja-1 .cam-caja-etq {
+  background: #8CA095;
+  color: #0B1512;
+}
+
+/* Escena 2 — la persona, AFUERA de la reja. Medido sobre ESTE frame (960x600),
+   no heredado de la otra escena ni de la caja de Frigate: x 336-402, y 204-322.
+
+   Este encuadre es el argumento comercial de la seccion: el sujeto esta en la
+   vereda, del otro lado de los barrotes, junto al auto estacionado. El sistema
+   lo ve ANTES de que entre. Argos marco ese evento como zone=afuera_entrada, que
+   es lo que confirma que estaba fuera del perimetro y no dentro.
+
+   Ambar y con glow: aca el sistema si actua, y el color lo anuncia antes de que
+   se lea una sola linea del log. */
+.cam-caja-2 {
+  left: 35%;
+  top: 34%;
+  width: 6.88%;
+  height: 19.67%;
+  border: 1.5px solid var(--ambar);
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.35);
+}
+
+.cam-caja-2 .cam-caja-etq {
+  background: var(--ambar);
+  color: #1A1206;
+}
+
+/* La etiqueta desborda la caja hacia la derecha a propósito: los dos sujetos
+   ocupan un 6-7% del ancho y ni "ANIMAL" ni "PERSONA" caben dentro. */
 .cam-caja-etq {
   position: absolute;
   top: -19px;
   left: -1.5px;
-  background: #8CA095;
-  color: #0B1512;
   font-size: 9.5px;
   font-weight: 600;
   letter-spacing: 0.08em;
   padding: 3px 7px;
   white-space: nowrap;
+}
+
+/* El modo del OSD ya no cambia entre escenas: los DOS frames son diurnos y en
+   color (15:51 y 15:43), así que el rótulo es uno solo y estático. Cuando había
+   un frame nocturno acá vivía un cruce de dos rótulos apilados con grid; se
+   retiró al quedar sin diferencia que anunciar. */
+
+/* En la escena 2 el módulo entero pasa a alerta: el REC late y la cabecera
+   deja de decir OPERATIVO. */
+.esc-2 .cam-rec {
+  color: #F87171;
+  animation: blink 1s infinite;
+}
+
+.esc-2 .modulo-estado { color: var(--ambar); }
+
+.esc-2 .punto-estado {
+  background: var(--ambar);
+  animation: blink 1.1s infinite;
 }
 
 .cam-osd {
@@ -613,58 +853,17 @@ a:focus-visible {
 
 /* Log de eventos ------------------------------------------------------------ */
 
-.log {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-top: 10px;
-  font: 10px var(--mono);
-  letter-spacing: 0.06em;
-  color: var(--texto-mono);
-  /* Alto fijo, líneas pegadas abajo y lo que sobra por arriba se recorta: el
-     log se llena de a una línea y de otro modo empujaría el layout en cada
-     entrada. Un min-height no alcanza porque el alto real depende de cuántas
-     líneas envuelvan, y eso cambia con el ancho (medido: entre 89 y 128 px). */
-  height: 93px;
-  justify-content: flex-end;
-  overflow: hidden;
-}
-
-.log-activo {
-  color: var(--verde);
-}
-
-.log-hora {
-  font-variant-numeric: tabular-nums;
-}
-
-/* La caja, el OSD y el log ya no cambian de escena: el fondo es un frame fijo.
-   Se fueron con la simulación las reglas .esc-1/.esc-2/.esc-3/.esc-0 y el perro
-   que estaba dibujado con divs (.cam-perro y sus partes). */
-
-/* Silueta de perro — las mismas primitivas que la persona, acostadas.
-   Todo en % del alto de la caja, así escala igual en móvil. */
-
-/* Las cuatro patas son un solo elemento rayado. */
-
-/* Entrada y salida de las líneas del log. */
-.log-gris  { opacity: 0.68; }
-.log-verde { color: var(--verde); opacity: 0.8; }
-.log-entra { animation: entra 0.45s both; }
-.log-sale  { animation: sale 0.4s both; }
+/* El log chico que vivía bajo la cámara se retiró: su papel lo hace ahora
+   .linea-tiempo, con tipografía casi cuatro veces más grande. Con él se fueron
+   sus tonos (.log-gris/.log-verde/.log-ambar/.log-voz/.log-activo), su entrada
+   y salida por fade y la purga de líneas viejas: la secuencia se muestra entera
+   y se limpia al cambiar de escena. Sobrevive .log-puntos, que sigue animando
+   los "..." de las líneas en curso. */
 
 /* Los puntos suspensivos de la última línea se escriben solos. */
 .log-puntos {
   display: inline-block;
   animation: puntos 1.6s steps(4, jump-none) infinite;
-}
-
-@keyframes entra {
-  from { opacity: 0; transform: translateY(4px); }
-}
-
-@keyframes sale {
-  to { opacity: 0; transform: translateY(-6px); }
 }
 
 @keyframes puntos {
@@ -1350,9 +1549,19 @@ a:focus-visible {
 
 /* mid: la pieza de cámara ya no cabe al lado del texto */
 @media (max-width: 1120px) {
+  /* Una sola columna, y la cámara ANTES de la secuencia: primero se ve la
+     escena y después se lee lo que el sistema hizo con ella. */
   .momento-inner {
     grid-template-columns: 1fr;
-    gap: 32px;
+    grid-template-areas:
+      "cab"
+      "demo"
+      "tiempo";
+    gap: 28px;
+  }
+
+  .linea-tiempo {
+    min-height: 0;
   }
 
   .seccion-titulo-h1 {
@@ -1396,9 +1605,16 @@ a:focus-visible {
     max-width: none;
   }
 
-  .momento-texto .seccion-titulo {
+  .momento-cab .seccion-titulo {
     font-size: 28px;
   }
+
+  /* En móvil la secuencia baja de tamaño pero sigue mandando sobre el cuerpo
+     de texto: 17px contra los 16 del resumen, y el remate a 26. */
+  .linea-tiempo li      { font-size: 17px; margin-bottom: 15px; }
+  .linea-tiempo .lt-clave { font-size: 19px; }
+  .linea-tiempo .lt-voz   { font-size: 18px; }
+  .linea-tiempo .lt-remate { font-size: 26px; margin-top: 20px; }
 
   .puertas,
   .pilares,
@@ -1552,8 +1768,16 @@ a:focus-visible {
   .franja-punto,
   .btn-llamar-punto,
   .cam-punto,
-  .log-entra,
+  .esc-2 .cam-rec,
+  .esc-2 .punto-estado,
+  .lt-entra,
   .log-puntos {
     animation: none;
+  }
+
+  /* Sin fundido entre escenas: el cambio es instantaneo. */
+  .cam-fondo,
+  .cam-caja {
+    transition: none;
   }
 }

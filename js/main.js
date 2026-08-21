@@ -28,6 +28,17 @@
     );
   }
 
+  /* Segundos desde medianoche -> "HH:MM:SS". Lo usan el OSD y el log de la
+     cámara, que corren sobre la hora de SU escena y no sobre la del visitante. */
+  function horaDeSegundos(seg) {
+    seg = Math.floor(seg) % 86400;
+    return (
+      dosDigitos(Math.floor(seg / 3600)) + ':' +
+      dosDigitos(Math.floor(seg / 60) % 60) + ':' +
+      dosDigitos(seg % 60)
+    );
+  }
+
   function pintarReloj() {
     var ahora = new Date();
 
@@ -40,9 +51,12 @@
 
     /* Los relojes siguen corriendo con prefers-reduced-motion: son un dato, no
        una animación, y congelarlos mostraría una hora falsa. */
+    /* La franja de estado sí lleva la hora del VISITANTE: es el reloj vivo del
+       sitio. El OSD de la cámara NO — ese lo gobierna la escena, porque los dos
+       frames son momentos grabados y reales (15:51 y 15:43), y un OSD con la
+       hora de quien mira contradiría al log de su propia escena. */
     if (franjaFecha) franjaFecha.textContent = fecha + ' ';
     if (franjaHora) franjaHora.textContent = hora;
-    if (camHora) camHora.textContent = hora;
 
     // Se reagenda al filo del segundo siguiente, no cada 1000 ms exactos:
     // así no acumula deriva ni se salta un segundo a la vista.
@@ -55,91 +69,178 @@
 
   var demo = document.querySelector('.demo');
   var log = document.getElementById('log');
+  var camara = document.getElementById('camara');
+  var escenario = document.getElementById('momento-inner');
 
-  if (demo && log) {
+  /* La demo va dentro de un try: es decorativa, y el formulario de contacto
+     —que es la vía de conversión— vive más abajo en este mismo IIFE. Sin esto,
+     cualquier error acá aborta el resto del archivo y se lleva por delante el
+     asistente de tres pasos y el deep-link de los botones de entrada, sin que
+     nada en pantalla lo delate. Ya pasó una vez con una constante borrada. */
+  try {
+  if (demo && log && camara && escenario) {
     // Fuera las líneas de respaldo del HTML: existen solo para el caso sin JS.
     log.textContent = '';
 
-    /* El guión. `t` son ms desde el inicio del ciclo, `linea` lo que entra al
-       log y `tono` su color.
+    /* El guión, ahora en DOS escenas que rotan.
 
-       Antes esto narraba tres escenas (animal, conocida, desconocida) porque la
-       cámara era una simulación que podía cambiar de escena. Ahora el fondo es
-       un frame fijo —un perro en la reja frontal— así que el log cuenta esa
-       escena y nada más: hablar de una persona desconocida mientras en pantalla
-       hay un perro sería describir algo que no está pasando. */
-    var GUION = [
-      { t: 0, linea: 'MOVIMIENTO DETECTADO → VERIFICANDO CON IA', puntos: true },
-      { t: 2800, tono: 'log-gris', linea: 'ANIMAL · FALSA ALARMA DESCARTADA' },
-      { t: 5600, tono: 'log-verde', linea: 'NO TE INTERRUMPIMOS POR UN PERRO' },
-      { t: 8600, tono: 'log-activo', linea: 'SISTEMA EN VIGILANCIA' }
-    ];
+       La escena 1 muestra lo que el servicio NO hace: un perro cruza, el sistema
+       lo descarta y nadie se entera. La escena 2 muestra lo que sí hace cuando
+       importa. El contraste entre los dos remates es el argumento de la sección
+       entera, y por eso van en el mismo bucle y no en dos demos separadas.
 
-    var CICLO = 13500;
-    var MAX_LINEAS = 4;
-
-    var paso = 0;
-
-    var sacarLinea = function (li) {
-      if (prefiereMenosMovimiento) {
-        li.remove();
-        return;
+       `t` son ms desde el arranque de la escena; `linea` lo que entra al log y
+       `tono` su color. `pausa` es cuánto se queda quieta la escena tras su última
+       línea, para que dé tiempo a leerla antes del fundido. */
+    var ESCENAS = [
+      {
+        clase: 'esc-1',
+        chip: 'OPERATIVO',
+        // 15:51:43 — la hora real del frame (16-ago-2026). El OSD y el log de
+        // la escena cuelgan de acá, así que lo que se lee en pantalla es la
+        // hora del momento grabado y no la de quien está mirando la web.
+        base: 15 * 3600 + 51 * 60 + 43,
+        pausa: 3500,
+        guion: [
+          { t: 0, linea: 'MOVIMIENTO DETECTADO → VERIFICANDO CON IA', puntos: true },
+          { t: 2200, clave: true, linea: 'ANIMAL · FALSA ALARMA DESCARTADA' },
+          { t: 4400, remate: true, linea: 'NO TE INTERRUMPIMOS POR UN PERRO' }
+        ]
+      },
+      {
+        clase: 'esc-2',
+        chip: 'ALERTA',
+        base: 15 * 3600 + 43 * 60 + 3,    // 15:43:03, hora real del frame (16-jul-2026)
+        pausa: 3500,
+        guion: [
+          { t: 0, linea: 'MOVIMIENTO DETECTADO → VERIFICANDO CON IA', puntos: true },
+          { t: 1800, clave: true,
+            linea: 'PERSONA DESCONOCIDA · ROSTRO NO RECONOCIDO' },
+          // Entre comillas y en minúsculas a propósito: es lo que el sistema DICE
+          // por el parlante y manda al teléfono, no una línea de registro más.
+          { t: 3600, voz: true,
+            linea: '«Carlos, hay una persona desconocida en la entrada, de pie junto a la reja»' },
+          { t: 5800, clave: true, linea: 'ADVERTENCIA POR VOZ EMITIDA · GRABANDO' },
+          { t: 7600, clave: true, linea: 'LLAMANDO AL CLIENTE', puntos: true },
+          { t: 9400, clave: true, linea: 'ALERTA ENVIADA A VECINOS CONECTADOS' },
+          { t: 11200, remate: true, linea: 'POR ESTO SÍ ACTUAMOS · EN SEGUNDOS' }
+        ]
       }
-      // Se marca primero y se saca después, para que alcance a irse con fade.
-      li.classList.add('log-sale');
-      setTimeout(function () { li.remove(); }, 400);
-    };
+    ];
 
     var pintarLinea = function (guion) {
       var li = document.createElement('li');
 
-      var marca = document.createElement('span');
-      marca.className = 'log-hora';
-      // La hora se estampa recién ahora: es la del visitante en este momento.
-      marca.textContent = horaDe(new Date()) + ' · ';
-      li.appendChild(marca);
-      li.appendChild(document.createTextNode(guion.linea));
+      /* El remate no lleva hora: es un titular que cierra la escena, no un paso
+         más de la secuencia. */
+      if (!guion.remate) {
+        var marca = document.createElement('span');
+        marca.className = 'lt-hora';
+        /* La hora sale del GUIÓN (base del frame + el t del paso), no del reloj
+           de pared. Así no deriva si el navegador se atrasa, y sobre todo: con
+           prefers-reduced-motion las líneas se pintan todas de golpe y con el
+           reloj de pared saldrían las siete con el mismo segundo. */
+        marca.textContent = horaDeSegundos(baseEscena + (guion.t || 0) / 1000);
+        li.appendChild(marca);
+      }
+
+      var txt = document.createElement('span');
+      txt.className = 'lt-txt';
+      txt.appendChild(document.createTextNode(guion.linea));
 
       if (guion.puntos) {
         var puntos = document.createElement('span');
         puntos.className = 'log-puntos';
         puntos.textContent = '...';
-        li.appendChild(puntos);
+        txt.appendChild(puntos);
       }
+      li.appendChild(txt);
 
-      if (guion.tono) li.classList.add(guion.tono);
-      if (!prefiereMenosMovimiento) li.classList.add('log-entra');
+      if (guion.clave) li.classList.add('lt-clave');
+      if (guion.voz) li.classList.add('lt-voz');
+      if (guion.remate) li.classList.add('lt-remate');
+      if (!prefiereMenosMovimiento) li.classList.add('lt-entra');
       log.appendChild(li);
-
-      // Las que ya se están yendo no cuentan, si no se sacarían dos veces.
-      var vivas = log.querySelectorAll('li:not(.log-sale)');
-      if (vivas.length > MAX_LINEAS) sacarLinea(vivas[0]);
     };
 
-    var aplicar = function (guion) {
-      if (guion.linea) pintarLinea(guion);
+    var chip = demo.querySelector('.modulo-estado-txt');
+
+    var aplicar = function (paso) {
+      if (paso.linea) pintarLinea(paso);
     };
 
-    var correr = function () {
-      var actual = GUION[paso];
-      aplicar(actual);
-      paso += 1;
+    /* Pone una escena: cambia la clase del contenedor y de la cámara — de ahí
+       cuelga TODO el aspecto: fondo, caja, modo del OSD, color del módulo. */
+    var ponerEscena = function (esc) {
+      /* La clase va al contenedor de la SECCIÓN, que es ancestro de la cámara y
+         de la línea de tiempo: así una sola clase gobierna el fondo, la caja, el
+         chip de la cabecera y el color del remate, sin repetirla en tres sitios. */
+      ESCENAS.forEach(function (e) { escenario.classList.remove(e.clase); });
+      escenario.classList.add(esc.clase);
+      if (chip) chip.textContent = esc.chip;
+    };
 
-      // Al llegar al final se vuelve al primer paso completando los 24 s.
-      var espera = paso < GUION.length
-        ? GUION[paso].t - actual.t
-        : CICLO - actual.t;
-      if (paso >= GUION.length) paso = 0;
+    // Debe coincidir con la transición de .cam-fondo en el CSS: es lo que se
+    // espera de más al final de cada escena para que el fundido termine antes
+    // de que empiece la siguiente.
+    var FUNDIDO = 900;
 
-      setTimeout(correr, espera);
+    var iEsc = 0;
+    var temporizadores = [];
+    var baseEscena = ESCENAS[0].base;
+    var arranque = Date.now();
+    var transcurrido = function () { return Date.now() - arranque; };
+
+    /* El OSD avanza segundo a segundo desde la hora del frame: la cámara está
+       "grabando" ese momento mientras dura la escena. */
+    var tictac = function () {
+      if (camHora) camHora.textContent = horaDeSegundos(baseEscena + transcurrido() / 1000);
+      temporizadores.push(setTimeout(tictac, 1000 - (Date.now() % 1000)));
+    };
+
+    var correrEscena = function () {
+      // Se cancelan los pendientes de la escena anterior: si el visitante deja
+      // la pestaña en segundo plano, los setTimeout se acumulan y al volver
+      // vomitan todas las líneas juntas.
+      temporizadores.forEach(clearTimeout);
+      temporizadores = [];
+
+      var esc = ESCENAS[iEsc];
+      ponerEscena(esc);
+      log.textContent = '';
+      baseEscena = esc.base;
+      arranque = Date.now();
+      tictac();
+
+      esc.guion.forEach(function (paso) {
+        temporizadores.push(setTimeout(function () { aplicar(paso); }, paso.t));
+      });
+
+      var ultima = esc.guion[esc.guion.length - 1].t;
+      temporizadores.push(setTimeout(function () {
+        iEsc = (iEsc + 1) % ESCENAS.length;
+        correrEscena();
+      }, ultima + esc.pausa + FUNDIDO));
     };
 
     if (prefiereMenosMovimiento) {
-      // Sin bucle: el log se pinta entero una vez y ahí se queda.
-      GUION.forEach(aplicar);
+      /* Sin bucle ni fundidos: queda puesta la escena 2 con su log completo.
+         Se elige esa y no la 1 porque es la que enseña lo que el servicio hace
+         cuando importa; quedarse en el perro sería vender lo que NO hace. */
+      var esc2 = ESCENAS[1];
+      ponerEscena(esc2);
+      baseEscena = esc2.base;
+      arranque = Date.now();
+      if (camHora) camHora.textContent = horaDeSegundos(esc2.base);
+      esc2.guion.forEach(aplicar);
     } else {
-      correr();
+      correrEscena();
     }
+  }
+
+  } catch (e) {
+    // No se relanza: la demo se queda donde quedó y el resto del sitio sigue.
+    if (window.console) console.error('[demo] se detuvo:', e);
   }
 
   /* Formulario de contacto -------------------------------------------------
