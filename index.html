@@ -499,9 +499,29 @@
             </div>
 
             <div class="campo">
+              <label for="campo-comuna">Comuna</label>
+              <input type="text" id="campo-comuna" name="comuna"
+                     autocomplete="address-level2"
+                     required maxlength="60" placeholder="Dónde está la propiedad">
+            </div>
+
+            <div class="campo">
               <label for="campo-telefono">Teléfono</label>
               <input type="tel" id="campo-telefono" name="telefono" autocomplete="tel"
                      required maxlength="20" inputmode="tel" placeholder="+56 9 ...">
+            </div>
+
+            <!-- Opcional de verdad: sin `required`, y el paréntesis en la
+                 etiqueta para que se sepa antes de llegar al campo. El
+                 type="email" no lo vuelve obligatorio —vacío es válido— pero sí
+                 hace que reportValidity() atrape el typo antes de enviar. El
+                 backend igual tolera una dirección mala: guarda el lead sin
+                 email en vez de perderlo. -->
+            <div class="campo">
+              <label for="campo-email">Email (opcional)</label>
+              <input type="email" id="campo-email" name="email" autocomplete="email"
+                     maxlength="120" inputmode="email"
+                     placeholder="Si prefieres que te escribamos">
             </div>
 
             <!-- Trampa para bots: un humano nunca la ve ni la llena. Queda
@@ -519,12 +539,16 @@
               <button type="button" class="wizard-atras" data-atras>← Volver</button>
             </div>
 
-            <!-- TODO(ventas-backend): el envío está deshabilitado a propósito.
-                 Para activarlo, ver ENDPOINT_LEADS en js/main.js. -->
+            <!-- Nota de respaldo. Aparece en dos casos, y por eso el texto no
+                 nombra ninguno: sin JavaScript —el botón nace `disabled` en el
+                 marcado y lo habilita js/main.js— y con ENDPOINT_LEADS en null.
+                 En ambos la salida es la misma, el teléfono. Con el envío
+                 activo js/main.js la oculta, y la reutiliza para el acuse de
+                 recibo y para el mensaje del 429. -->
             <p class="wizard-nota" id="wizard-nota">
-              El envío del formulario todavía no está conectado. Mientras tanto,
-              llámanos al <a href="tel:+566009142219">600 914 2219</a>: te
-              contesta Catalina, nuestra asistente con IA, a cualquier hora.
+              El envío directo no está disponible en este momento. Llámanos al
+              <a href="tel:+566009142219">600 914 2219</a>: te contesta
+              Catalina, nuestra asistente con IA, a cualquier hora.
             </p>
 
             <a class="btn-llamar" href="tel:+566009142219">

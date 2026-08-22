@@ -389,7 +389,9 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         nombre: datos.get('nombre'),
+        comuna: datos.get('comuna'),
         telefono: datos.get('telefono'),
+        email: datos.get('email'),
         tipo: datos.get('tipo'),
         camaras: datos.get('camaras')
       })

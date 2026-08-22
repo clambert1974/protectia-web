@@ -56,7 +56,8 @@ el formulario sigue siendo legible.
 
 ## El formulario
 
-Manda a `POST https://ventas.protectia.cl/api/lead-web`, que deja el lead en
+Manda `nombre`, `comuna`, `telefono`, `email`, `tipo` y `camaras` a
+`POST https://ventas.protectia.cl/api/lead-web`, que deja el lead en
 `leads.db` y dispara un push al panel de ventas — el mismo aviso que los leads
 que captura Catalina por teléfono, con el título prefijado "Nuevo lead web:"
 para distinguirlos.
@@ -73,6 +74,14 @@ login. Ojo si se toca esa política: tiene que cubrir también el preflight
 `OPTIONS`, o el navegador recibe un 302 al login y el `POST` no se llega a
 mandar — y el síntoma es un error de CORS, que no se parece en nada a un
 problema de autenticación.
+
+De los seis campos, el navegador exige `nombre`, `comuna` y `telefono`; el
+backend solo exige los dos últimos. La diferencia es deliberada: el sitio está
+detrás del caché de Cloudflare, así que durante días van a seguir llegando
+envíos de la versión anterior de la página, sin comuna. Si el backend la
+exigiera los descartaría **en silencio** —todo lo que rechaza responde 200— y
+serían leads perdidos sin síntoma. `email` es opcional en ambos lados, y una
+dirección malformada descarta el dato, nunca el lead.
 
 La protección anti-abuso vive toda del lado del servidor
 (`ventas-app/backend/web.py`): honeypot —el campo `empresa` del marcado—, rate
