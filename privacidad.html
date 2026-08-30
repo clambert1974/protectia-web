@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>Política de Privacidad — Protect(IA)</title>
+  <meta name="description" content="Cómo Protect(IA) (L&amp;F IT Consulting SpA) recopila, usa y protege los datos personales en protectia.cl, la app Protect(IA)/Argos y Comunidad Vecinal. Ley 21.719.">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="es_CL">
+  <meta property="og:site_name" content="Protect(IA)">
+  <meta property="og:url" content="https://protectia.cl/privacidad.html">
+  <meta property="og:title" content="Política de Privacidad — Protect(IA)">
+  <meta property="og:description" content="Qué datos pedimos, cuáles nunca salen de tu casa y cómo ejercer tus derechos bajo la Ley 21.719.">
+
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+
+  <!-- Tipografías self-hosted (SIL OFL 1.1). Ver fonts/OFL.txt y fonts/OFL-IBM-Plex.txt.
+       Acá solo se precargan las dos que se usan sobre la línea de flotación:
+       esta página es texto corrido, no tiene la etiqueta de la detección. -->
+  <link rel="preload" href="fonts/space-grotesk-variable-latin.woff2"
+        as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/ibm-plex-mono-400-latin.woff2"
+        as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Estilos propios de las páginas legales. Van acá y no en styles.css
+       porque solo los usa este documento: el reset global deja h1/h2/p/ul sin
+       márgenes y sin viñetas, y un texto legal necesita justo lo contrario. -->
+  <style>
+    .legal-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 max(24px, env(safe-area-inset-right, 0px))
+               0 max(24px, env(safe-area-inset-left, 0px));
+    }
+
+    .legal-titulo {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .legal-fecha {
+      font: 11px var(--mono);
+      letter-spacing: 0.08em;
+      color: var(--texto-mono);
+      text-transform: uppercase;
+    }
+
+    .legal-entrada {
+      margin-top: 24px;
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--texto);
+      text-wrap: pretty;
+    }
+
+    .legal-bloque {
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--linea-modulo);
+    }
+
+    .legal-bloque h2 {
+      display: flex;
+      gap: 12px;
+      font-size: 21px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 14px;
+    }
+
+    .legal-num {
+      flex: none;
+      font: 500 12px var(--mono);
+      letter-spacing: 0.06em;
+      color: var(--verde);
+      padding-top: 5px;
+    }
+
+    .legal-bloque p,
+    .legal-bloque li {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--texto);
+      text-wrap: pretty;
+    }
+
+    .legal-bloque p + p,
+    .legal-bloque p + ul,
+    .legal-bloque ul + p {
+      margin-top: 14px;
+    }
+
+    .legal-lista li {
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .legal-lista li + li {
+      margin-top: 10px;
+    }
+
+    .legal-lista li::before {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--verde);
+    }
+
+    .legal-bloque strong {
+      color: var(--tinta);
+      font-weight: 600;
+    }
+
+    .legal-bloque a {
+      color: var(--verde);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* El punto que más nos importa que se lea: el video no sube a la nube. */
+    .legal-destacado {
+      margin-top: 16px;
+      background: var(--tarjeta);
+      border: 1px solid var(--linea-modulo);
+      border-left: 3px solid var(--verde);
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+
+    .legal-contacto {
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--linea-modulo);
+      font: 11px var(--mono);
+      letter-spacing: 0.08em;
+      color: var(--texto-mono);
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 760px) {
+      .legal-inner {
+        padding: 0 max(20px, env(safe-area-inset-right, 0px))
+                 0 max(20px, env(safe-area-inset-left, 0px));
+      }
+
+      .legal-titulo {
+        font-size: 30px;
+      }
+
+      .legal-bloque h2 {
+        font-size: 19px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Franja de estado ---------------------------------------------------- -->
+  <!-- Sin reloj: esta página no carga js/main.js. -->
+  <div class="franja">
+    <span class="franja-estado">
+      <span class="franja-punto" aria-hidden="true"></span>
+      <span class="franja-texto">SISTEMA ACTIVO — EL VIDEO SE PROCESA EN TU CASA, NO EN LA NUBE</span>
+    </span>
+  </div>
+
+  <!-- Cabecera ------------------------------------------------------------- -->
+  <header class="site-header">
+    <a class="logo" href="/">PROTECT<span class="logo-ia">(IA)</span></a>
+
+    <!-- El nav se oculta bajo 760px; el menú móvil sigue pendiente. -->
+    <nav class="site-nav" aria-label="Navegación principal">
+      <a class="nav-link" href="/#como-funciona">CÓMO FUNCIONA</a>
+      <a class="nav-link" href="/#plan">PLAN</a>
+      <a class="nav-link" href="/#faq">PREGUNTAS</a>
+    </nav>
+
+    <div class="cabecera-acciones">
+      <a class="btn-tel" href="tel:+566009142219"><span class="btn-tel-rotulo">Llámanos:
+        </span>600 914 2219</a>
+      <a class="btn-comenzar" href="/#contacto">Comenzar</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="seccion" aria-labelledby="privacidad-titulo">
+      <div class="legal-inner">
+
+        <p class="seccion-kicker">LEGAL</p>
+        <h1 class="legal-titulo" id="privacidad-titulo">Política de Privacidad</h1>
+        <p class="legal-fecha">Última actualización: 30 de agosto de 2026</p>
+
+        <p class="legal-entrada">
+          Protect(IA) existe para cuidar tu casa, y eso incluye cuidar tus
+          datos. Acá te contamos, en simple, qué información recopilamos, para
+          qué la usamos, con quién la compartimos y qué puedes exigirnos en
+          cualquier momento. Si algo no te queda claro, escríbenos a
+          <a href="mailto:contacto@protectia.cl">contacto@protectia.cl</a>.
+        </p>
+
+        <!-- 1 ------------------------------------------------------------- -->
+        <div class="legal-bloque">
+          <h2><span class="legal-num" aria-hidden="true">01</span> Responsable del tratamiento</h2>
+          <p>
+            El responsable de los datos personales tratados a través de estos
+            servicios es <strong>L&amp;F IT Consulting SpA</strong>, RUT
+            <strong>77.991.936-6</strong>, con domicilio en Santiago, Chile.
+          </p>
+          <p>
+            Canal de contacto para cualquier materia relativa a esta política,
+            incluido el ejercicio de derechos:
+            <a href="mailto:contacto@protectia.cl">contacto@protectia.cl</a>.
+          </p>
+        </div>
+
+        <!-- 2 ------------------------------------------------------------- -->
+        <div class="legal-bloque">
+          <h2><span class="legal-num" aria-hidden="true">02</span> Ámbito de aplicación</h2>
+          <p>Esta política se aplica a:</p>
+          <ul class="legal-lista">
+            <li>
+              El sitio <strong>protectia.cl</strong>, incluidos sus formularios
+              de contacto y cotización.
+            </li>
+            <li>
+              La aplicación <strong>Protect(IA)/Argos</strong>, en su versión
+              web (<strong>app.protectia.cl</strong>) y en la app Android
+              <strong>«Protectia Seguridad»</strong>.
+            </li>
+            <li>
+              <strong>Comunidad Vecinal</strong>
+              (<strong>vecinal.protectia.cl</strong>), la red de barrio incluida
+              en el plan.
+            </li>
+          </ul>
+        </div>
+
+        <!-- 3 ------------------------------------------------------------- -->
+        <div class="legal-bloque">
+          <h2><span class="legal-num" aria-hidden="true">03</span> Datos que recopilamos</h2>
+          <p>Solo pedimos lo que el servicio necesita para funcionar:</p>
+          <ul class="legal-lista">
+            <li>
+              <strong>Datos de identificación y contacto:</strong> nombre,
+              correo electrónico, teléfono y comuna. Los entregas tú al
+              registrarte o al pedir una cotización.
+            </li>
+            <li>
+              <strong>Dirección del hogar:</strong> calle y número, para ubicar
+              tu casa en el mapa de tu barrio y para que las alertas lleguen a
+              los vecinos correctos.
+            </li>
+            <li>
+              <strong>Eventos de seguridad:</strong> los registros que genera el
+              sistema cuando detecta y verifica algo (fecha, hora, tipo de
+              evento, estado de la alerta).
+            </li>
+            <li>
+              <strong>Token de notificaciones push</strong> del dispositivo, que
+              es el identificador técnico que permite avisarte en el teléfono.
+            </li>
+          </ul>
+        </div>
+
+        <!-- 4 ------------------------------------------------------------- -->
+        <div class="legal-bloque">
+          <h2><span class="legal-num" aria-hidden="true">04</span> Datos que NO recopilamos ni compartimos</h2>
+          <div class="legal-destacado">
+            <p>
+              <strong>El video de tus cámaras no sube a la nube.</strong> Se
+              procesa localmente, en el equipo Protect(IA) instalado en tu casa.
+              Nosotros no almacenamos, no transmitimos ni miramos las imágenes
+              de tus cámaras: el análisis es automático y ocurre dentro de tu
+              propia red.
+            </p>
+          </div>
+          <p>
+            <strong>En el mapa de Comunidad Vecinal, tu dirección no se muestra
+            a nadie.</strong> Los demás vecinos solo ven un marcador rotulado
+            <strong>«Casa N»</strong>. Nunca se expone la dirección exacta, el
+            nombre, el teléfono ni ningún otro dato personal de los vecinos
+            entre sí.
+          </p>
+          <p>
+            Tampoco vendemos, arrendamos ni cedemos datos personales a terceros
+            con fines publicitarios o comerciales.
+          </p>
+        </div>
+
+        <!-- 5 ------------------------------------------------------------- -->
+        <div class="legal-bloque">
+          <h2><span class="legal-num" aria-hidden="true">05</span> Para qué usamos los datos</h2>
+          <ul class="legal-lista">
+            <li>
+              <strong>Operar el servicio:</strong> entregar alertas verificadas,
+              habilitar el botón de pánico, notificar a los vecinos del sector
+              cuando corresponde y ejecutar las llamadas automáticas en cascada
+              a tus contactos, a través de nuestro proveedor telefónico.
+            </li>
+            <li>
+              <strong>Atenderte:</strong> responder consultas, cotizaciones y
+              solicitudes de soporte.
+            </li>
+            <li>
+              <strong>Mejorar el servicio:</strong> medir el funcionamiento del
+              sistema y corregir fallas, siempre con la menor cantidad de datos
+              posible.
+            </li>
+          </ul>
+          <p>
+            No usamos tus datos para tomar decisiones automatizadas con efectos
+            jurídicos sobre ti, ni para elaborar perfiles comerciales.
+          </p>
+        </div>
+
+        <!-- 6 ------------------------------------------------------------- -->
+        <div class="legal-bloque">
+          <h2><span class="legal-num" aria-hidden="true">06</span> Base legal y tus derechos (Ley 21.719)</h2>
+          <p>
+            Tratamos tus datos sobre la base del <strong>consentimiento</strong>
+            que otorgas al registrarte o al enviarnos un formulario, y de la
+            <strong>ejecución del contrato</strong> de servicio que mantienes
+            con nosotros. Puedes retirar tu consentimiento en cualquier momento,
+            sin efecto retroactivo sobre lo ya realizado.
+          </p>
+          <p>
+            Conforme a la <strong>Ley N° 21.719</strong> sobre protección de
+            datos personales, tienes derecho a:
+          </p>
+          <ul class="legal-lista">
+            <li><strong>Acceso:</strong> saber qué datos tuyos tenemos y cómo los usamos.</li>
+            <li><strong>Rectificación:</strong> corregir datos inexactos, desactualizados o incompletos.</li>
+            <li><strong>Supresión:</strong> pedir que eliminemos tus datos cuando ya no sean necesarios o retires tu consentimiento.</li>
+            <li><strong>Oposición:</strong> oponerte a un tratamiento determinado en los casos que la ley permite.</li>
+            <li><strong>Portabilidad:</strong> recibir tus datos en un formato estructurado y de uso común, o pedir que se los enviemos a otro responsable.</li>
+          </ul>
+          <p>
+            Estos derechos se ejercen <strong>gratuitamente</strong> escribiendo
+            a <a href="mailto:contacto@protectia.cl">contacto@protectia.cl</a>,
+            identificándote como titular de los datos. Responderemos dentro del
+            plazo legal, y en todo caso a la brevedad posible. Si no quedas
+            conforme con nuestra respuesta, puedes reclamar ante la autoridad de
+            protección de datos personales.
+          </p>
+        </div>
+
+        <!-- 7 ------------------------------------------------------------- -->
+        <div class="legal-bloque">
+          <h2><span class="legal-num" aria-hidden="true">07</span> Por cuánto tiempo guardamos los datos</h2>
+          <p>
+            Conservamos tus datos personales <strong>mientras tu cuenta esté
+            activa</strong> y sigas usando el servicio. Al cerrar la cuenta, los
+            eliminamos o los anonimizamos —de modo que ya no puedan asociarse a
+            ti— dentro de un plazo razonable.
+          </p>
+          <p>
+            La única excepción es la información que debamos mantener por una
+            obligación legal, contable o tributaria, que se guarda solo por el
+            tiempo que esa obligación exija.
+          </p>
+        </div>
+
+        <!-- 8 ------------------------------------------------------------- -->
+        <div class="legal-bloque">
+          <h2><span class="legal-num" aria-hidden="true">08</span> Encargados de tratamiento</h2>
+          <p>
+            Para que el servicio funcione nos apoyamos en proveedores que actúan
+            como <strong>encargados de tratamiento</strong>: procesan datos por
+            cuenta nuestra, siguiendo nuestras instrucciones y bajo obligación
+            de confidencialidad.
+          </p>
+          <ul class="legal-lista">
+            <li>
+              <strong>Telefonía y mensajería</strong> (por ejemplo, Twilio), para
+              las llamadas automáticas en cascada. Reciben únicamente el número
+              de teléfono de destino y el mensaje a entregar.
+            </li>
+            <li>
+              <strong>Servicios de notificaciones push</strong>, para hacer
+              llegar los avisos a tu dispositivo. Reciben únicamente el token
+              del dispositivo y el contenido de la notificación.
+            </li>
+          </ul>
+          <p>
+            En todos los casos entregamos <strong>solo el mínimo necesario</strong>
+            para ejecutar la operación, nunca el conjunto de tus datos.
+          </p>
+        </div>
+
+        <!-- 9 ------------------------------------------------------------- -->
+        <div class="legal-bloque">
+          <h2><span class="legal-num" aria-hidden="true">09</span> Menores de edad</h2>
+          <p>
+            El servicio está dirigido a <strong>personas mayores de 18 años</strong>.
+            No recopilamos deliberadamente datos de menores de edad. Si detectamos
+            que se registró una cuenta de un menor, la eliminaremos junto con sus
+            datos. Si crees que esto ocurrió, escríbenos a
+            <a href="mailto:contacto@protectia.cl">contacto@protectia.cl</a>.
+          </p>
+        </div>
+
+        <!-- 10 ------------------------------------------------------------ -->
+        <div class="legal-bloque">
+          <h2><span class="legal-num" aria-hidden="true">10</span> Cambios a esta política</h2>
+          <p>
+            Podemos actualizar esta política cuando cambien el servicio o la
+            normativa aplicable. La versión vigente es siempre la publicada en
+            esta página, con su fecha de última actualización. Si el cambio es
+            relevante para ti, te avisaremos por correo electrónico o dentro de
+            la aplicación antes de que entre en vigencia.
+          </p>
+          <p>
+            <strong>Última actualización: 30 de agosto de 2026.</strong>
+          </p>
+        </div>
+
+        <p class="legal-contacto">
+          ¿DUDAS SOBRE TUS DATOS? ESCRÍBENOS A
+          <a href="mailto:contacto@protectia.cl">CONTACTO@PROTECTIA.CL</a>
+        </p>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 PROTECT(IA) — L&amp;F IT CONSULTING SPA</span>
+      <span class="footer-enlaces">
+        <a href="tel:+566009142219">600 914 2219</a>
+        <a href="/privacidad.html">POLÍTICA DE PRIVACIDAD</a>
+        <!-- TODO: los términos siguen pendientes; hoy son un marcador sin destino. -->
+        <a href="#" aria-disabled="true">TÉRMINOS Y CONDICIONES</a>
+      </span>
+    </div>
+  </footer>
+
+  <!-- Barra fija solo móvil -->
+  <a class="barra-movil" href="tel:+566009142219">
+    <span class="barra-movil-titulo">Llamar al 600 914 2219</span>
+    <span class="barra-movil-nota">TE CONTESTA CATALINA, NUESTRA IA</span>
+  </a>
+
+</body>
+</html>
