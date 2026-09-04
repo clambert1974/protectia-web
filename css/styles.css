@@ -2114,6 +2114,8 @@ main {
 }
 
 .tienda-seccion {
+  width: 100%;                         /* item de un flex column: sin esto encoge al
+                                          ancho del H2 y margin:auto lo centra */
   max-width: var(--ancho-max);
   margin: 0 auto;
   min-height: 120px;                   /* compacto: slot para los productos que vienen */
@@ -2131,6 +2133,11 @@ main {
   color: var(--tinta);
   text-align: left;                    /* como el resto del sitio */
 }
+
+/* Sección sin productos: oculta pero PRESENTE en el DOM —la ancla de la barra y
+   el contenedor futuro siguen ahí—. Al cargar productos se le quita esta clase y
+   la sección aparece con su H2. */
+.tienda-seccion--vacia { display: none; }
 
 @media (max-width: 760px) {
   .hero-tienda-marco { padding-top: 14px; }
