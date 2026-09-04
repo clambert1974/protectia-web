@@ -1998,3 +1998,26 @@ main {
     font-size: 19px;
   }
 }
+
+/* Tienda --------------------------------------------------------------------
+   Página de espera del catálogo. Reutiliza la columna angosta de las legales
+   —es una página para leer, no una home para recorrer— y solo agrega lo que
+   ahí no existía: una bajada bajo el título y una caja para el botón.
+
+   La caja tiene que ser flex, y no es capricho: .btn-tel nació en la cabecera,
+   que ya es un contenedor flex, y por eso nunca declaró display. Suelto dentro
+   de un div normal el <a> queda inline y su padding vertical se desborda por
+   encima del párrafo de arriba en vez de ocupar alto propio. */
+
+.tienda-bajada {
+  margin-top: 4px;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--texto);
+}
+
+.tienda-acciones {
+  display: flex;
+  margin-top: 28px;
+}

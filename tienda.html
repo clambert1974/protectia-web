@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>Tienda — Protect(IA)</title>
+  <meta name="description" content="Cámaras compatibles con Protect(IA). El catálogo estará disponible pronto; mientras tanto te decimos por teléfono cuál comprar y dónde.">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_CL">
+  <meta property="og:site_name" content="Protect(IA)">
+  <meta property="og:url" content="https://protectia.cl/tienda.html">
+  <meta property="og:title" content="Tienda — Protect(IA)">
+  <meta property="og:description" content="Cámaras compatibles con Protect(IA). El catálogo estará disponible pronto.">
+
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+
+  <!-- Tipografías self-hosted (SIL OFL 1.1). Ver fonts/OFL.txt y fonts/OFL-IBM-Plex.txt.
+       Acá solo se precargan las dos que se usan sobre la línea de flotación:
+       esta página es texto corrido, no tiene la etiqueta de la detección. -->
+  <link rel="preload" href="fonts/space-grotesk-variable-latin.woff2"
+        as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/ibm-plex-mono-400-latin.woff2"
+        as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Franja de estado ---------------------------------------------------- -->
+  <!-- Sin reloj: esta página no carga js/main.js. -->
+  <div class="franja">
+    <span class="franja-estado">
+      <span class="franja-punto" aria-hidden="true"></span>
+      <span class="franja-texto">SISTEMA ACTIVO — EL VIDEO SE PROCESA EN TU CASA, NO EN LA NUBE</span>
+    </span>
+  </div>
+
+  <!-- Cabecera ------------------------------------------------------------- -->
+  <header class="site-header">
+    <a class="logo" href="/">PROTECT<span class="logo-ia">(IA)</span></a>
+
+    <!-- El nav se oculta bajo 760px; el menú móvil sigue pendiente. -->
+    <nav class="site-nav" aria-label="Navegación principal">
+      <a class="nav-link" href="/#como-funciona">CÓMO FUNCIONA</a>
+      <a class="nav-link" href="/#plan">PLAN</a>
+      <a class="nav-link" href="/tienda.html" aria-current="page">TIENDA</a>
+      <a class="nav-link" href="/#faq">PREGUNTAS</a>
+    </nav>
+
+    <div class="cabecera-acciones">
+      <a class="btn-tel" href="tel:6009142219"><span class="btn-tel-rotulo">Llámanos:
+        </span>600 914 2219</a>
+      <a class="btn-comenzar" href="/#contacto">Comenzar</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="seccion" aria-labelledby="tienda-titulo">
+      <div class="legal-inner">
+
+        <h1 class="legal-titulo" id="tienda-titulo">Tienda</h1>
+        <p class="tienda-bajada">Cámaras compatibles con Protect(IA)</p>
+
+        <p class="legal-entrada">
+          Estamos armando el catálogo: muy pronto vas a poder ver acá las
+          cámaras compatibles y dónde comprarlas.
+        </p>
+
+        <!-- El botón va sin <span class="btn-tel-rotulo">: esa palabra se
+             oculta bajo 760px para que el número quepa en la cabecera, y acá
+             no hay ninguna razón para perderla. -->
+        <div class="tienda-acciones">
+          <a class="btn-tel" href="tel:6009142219">Llámanos: 600 914 2219</a>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© 2026 PROTECT(IA) — L&amp;F IT CONSULTING SPA</span>
+      <span class="footer-enlaces">
+        <a href="tel:6009142219">600 914 2219</a>
+        <a href="/privacidad.html">POLÍTICA DE PRIVACIDAD</a>
+        <!-- TODO: los términos siguen pendientes; hoy son un marcador sin destino. -->
+        <a href="#" aria-disabled="true">TÉRMINOS Y CONDICIONES</a>
+      </span>
+    </div>
+  </footer>
+
+  <!-- Barra fija solo móvil -->
+  <a class="barra-movil" href="tel:6009142219">
+    <span class="barra-movil-titulo">Llamar al 600 914 2219</span>
+    <span class="barra-movil-nota">TE CONTESTA CATALINA, NUESTRA IA</span>
+  </a>
+
+</body>
+</html>
