@@ -2065,6 +2065,54 @@ main {
   user-select: none;
 }
 
+/* Banner hero de la tienda. Contenido al ancho del contenedor (--ancho-max),
+   foto con object-fit cover y overlay sutil abajo para leer el texto claro. */
+.hero-tienda-marco {
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  padding: 20px max(24px, env(safe-area-inset-right, 0px))
+           0 max(24px, env(safe-area-inset-left, 0px));
+}
+.hero-tienda {
+  position: relative;
+  height: 420px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.hero-tienda-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.hero-tienda-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 28px 30px;
+  /* tinte de la franja (#0B1D15) para amarrar paleta; solo abajo, sutil */
+  background: linear-gradient(to top,
+              rgba(11, 29, 21, 0.82) 0%,
+              rgba(11, 29, 21, 0.30) 55%,
+              rgba(11, 29, 21, 0) 100%);
+}
+.hero-tienda-titulo {
+  margin: 0;
+  font: 700 40px var(--fuente);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: #fff;
+}
+.hero-tienda-bajada {
+  margin: 8px 0 0;
+  font: 500 18px var(--fuente);
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 42ch;
+}
+
 .tienda-seccion {
   max-width: var(--ancho-max);
   margin: 0 auto;
@@ -2082,6 +2130,12 @@ main {
 }
 
 @media (max-width: 760px) {
+  .hero-tienda-marco { padding-top: 14px; }
+  .hero-tienda { height: 260px; border-radius: 12px; }
+  .hero-tienda-overlay { padding: 18px 18px; }
+  .hero-tienda-titulo { font-size: 26px; }
+  .hero-tienda-bajada { font-size: 14.5px; }
+
   .tienda-seccion { padding-top: 32px; }
   .tienda-seccion-titulo { font-size: 23px; }
 }
