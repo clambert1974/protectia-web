@@ -2021,3 +2021,67 @@ main {
   display: flex;
   margin-top: 28px;
 }
+
+/* ============================================================================
+   Tienda — barra de categorías + secciones ancla
+   Franja bajo el header, misma paleta que la franja superior "SISTEMA ACTIVO".
+   El contenido de cada sección (los productos) se agrega después.
+   ========================================================================= */
+.barra-categorias {
+  background: var(--franja-fondo);
+  overflow-x: auto;                    /* móvil: scroll horizontal sin romper */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;               /* Firefox: sin barra visible */
+}
+.barra-categorias::-webkit-scrollbar { display: none; }   /* WebKit */
+
+.barra-categorias-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: max-content;                  /* se extiende al contenido y habilita el scroll */
+  min-width: 100%;                     /* pero llena el ancho cuando sobra espacio */
+  box-sizing: border-box;
+  padding: 9px max(24px, env(safe-area-inset-right, 0px))
+           9px max(24px, env(safe-area-inset-left, 0px));
+}
+
+.cat-link {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  color: var(--franja-texto);
+  font: 500 11.5px var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;           /* mono uppercase, como el nav */
+  padding: 4px 6px;
+  border-radius: 5px;
+}
+.cat-link:hover { color: #fff; }
+
+.cat-sep {
+  flex: 0 0 auto;
+  color: rgba(127, 200, 164, 0.4);
+  font: 11.5px var(--mono);
+  user-select: none;
+}
+
+.tienda-seccion {
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  padding: 44px max(24px, env(safe-area-inset-right, 0px))
+           0 max(24px, env(safe-area-inset-left, 0px));
+  scroll-margin-top: 76px;             /* header sticky: que el ancla no quede tapada */
+}
+.tienda-seccion:last-of-type { padding-bottom: 64px; }
+
+.tienda-seccion-titulo {
+  margin: 0;
+  font: 700 28px var(--fuente);
+  letter-spacing: -0.01em;
+  color: var(--tinta);
+}
+
+@media (max-width: 760px) {
+  .tienda-seccion { padding-top: 32px; }
+  .tienda-seccion-titulo { font-size: 23px; }
+}
