@@ -2116,17 +2116,20 @@ main {
 .tienda-seccion {
   max-width: var(--ancho-max);
   margin: 0 auto;
-  padding: 44px max(24px, env(safe-area-inset-right, 0px))
-           0 max(24px, env(safe-area-inset-left, 0px));
+  min-height: 120px;                   /* compacto: slot para los productos que vienen */
+  padding: 22px max(24px, env(safe-area-inset-right, 0px))
+           22px max(24px, env(safe-area-inset-left, 0px));
   scroll-margin-top: 76px;             /* header sticky: que el ancla no quede tapada */
+  border-top: 1px solid var(--linea);  /* zonas separadas y ordenadas, sin escalera */
 }
-.tienda-seccion:last-of-type { padding-bottom: 64px; }
+.tienda-seccion:first-of-type { border-top: 0; }
 
 .tienda-seccion-titulo {
   margin: 0;
-  font: 700 28px var(--fuente);
+  font: 600 20px var(--fuente);        /* tamaño normal de sección, no display gigante */
   letter-spacing: -0.01em;
   color: var(--tinta);
+  text-align: left;                    /* como el resto del sitio */
 }
 
 @media (max-width: 760px) {
@@ -2136,6 +2139,6 @@ main {
   .hero-tienda-titulo { font-size: 26px; }
   .hero-tienda-bajada { font-size: 14.5px; }
 
-  .tienda-seccion { padding-top: 32px; }
-  .tienda-seccion-titulo { font-size: 23px; }
+  .tienda-seccion { min-height: 96px; padding-top: 18px; padding-bottom: 18px; }
+  .tienda-seccion-titulo { font-size: 18px; }
 }
