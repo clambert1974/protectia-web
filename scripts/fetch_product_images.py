@@ -97,28 +97,36 @@ def _imagen_de_pdf(data):
         # Solo pagina 1; -all conserva el formato original de cada imagen embebida.
         subprocess.run(["pdfimages", "-all", "-f", "1", "-l", "1", pdf,
                         os.path.join(td, "img")], check=True, capture_output=True)
-        # La foto de producto es un lienzo CUADRADO (~472x472); el membrete de la
-        # ficha es una imagen apaisada tamaño-pagina, y los iconos/logos son
-        # chicos. Nos quedamos con la imagen mas grande de aspecto ~cuadrado.
-        candidatos = []
+        imgs = []
         for name in sorted(os.listdir(td)):
             if not name.startswith("img"):
                 continue
             try:
                 im = Image.open(os.path.join(td, name))
                 im.load()
-            except Exception:                      # noqa: BLE001 — mascaras/otros no-imagen
+            except Exception:                      # noqa: BLE001 — no-imagen
                 continue
-            w, h = im.size
-            if min(w, h) < 250:                    # iconos, logos, miniaturas fuera
-                continue
-            if max(w, h) / min(w, h) > 1.35:       # membretes/fondos de pagina fuera
-                continue
-            candidatos.append((w * h, im.copy()))
-        if not candidatos:
-            raise ValueError("no se hallo una foto de producto (cuadrada, >=250px) en la pagina 1 del PDF")
-        candidatos.sort(key=lambda c: -c[0])
-        return candidatos[0][1]
+            imgs.append(im)
+        # La foto de producto es una imagen a COLOR de aspecto ~cuadrado y grande;
+        # el membrete de la ficha es apaisado tamaño-pagina y los iconos, chicos.
+        color = [im for im in imgs
+                 if im.mode not in ("L", "1", "LA")
+                 and min(im.size) >= 250
+                 and max(im.size) / min(im.size) <= 1.35]
+        if not color:
+            raise ValueError("no se hallo una foto de producto (a color, cuadrada, >=250px) en la pagina 1 del PDF")
+        color.sort(key=lambda im: -(im.size[0] * im.size[1]))
+        prod = color[0].convert("RGB")
+        # Soft-mask: algunas fichas (Hikvision) traen la foto sobre fondo NEGRO con
+        # una mascara alfa —una imagen en gris del MISMO tamaño— que la recorta. Si
+        # existe, la aplicamos: el fondo negro pasa a transparente y normalizar() lo
+        # aplana sobre blanco, quedando consistente con las demas fotos.
+        mask = next((im for im in imgs
+                     if im.mode in ("L", "1") and im.size == prod.size), None)
+        if mask is not None:
+            prod = prod.copy()
+            prod.putalpha(mask.convert("L"))
+        return prod
 
 
 def parece_placeholder(im):

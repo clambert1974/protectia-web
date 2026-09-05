@@ -2168,11 +2168,11 @@ main {
 }
 .producto-foto {
   background: #fff;                       /* la foto trae fondo blanco: se integra */
-  aspect-ratio: 1 / 1;
+  height: 210px;                          /* alto fijo: sin esto la foto crecía a media pantalla */
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 16px;
 }
 .producto-foto img {
   max-width: 100%;
@@ -2244,4 +2244,5 @@ main {
 .producto-cotizar:hover { background: #16b34a; }
 
 @media (max-width: 900px) { .productos-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 760px) { .producto-foto { height: 170px; padding: 14px; } }
 @media (max-width: 520px) { .productos-grid { grid-template-columns: 1fr; } }

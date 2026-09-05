@@ -35,7 +35,7 @@
       "product_url": "https://www.hikvision.com/en/products/IP-Products/Network-Cameras/Pro-Series-EasyIP-/ds-2cd2043g2-i-u-/",
       "image_url": "https://assets.hikvision.com/prd/public/all/doc/sm000058907/DS-2CD2043G2-IU_Datasheet_V5.5.113_20230303.pdf",
       "confianza": "media",
-      "notas": "Igual que el 1021G0: foto extraída de la página 1 de la ficha oficial en PDF (assets.hikvision.com, ~473x473). El PDF es de la variante I(U), mismo cuerpo bullet AcuSense 4MP."
+      "notas": "Foto extraída de la ficha oficial en PDF (assets.hikvision.com, variante I(U), mismo cuerpo bullet AcuSense 4MP). No existe imagen oficial de Hikvision del modelo sobre fondo blanco: el asset embebido viene sobre fondo NEGRO, así que el script aplica su soft-mask (alfa embebido en el PDF) para recortar la cámara y aplanarla sobre blanco, consistente con las demás."
     },
     {
       "modelo": "Reolink RLC-510WA",
