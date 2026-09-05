@@ -1,0 +1,50 @@
+{
+  "_comentario": "Sensores inteligentes para la Tienda. Mismo formato; scripts/fetch_product_images.py lee este JSON junto con cámaras y cerraduras. Sonoff: imagen del fabricante ITEAD (itead.cc, que fabrica la marca SONOFF; los modelos base ya no tienen página en sonoff.tech). Aqara: CDN oficial us.aqara.com. Tuya (humo): white-label sin sitio de fabricante único, se usa la mejor foto limpia con fondo blanco y se anota la fuente.",
+  "productos": [
+    {
+      "modelo": "Sonoff SNZB-04",
+      "fabricante": "Sonoff",
+      "slug": "sonoff-snzb-04",
+      "product_url": "https://sonoff.tech/product/gateway-and-sensors/snzb-04p/",
+      "image_url": "https://sonoff.tech/cdn/shop/files/SNZB-04P_3ecebce5-6f5f-4657-9d34-dc292e699965.avif",
+      "confianza": "alta",
+      "notas": "Foto de estudio solo-dispositivo (fondo blanco, pequeño badge Zigbee en la esquina) desde el CDN oficial sonoff.tech. Es la variante SNZB-04P, visualmente idéntica al SNZB-04 base (mismo sensor de contacto blanco de dos piezas); el modelo base ya no tiene página en sonoff.tech. AVIF transcodificado a JPG por el script (ffmpeg)."
+    },
+    {
+      "modelo": "Sonoff SNZB-03P",
+      "fabricante": "Sonoff",
+      "slug": "sonoff-snzb-03",
+      "product_url": "https://sonoff.tech/product/gateway-and-sensors/snzb-03p/",
+      "image_url": "https://sonoff.tech/cdn/shop/files/SNZB-03P_Zigbee.avif",
+      "confianza": "alta",
+      "notas": "Foto de estudio solo-dispositivo (fondo blanco, pequeño badge Zigbee) desde el CDN oficial sonoff.tech. Se usa la variante ACTUAL SNZB-03P (rediseño cilíndrico con base pivotante): el SNZB-03 base (cuadrado) está descontinuado y no tiene foto oficial limpia. Por eso la tarjeta se rotula 'SNZB-03P', para que coincida con la imagen. AVIF transcodificado a JPG por el script (ffmpeg)."
+    },
+    {
+      "modelo": "Tuya Sensor de Humo",
+      "fabricante": "Tuya",
+      "slug": "tuya-sensor-humo",
+      "product_url": "",
+      "image_url": "https://ueeshop.ly200-cdn.com/u_file/UPBE/UPBE110/2406/products/19/0ccf77d27b.jpg?x-oss-process=image/quality,q_100/resize,m_lfit,h_1000,w_1000",
+      "confianza": "media",
+      "notas": "Detector de humo Tuya white-label (WiFi/Zigbee), sin sitio de fabricante único. Foto de estudio fondo blanco (1000x1000) con logo 'Zemismart' en una esquina. Fuente: Zemismart (revendedor Tuya/Zigbee), CDN ueeshop.ly200-cdn.com."
+    },
+    {
+      "modelo": "Aqara Water Leak Sensor",
+      "fabricante": "Aqara",
+      "slug": "aqara-water-leak-sensor",
+      "product_url": "https://us.aqara.com/products/water-leak-sensor",
+      "image_url": "https://us.aqara.com/cdn/shop/files/Aqara_Water_Leak_Sensor.webp?v=1728699336&width=1200",
+      "confianza": "alta",
+      "notas": "Modelo exacto. Imagen principal del CDN oficial de Aqara (us.aqara.com): sensor redondo blanco con ícono de gota, fondo blanco limpio."
+    },
+    {
+      "modelo": "Aqara Vibration Sensor",
+      "fabricante": "Aqara",
+      "slug": "aqara-vibration-sensor",
+      "product_url": "https://us.aqara.com/products/vibration-sensor",
+      "image_url": "https://us.aqara.com/cdn/shop/files/Aqara_Vibration_Sensor_3.webp?v=1735633761&width=1200",
+      "confianza": "alta",
+      "notas": "Modelo DJT11LM. CDN oficial de Aqara (us.aqara.com): módulo cuadrado blanco con ícono de ondas, solo el dispositivo (se descartó la variante con caja de retail), fondo blanco."
+    }
+  ]
+}

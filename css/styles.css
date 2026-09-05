@@ -2186,6 +2186,13 @@ main {
   background: rgba(245, 179, 1, 0.12);
   border-color: rgba(245, 179, 1, 0.32);
 }
+/* Variante para sensores: teal, distinto del verde (compatible) y del ámbar
+   (acceso). No implica integración con Protect(IA). */
+.producto-badge--sensor {
+  color: #2dd4bf;
+  background: rgba(20, 184, 166, 0.12);
+  border-color: rgba(20, 184, 166, 0.34);
+}
 .producto-nombre {
   margin: 2px 0 0;
   font: 700 16px var(--fuente);

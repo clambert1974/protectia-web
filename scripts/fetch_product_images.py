@@ -36,7 +36,8 @@ from PIL import Image, ImageStat
 
 BASE = Path(__file__).resolve().parent          # scripts/
 REPO = BASE.parent                               # raíz de protectia-web
-JSON_FILES = [BASE / "productos_camaras.json", BASE / "productos_cerraduras.json"]
+JSON_FILES = [BASE / "productos_camaras.json", BASE / "productos_cerraduras.json",
+              BASE / "productos_sensores.json"]
 OUT_DIR = REPO / "img" / "productos"
 
 MAX_SIDE = 800                 # lado máximo (px) tras redimensionar
@@ -59,6 +60,8 @@ FABRICANTE_DOMINIOS = {
     "Reolink": ("reolink.com", "reolink.us"),
     "Yale": ("yalehome.cl", "yale.cl", "yalehome.com", "yale.com", "yalehome.com.ar"),
     "Kaadas": ("kaadas.com", "kaadas.cl", "kaadas.com.my"),
+    "Sonoff": ("sonoff.tech", "itead.cc"),
+    "Aqara": ("aqara.com",),
 }
 
 
@@ -92,7 +95,26 @@ def imagen_desde_descarga(data):
     imagen embebida mas grande de la PAGINA 1: es la foto de estudio del producto."""
     if data[:5] == b"%PDF-":
         return _imagen_de_pdf(data)
-    return Image.open(io.BytesIO(data))
+    try:
+        im = Image.open(io.BytesIO(data))
+        im.load()
+        return im
+    except Exception:                              # noqa: BLE001 — formato que PIL no abre (AVIF)
+        return _imagen_via_ffmpeg(data)
+
+
+def _imagen_via_ffmpeg(data):
+    """Transcodifica a PNG con ffmpeg lo que PIL 9.4 no abre (p.ej. AVIF, que
+    sirve el CDN de sonoff.tech)."""
+    with tempfile.TemporaryDirectory() as td:
+        src, out = os.path.join(td, "in"), os.path.join(td, "out.png")
+        with open(src, "wb") as f:
+            f.write(data)
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", src, out],
+                       check=True, capture_output=True)
+        im = Image.open(out)
+        im.load()
+        return im.copy()
 
 
 def _imagen_de_pdf(data):
