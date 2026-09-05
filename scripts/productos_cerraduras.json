@@ -1,0 +1,41 @@
+{
+  "_comentario": "Candados y cerraduras de acceso inteligente para la Tienda. Mismo formato que productos_camaras.json; scripts/fetch_product_images.py lee ambos. Yale/Kaadas: imagen oficial del fabricante (regional). Tuya: producto white-label sin sitio de fabricante único, se usa la mejor foto limpia con fondo blanco y se anota la fuente en 'notas'.",
+  "productos": [
+    {
+      "modelo": "Tuya Candado Huella SG-SPL10",
+      "fabricante": "Tuya",
+      "slug": "candado-inteligente-huella-tuya",
+      "product_url": "",
+      "image_url": "https://imgaz2.staticbg.com/thumb/large/oaupload/ser1/banggood/images/95/EF/e3b33bc0-5da5-4b85-b8c1-f78d6af4760d.jpg.webp",
+      "confianza": "media",
+      "notas": "Producto Tuya/TTLock white-label (candado huella USB, IP65) equivalente al SG-SPL10; no es el SKU exacto rotulado. Foto de estudio fondo blanco (1000x1000). Fuente: CDN de Banggood (staticbg.com) — no hay sitio de fabricante único para este genérico."
+    },
+    {
+      "modelo": "Tuya Cerradura Huella+Clave+WiFi F3",
+      "fabricante": "Tuya",
+      "slug": "cerradura-inteligente-huella-clave-wifi-tuya",
+      "product_url": "https://moeshouse.com/products/wifi-tuya-smart-door-lock-fingerprint-digital-password-lock-waterproof",
+      "image_url": "https://moeshouse.com/cdn/shop/products/wifi-tuya-smart-door-lock-fingerprint-digital-password-lock-waterproof-790917.jpg?v=1688695257&width=1946",
+      "confianza": "alta",
+      "notas": "Cerradura de sobreponer Tuya WiFi (huella + clave + tarjeta + app), familia F3/A261. Foto de estudio fondo blanco (1001x1001). Fuente: MOES (moeshouse.com), retailer del ecosistema Tuya — sin sitio de fabricante único para este genérico."
+    },
+    {
+      "modelo": "Yale YMC420",
+      "fabricante": "Yale",
+      "slug": "yale-ymc420",
+      "product_url": "https://yalehome.com.ar/products/cerradura-de-embutir-digital-ymc420",
+      "image_url": "https://yalehome.com.ar/cdn/shop/files/YMC420_1.png?v=1761848854&width=1024",
+      "confianza": "alta",
+      "notas": "Modelo exacto. Foto de estudio fondo blanco, cerradura de embutir digital con teclado retroiluminado y manilla. Fuente: tienda oficial Yale/Assa Abloy Argentina (yalehome.com.ar); no está publicado en yalehome.cl."
+    },
+    {
+      "modelo": "Kaadas K20 Pro Max",
+      "fabricante": "Kaadas",
+      "slug": "kaadas-k20-pro-max",
+      "product_url": "https://kaadas.com.my/product/kaadas-k20-pro-max/",
+      "image_url": "https://kaadas.com.my/wp-content/uploads/2024/10/K20-pro-max-copper_0-1-1.jpg",
+      "confianza": "alta",
+      "notas": "Modelo exacto (variante Copper). og:image oficial, foto de estudio sobre fondo claro/degradado (1000x1250): panel exterior con cámara + huella + teclado y panel interior con pantalla. Fuente: sitio regional oficial Kaadas (kaadas.com.my); kaadas.cl no está activo con el producto."
+    }
+  ]
+}

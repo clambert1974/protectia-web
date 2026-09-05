@@ -2179,6 +2179,13 @@ main {
   padding: 4px 9px;
   border-radius: 999px;
 }
+/* Variante para accesos inteligentes (candados/cerraduras): funcionan con su
+   propia app, no con Protect(IA). Ámbar para distinguirla del verde "compatible". */
+.producto-badge--acceso {
+  color: #f5b301;
+  background: rgba(245, 179, 1, 0.12);
+  border-color: rgba(245, 179, 1, 0.32);
+}
 .producto-nombre {
   margin: 2px 0 0;
   font: 700 16px var(--fuente);

@@ -36,7 +36,7 @@ from PIL import Image, ImageStat
 
 BASE = Path(__file__).resolve().parent          # scripts/
 REPO = BASE.parent                               # raíz de protectia-web
-JSON_PATH = BASE / "productos_camaras.json"
+JSON_FILES = [BASE / "productos_camaras.json", BASE / "productos_cerraduras.json"]
 OUT_DIR = REPO / "img" / "productos"
 
 MAX_SIDE = 800                 # lado máximo (px) tras redimensionar
@@ -57,13 +57,19 @@ FABRICANTE_DOMINIOS = {
     "Dahua": ("dahuasecurity.com",),
     "Hikvision": ("hikvision.com", "hikvisioneurope.com"),
     "Reolink": ("reolink.com", "reolink.us"),
+    "Yale": ("yalehome.cl", "yale.cl", "yalehome.com", "yale.com", "yalehome.com.ar"),
+    "Kaadas": ("kaadas.com", "kaadas.cl", "kaadas.com.my"),
 }
 
 
 def es_dominio_fabricante(url, fabricante):
-    """La URL tiene que colgar del dominio del fabricante, no de un tercero."""
+    """La URL debe colgar del dominio del fabricante. Para marcas SIN dominio
+    propio en el mapa (p.ej. Tuya genérico), no se restringe: se acepta la mejor
+    imagen limpia disponible y la fuente queda anotada en el JSON (campo notas)."""
+    dominios = FABRICANTE_DOMINIOS.get(fabricante)
+    if not dominios:
+        return True
     host = (urlparse(url).hostname or "").lower()
-    dominios = FABRICANTE_DOMINIOS.get(fabricante, ())
     return any(host == d or host.endswith("." + d) for d in dominios)
 
 
@@ -174,7 +180,10 @@ def main():
     ap.add_argument("--force", action="store_true", help="re-descarga aunque el .jpg ya exista")
     args = ap.parse_args()
 
-    productos = json.loads(JSON_PATH.read_text(encoding="utf-8"))["productos"]
+    productos = []
+    for jf in JSON_FILES:
+        if jf.exists():
+            productos.extend(json.loads(jf.read_text(encoding="utf-8"))["productos"])
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
     filas, ok, fallos = [], 0, 0
