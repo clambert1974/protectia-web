@@ -2193,6 +2193,13 @@ main {
   background: rgba(20, 184, 166, 0.12);
   border-color: rgba(20, 184, 166, 0.34);
 }
+/* Variante para disuasión sonora (sirenas/bocinas/timbres): coral, propia,
+   distinta de teal/ámbar/verde. */
+.producto-badge--sonido {
+  color: #fb7185;
+  background: rgba(251, 113, 133, 0.12);
+  border-color: rgba(251, 113, 133, 0.34);
+}
 .producto-nombre {
   margin: 2px 0 0;
   font: 700 16px var(--fuente);

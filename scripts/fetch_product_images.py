@@ -37,7 +37,7 @@ from PIL import Image, ImageStat
 BASE = Path(__file__).resolve().parent          # scripts/
 REPO = BASE.parent                               # raíz de protectia-web
 JSON_FILES = [BASE / "productos_camaras.json", BASE / "productos_cerraduras.json",
-              BASE / "productos_sensores.json"]
+              BASE / "productos_sensores.json", BASE / "productos_bocinas.json"]
 OUT_DIR = REPO / "img" / "productos"
 
 MAX_SIDE = 800                 # lado máximo (px) tras redimensionar
@@ -62,6 +62,9 @@ FABRICANTE_DOMINIOS = {
     "Kaadas": ("kaadas.com", "kaadas.cl", "kaadas.com.my"),
     "Sonoff": ("sonoff.tech", "itead.cc"),
     "Aqara": ("aqara.com",),
+    "Heiman": ("heiman.com", "heimantech.com"),
+    "Pyle": ("pyleusa.com", "pyleaudio.com"),
+    "TOA": ("toaelectronics.com", "toa.jp", "toa-products.com"),
 }
 
 
@@ -226,7 +229,16 @@ def main():
                 ok += 1
                 continue
             data = descargar(url, ref)
-            jpeg, (w, h), (w0, h0) = normalizar(imagen_desde_descarga(data))
+            im = imagen_desde_descarga(data)
+            # Recorte opcional (fracciones x0,y0,x1,y1): aísla el producto cuando
+            # la fuente oficial es una ficha/infografía y el producto va en una
+            # esquina limpia (p.ej. la sirena Heiman sobre su hoja de specs).
+            recorte = p.get("crop")
+            if recorte:
+                iw, ih = im.size
+                im = im.crop((int(iw * recorte[0]), int(ih * recorte[1]),
+                              int(iw * recorte[2]), int(ih * recorte[3])))
+            jpeg, (w, h), (w0, h0) = normalizar(im)
             destino.write_bytes(jpeg)
             kb = len(jpeg) / 1024
             host = urlparse(url).hostname
