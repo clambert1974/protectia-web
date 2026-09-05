@@ -267,21 +267,6 @@ a:focus-visible {
   gap: 8px;
 }
 
-.btn-comenzar {
-  flex: none;
-  font-weight: 600;
-  font-size: 14px;
-  background: var(--tinta);
-  color: var(--fondo);
-  padding: 11px 18px;
-  border-radius: 8px;
-}
-
-.btn-comenzar:hover {
-  background: #1B3226;
-  color: var(--fondo);
-}
-
 /* Secciones — el esqueleto de la home ---------------------------------------
    Todo el largo de la página son secciones apiladas del mismo ancho útil. El
    ritmo lo dan .seccion (aire vertical) y .seccion-inner (ancho y laterales
@@ -1805,12 +1790,6 @@ main {
 
   /* El número queda; se va la palabra que lo introduce. */
   .btn-tel-rotulo {
-    display: none;
-  }
-
-  /* "Comenzar" sale de la cabecera: la barra fija de abajo y el botón de cada
-     sección ya cubren la conversión, y el teléfono tiene que respirar. */
-  .btn-comenzar {
     display: none;
   }
 
