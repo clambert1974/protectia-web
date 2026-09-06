@@ -9,34 +9,6 @@
       "image_url": "https://moeshouse.com/cdn/shop/products/tuya-smart-wifizigbee-sound-light-siren-alarm-solar-energy-outdoor-ipx5-waterproof-tamper-alarm-with-rechargeable-battery-434922.png?v=1688695158&width=1946",
       "confianza": "media",
       "notas": "Sirena exterior de sonido + luz estroboscópica Tuya (WiFi/Zigbee). Foto de estudio fondo blanco (1600x1600). Fuente: MOES (moeshouse.com), OEM del ecosistema Tuya. Salvedad: este modelo es IPX5 + panel solar/batería (no exactamente IP65); mismo tipo de dispositivo."
-    },
-    {
-      "modelo": "Heiman HS2WD",
-      "fabricante": "Heiman",
-      "slug": "sirena-interior-zigbee-heiman",
-      "product_url": "https://www.heimantech.com/",
-      "image_url": "https://www.heimantech.com/upload/2025/11/20251113151155_959.png",
-      "crop": [0.645, 0.215, 0.995, 0.585],
-      "confianza": "alta",
-      "notas": "Sirena Zigbee HS2WD (hasta ~105 dB, con estrobo, plug-and-play), sitio oficial del fabricante (heimantech.com). La imagen oficial es una ficha/infografía; el script recorta (campo 'crop') el producto aislado sobre blanco de la esquina superior derecha."
-    },
-    {
-      "modelo": "TOA SC-630TU",
-      "fabricante": "TOA",
-      "slug": "bocina-exterior-horn-pa",
-      "product_url": "https://www.toaelectronics.com/products/sc-630tu",
-      "image_url": "https://www.toaelectronics.com/toa-assets/SC-630TU_Angle.jpg",
-      "confianza": "alta",
-      "notas": "Bocina tipo horn PA (TOA SC-630TU, 30W, exterior) desde el sitio oficial del fabricante (toaelectronics.com). Foto de estudio solo-dispositivo sobre fondo blanco, con soporte de montaje; sin caja ni texto de marketing. Representa la categoría 'bocina exterior para disuasión por voz' (parlante PA de línea, no autoamplificado)."
-    },
-    {
-      "modelo": "Linptech G6-TY (compatible Tuya)",
-      "fabricante": "Tuya",
-      "slug": "timbre-inteligente-chime",
-      "product_url": "https://www.linptech.org/",
-      "image_url": "https://www.linptech.org/wp-content/uploads/2021/12/g6-ty.jpg",
-      "confianza": "media",
-      "notas": "Timbre inteligente con chime: botón autoalimentado + receptor/chime enchufable. Modelo Linptech G6-TY (variante Tuya/Smart Life), del sitio oficial del fabricante (linptech.org). Foto de estudio de ambas unidades sobre fondo gris muy claro. Salvedad: resolución modesta (378x446) y fondo claro (no blanco puro). Sonoff no ofrece un timbre+chime dedicado con imagen limpia."
     }
   ]
 }

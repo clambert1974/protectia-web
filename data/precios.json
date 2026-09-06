@@ -1,12 +1,84 @@
 {
   "_comentario": "Feed de precios para la Tienda. Generado por el run diario de ~/precios. El cliente valida valido_hasta.",
-  "generado": "2026-09-05T19:59:38-04:00",
+  "generado": "2026-09-05T22:23:08-04:00",
   "productos": [
+    {
+      "slug": "aqara-vibration-sensor",
+      "precio_publicado": 16990,
+      "stock": true,
+      "valido_hasta": "2026-09-07T22:23:08-04:00"
+    },
+    {
+      "slug": "candado-inteligente-huella-tuya",
+      "precio_publicado": 93990,
+      "stock": true,
+      "valido_hasta": "2026-09-07T22:23:08-04:00"
+    },
+    {
+      "slug": "cerradura-inteligente-huella-clave-wifi-tuya",
+      "precio_publicado": 82990,
+      "stock": true,
+      "valido_hasta": "2026-09-07T22:23:08-04:00"
+    },
+    {
+      "slug": "dahua-dh-ipc-hdw1431t1p-a-0280b-s6",
+      "precio_publicado": 76990,
+      "stock": true,
+      "valido_hasta": "2026-09-07T22:23:08-04:00"
+    },
+    {
+      "slug": "dahua-dh-ipc-hfw1239tl1p-a-il",
+      "precio_publicado": 68990,
+      "stock": true,
+      "valido_hasta": "2026-09-07T22:23:08-04:00"
+    },
     {
       "slug": "hikvision-ds-2cd1021g0-i",
       "precio_publicado": 19990,
       "stock": true,
-      "valido_hasta": "2026-09-07T19:59:38-04:00"
+      "valido_hasta": "2026-09-07T22:23:08-04:00"
+    },
+    {
+      "slug": "hikvision-ds-2cd2043g2-i",
+      "precio_publicado": 113990,
+      "stock": true,
+      "valido_hasta": "2026-09-07T22:23:08-04:00"
+    },
+    {
+      "slug": "kaadas-k20-pro-max",
+      "precio_publicado": 758990,
+      "stock": true,
+      "valido_hasta": "2026-09-07T22:23:08-04:00"
+    },
+    {
+      "slug": "reolink-rlc-510wa",
+      "precio_publicado": 54990,
+      "stock": true,
+      "valido_hasta": "2026-09-07T22:23:08-04:00"
+    },
+    {
+      "slug": "sirena-exterior-estrobo-tuya",
+      "precio_publicado": 29990,
+      "stock": true,
+      "valido_hasta": "2026-09-07T22:23:08-04:00"
+    },
+    {
+      "slug": "sonoff-snzb-04",
+      "precio_publicado": 14990,
+      "stock": true,
+      "valido_hasta": "2026-09-07T22:23:08-04:00"
+    },
+    {
+      "slug": "tuya-sensor-humo",
+      "precio_publicado": 23990,
+      "stock": true,
+      "valido_hasta": "2026-09-07T22:23:08-04:00"
+    },
+    {
+      "slug": "yale-ymc420",
+      "precio_publicado": 329990,
+      "stock": true,
+      "valido_hasta": "2026-09-07T22:23:08-04:00"
     }
   ]
 }

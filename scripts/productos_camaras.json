@@ -45,15 +45,6 @@
       "image_url": "https://home-cdn.reolink.us/wp-content/uploads/2026/04/RLC-510WA-1-Pack-White.png",
       "confianza": "alta",
       "notas": "Modelo exacto. Foto de estudio fondo blanco (archivo 'RLC-510WA-1-Pack-White.png') desde el CDN oficial home-cdn.reolink.us. La primera imagen del carrusel era una toma ambientada (cámara sobre un muro); ésta es la de fondo blanco, consistente con las demás."
-    },
-    {
-      "modelo": "Reolink Duo 3 PoE",
-      "fabricante": "Reolink",
-      "slug": "reolink-duo-3-poe",
-      "product_url": "https://reolink.com/product/reolink-duo-3-poe/",
-      "image_url": "https://home-cdn.reolink.us/wp-content/uploads/2024/01/030826541704270414.65.png",
-      "confianza": "alta",
-      "notas": "Modelo exacto. og:image oficial de la página de producto (PNG 400x400, fondo transparente) desde el CDN oficial home-cdn.reolink.us. Las URLs del carrusel eran una miniatura y un badge 'Works with Home Assistant'; ésta es la foto real de la cámara dual-lens."
     }
   ]
 }
