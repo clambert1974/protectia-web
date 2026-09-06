@@ -2243,6 +2243,26 @@ main {
 }
 .producto-cotizar:hover { background: #16b34a; }
 
+/* Bloque de oferta (lo inyecta el JS de precios sólo si hay precio vigente). El
+   wrapper toma el margin-top:auto para pegar precio+despacho+botón al fondo de la
+   tarjeta; el botón contiguo deja de necesitar su propio auto. */
+.producto-oferta {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.producto-precio {
+  font: 700 22px var(--fuente);
+  color: var(--verde-vivo);              /* verde esmeralda sobre la tarjeta oscura */
+  letter-spacing: 0.01em;
+}
+.producto-despacho {
+  font: 500 11px var(--mono);
+  color: #9FB4AA;
+}
+.producto-oferta + .producto-cotizar { margin-top: 8px; }
+
 @media (max-width: 900px) { .productos-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 760px) { .producto-foto { height: 170px; padding: 14px; } }
 @media (max-width: 520px) { .productos-grid { grid-template-columns: 1fr; } }

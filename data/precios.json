@@ -1,0 +1,12 @@
+{
+  "_comentario": "Feed de precios para la Tienda. Generado por el run diario de ~/precios. El cliente valida valido_hasta.",
+  "generado": "2026-09-05T19:59:38-04:00",
+  "productos": [
+    {
+      "slug": "hikvision-ds-2cd1021g0-i",
+      "precio_publicado": 19990,
+      "stock": true,
+      "valido_hasta": "2026-09-07T19:59:38-04:00"
+    }
+  ]
+}
