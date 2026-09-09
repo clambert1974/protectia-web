@@ -4,661 +4,320 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-  <title>Protect(IA) — Convierte tus cámaras en un sistema que verifica y actúa</title>
-  <meta name="description" content="Usa las cámaras que ya tienes. Protect(IA) verifica cada alerta con inteligencia artificial, le habla al intruso, te llama y avisa a tu barrio. $30.000 al mes, sin contratos de permanencia. El video se queda en tu casa.">
+  <title>ProtectIA HOME | Seguridad integrada con IA</title>
+  <meta name="description" content="Integra cámaras compatibles, reconocimiento facial y avisos según la configuración de tu hogar. Conoce ProtectIA HOME y habla con Catalina, asistente de voz con IA.">
 
-  <!-- Open Graph -->
+  <!-- Open Graph. Se conservan tipo/idioma/URL de la fuente: no hay <link
+       rel="canonical"> en el sitio y no se inventa uno acá. -->
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_CL">
-  <meta property="og:site_name" content="Protect(IA)">
+  <meta property="og:site_name" content="ProtectIA HOME">
   <meta property="og:url" content="https://protectia.cl/">
-  <meta property="og:title" content="Protect(IA) — Convierte tus cámaras en un sistema que verifica y actúa">
-  <meta property="og:description" content="Conserva tus cámaras y hazlas inteligentes. Alertas verificadas por IA, disuasión por voz y llamadas automáticas. $30.000 al mes, sin permanencia.">
-  <!-- TODO: reemplazar por la imagen definitiva (1200x630) -->
-  <meta property="og:image" content="https://protectia.cl/img/og-protectia.jpg">
+  <meta property="og:title" content="ProtectIA HOME | Seguridad integrada con IA">
+  <meta property="og:description" content="Integra cámaras compatibles, reconocimiento facial y avisos según la configuración de tu hogar. Conoce ProtectIA HOME y habla con Catalina, asistente de voz con IA.">
+  <meta property="og:image" content="https://protectia.cl/img/hero-web18-v1.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1672">
+  <meta property="og:image:height" content="941">
+  <meta property="og:image:alt" content="Ilustración conceptual de ProtectIA HOME: vivienda iluminada y rostro abstracto turquesa">
 
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 
-  <!-- Tipografías self-hosted (SIL OFL 1.1). Ver fonts/OFL.txt y fonts/OFL-IBM-Plex.txt.
-       Se precargan las tres que se usan sobre la línea de flotación; el peso 600
-       de la mono lo pide el CSS y solo aparece en la etiqueta de la detección. -->
-  <link rel="preload" href="fonts/space-grotesk-variable-latin.woff2"
-        as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/ibm-plex-mono-400-latin.woff2"
-        as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/ibm-plex-mono-500-latin.woff2"
-        as="font" type="font/woff2" crossorigin>
-
+  <!-- El diseño WEB18 usa serif del sistema para la marca y sans del sistema
+       para la interfaz: la portada ya no carga Space Grotesk ni IBM Plex Mono,
+       así que acá se fueron los tres <link rel="preload"> de esas fuentes. Los
+       @font-face siguen en css/styles.css porque tienda y páginas legales sí
+       las usan. -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body class="web18">
 
-  <!-- Franja de estado ---------------------------------------------------- -->
-  <div class="franja">
-    <span class="franja-estado">
-      <span class="franja-punto" aria-hidden="true"></span>
-      <span class="franja-texto">SISTEMA ACTIVO — EL VIDEO SE PROCESA EN TU CASA, NO EN LA NUBE</span>
-    </span>
-    <!-- El reloj es decorativo: no se anuncia. En móvil queda solo la hora. -->
-    <span class="franja-ts" aria-hidden="true"><span class="franja-fecha"
-      id="franja-fecha"></span><span id="franja-hora"></span><span
-      class="franja-lugar"> · CHILE</span></span>
-  </div>
+  <a class="skip" href="#contenido">Ir al contenido</a>
 
-  <!-- Cabecera ------------------------------------------------------------- -->
-  <header class="site-header">
-    <a class="logo" href="#top">PROTECT<span class="logo-ia">(IA)</span></a>
+  <!-- Cabecera -------------------------------------------------------------
+       La navegación nace visible y el botón de menú nace `hidden`: sin JS el
+       menú sigue estando. js/main.js le pone .menu-js a la cabecera y recién
+       ahí, bajo 760px, el nav se colapsa detrás del botón. -->
+  <header class="site-header" id="top">
+    <a class="wordmark wordmark-small" href="#top" aria-label="ProtectIA HOME, inicio"><span>Protect<span class="ia">IA</span></span><span class="home">HOME</span></a>
 
-    <!-- El nav se oculta bajo 760px; el menú móvil sigue pendiente. -->
-    <nav class="site-nav" aria-label="Navegación principal">
-      <a class="nav-link" href="#como-funciona">CÓMO FUNCIONA</a>
-      <a class="nav-link" href="#plan">PLAN</a>
-      <a class="nav-link" href="/tienda.html">TIENDA</a>
-      <a class="nav-link" href="#faq">PREGUNTAS</a>
+    <button class="menu-toggle" type="button" hidden
+            aria-label="Abrir navegación" aria-controls="navigation" aria-expanded="false">
+      <span aria-hidden="true"></span><span aria-hidden="true"></span>
+    </button>
+
+    <nav id="navigation" aria-label="Navegación principal">
+      <a href="#como-funciona">Cómo funciona</a><a href="#plan">HOME y Vecinal</a><a href="/tienda.html">Tiend<span class="no-break">a ↗</span></a><a href="#faq">Preguntas</a>
     </nav>
 
-    <div class="cabecera-acciones">
-      <a class="btn-tel" href="tel:6009142219"><span class="btn-tel-rotulo">Llámanos:
-        </span>600 914 2219</a>
-    </div>
+    <a class="header-contact" href="tel:6009142219"><span>Habla con Catalina</span><strong>600 914 2219 <span aria-hidden="true">↗</span></strong></a>
   </header>
 
-  <main id="top">
+  <main id="contenido">
 
-    <!-- Doble puerta de entrada --------------------------------------------
-         El patrón central: cada visitante llega con una de dos situaciones y
-         cada tarjeta lo lleva por su camino. La primera además deja marcada
-         la respuesta en el formulario (data-camaras), para no preguntarle
-         dos veces lo mismo. -->
-    <section class="seccion seccion-puertas" id="puertas" aria-labelledby="puertas-titulo">
-      <div class="seccion-inner">
-        <p class="seccion-kicker">EMPIEZA POR ACÁ</p>
-        <h1 class="seccion-titulo seccion-titulo-h1" id="puertas-titulo">
-          Tus cámaras ya ven. <span class="resalte">Nosotros las hacemos entender.</span>
-        </h1>
-
-        <div class="puertas">
-          <article class="puerta">
-            <span class="esquina esquina-si" aria-hidden="true"></span>
-            <span class="esquina esquina-sd" aria-hidden="true"></span>
-            <span class="esquina esquina-ii" aria-hidden="true"></span>
-            <span class="esquina esquina-id" aria-hidden="true"></span>
-
-            <h2 class="puerta-titulo">¿Ya tienes cámaras?</h2>
-            <p class="puerta-texto">
-              Consérvalas y hazlas inteligentes. Verificamos compatibilidad
-              gratis y las conectamos a Protect(IA) sin cambiar nada.
-            </p>
-            <a class="btn-puerta" href="#contacto" data-camaras="Sí">Verificar compatibilidad</a>
-          </article>
-
-          <article class="puerta puerta-alterna">
-            <h2 class="puerta-titulo">¿No tienes cámaras?</h2>
-            <p class="puerta-texto">
-              Te decimos exactamente cuál comprar y dónde, al mejor precio del
-              mercado. Tú la compras, nosotros la hacemos inteligente.
-            </p>
-            <a class="btn-puerta btn-puerta-plano" href="#como-funciona">Cómo funciona</a>
-          </article>
+    <!-- Portada ------------------------------------------------------------- -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-scene">
+        <img src="img/hero-web18-v1.png" width="1672" height="941" decoding="async"
+             alt="Ilustración conceptual de una vivienda iluminada y una figura facial de puntos turquesa; no representa una instalación real.">
+      </div>
+      <div class="hero-content wrap">
+        <p class="eyebrow">SEGURIDAD · INTELIGENCIA ARTIFICIAL · TU HOGAR</p>
+        <div class="wordmark hero-brand" aria-label="ProtectIA HOME"><span>Protect<span class="ia">IA</span></span><span class="home">HOME</span></div>
+        <h1 id="hero-title">Un ecosistema de seguridad<br class="desktop-break"> integrado con IA.</h1>
+        <p class="hero-intro">Conecta cámaras compatibles, reconocimiento facial y avisos en una experiencia pensada para tu hogar.</p>
+        <div class="hero-actions">
+          <a class="button primary hero-call" href="tel:6009142219"><span class="call-label">Habla con Catalina<small>600 914 2219</small></span><span aria-hidden="true">↗</span></a>
+          <a class="text-link" href="#contacto">Cuéntanos qué necesitas <span aria-hidden="true">↓</span></a>
         </div>
+        <p class="hero-condition">Catalina · Asistente de voz con IA.<br>Integración y disponibilidad según la configuración de cada hogar.</p>
+      </div>
+      <p class="image-caption">Ilustración conceptual creada con IA</p>
+    </section>
+
+    <!-- Franja de capacidades — destino de #pilares -------------------------- -->
+    <div class="capability-strip wrap" id="pilares" aria-label="Componentes del ecosistema">
+      <div><span class="tiny-index">01</span><p>Reconocimiento facial<span>Personas registradas</span></p></div>
+      <div><span class="tiny-index">02</span><p>Cámaras compatibles<span>Evaluación por hogar</span></p></div>
+      <div><span class="tiny-index">03</span><p>Avisos y disuasión<span>App · llamadas · voz opcional</span></p></div>
+    </div>
+
+    <!-- El valor de integrar — destino de #como-funciona ---------------------
+         El esquema conceptual (#momento) reemplaza a la secuencia temporizada
+         de la demo anterior: es información, no telemetría. -->
+    <section class="section wrap ecosystem" id="como-funciona" aria-labelledby="ecosystem-title">
+      <div class="section-heading"><p class="eyebrow">EL VALOR DE INTEGRAR</p><h2 id="ecosystem-title">Cada componente suma.<br><span>La integración conecta todo.</span></h2></div>
+      <div class="ecosystem-grid">
+        <div class="ecosystem-copy">
+          <h3>Más contexto para los avisos de tu casa.</h3>
+          <p>ProtectIA HOME combina detección y verificación con IA para ayudar a decidir los avisos. También intervienen las reglas del sistema y el estado del servicio.</p>
+          <p>El reconocimiento facial trabaja con personas previamente registradas y con la configuración de tu instalación.</p>
+          <p>Puedes integrar avisos en la app, llamadas configuradas y disuasión por voz con parlante opcional, según tu instalación.</p>
+          <p class="condition">Puede haber avisos incorrectos o eventos no detectados. La recepción depende de energía, conexión y servicios disponibles.</p>
+          <a class="text-link" href="#contacto">Conversemos sobre tu hogar <span aria-hidden="true">↗</span></a>
+        </div>
+        <figure class="ecosystem-diagram" id="momento">
+          <figcaption>ESQUEMA CONCEPTUAL</figcaption>
+          <div class="flow-node"><span class="node-number">01</span><div><h4>Tus cámaras</h4><p>Modelos y conexión compatibles</p></div></div>
+          <div class="flow-line" aria-hidden="true"></div>
+          <div class="flow-node featured"><span class="node-number">IA</span><div><h4>ProtectIA HOME</h4><p>Detección · personas registradas · reglas</p></div></div>
+          <div class="flow-line" aria-hidden="true"></div>
+          <div class="flow-node"><span class="node-number">03</span><div><h4>Avisos y disuasión</h4><p>App · llamadas configuradas · voz</p></div></div>
+          <p class="diagram-note">La disuasión por voz requiere un parlante opcional. Canales sujetos a la configuración de cada hogar.</p>
+        </figure>
       </div>
     </section>
 
-    <!-- Cuando cada segundo importa ----------------------------------------
-         Abre la home: se ve primera aunque en el DOM vaya segunda, para que el
-         <h1> de la doble puerta siga siendo el primer encabezado del documento.
-         El reorden es solo visual, con `order` — ver css/styles.css.
-
-         La pieza de cámara ya no es una simulación en CSS: son dos fotogramas
-         reales de la reja frontal que se alternan, y la secuencia de eventos de
-         al lado es el argumento de la sección — la diferencia entre avisar y
-         verificar, mostrada en vez de explicada. -->
-    <section class="seccion seccion-momento" id="momento" aria-labelledby="momento-titulo">
-      <div class="seccion-inner momento-inner esc-1" id="momento-inner">
-
-        <!-- Cabecera a todo el ancho: enmarca lo que el visitante va a ver antes
-             de que empiece a moverse. -->
-        <div class="momento-cab">
-          <p class="seccion-kicker">CUANDO CADA SEGUNDO IMPORTA</p>
-          <h2 class="seccion-titulo" id="momento-titulo">
-            Dos detecciones. Una sola te interrumpe.
-          </h2>
-          <!-- El argumento de las "50 alertas al día" no se pierde: eran tres
-               párrafos y una cita, y ahora es esta línea. El protagonista pasa a
-               ser la secuencia de eventos, que lo demuestra en vez de contarlo. -->
-          <p class="momento-resumen">
-            Las cámaras comunes te alertan por todo: un gato, una rama, un auto que
-            pasa. Al final dejas de mirar el teléfono — y el día que pasa algo de
-            verdad, esa alerta se pierde entre las demás. Protect(IA) analiza cada
-            movimiento con inteligencia artificial y <strong>te avisa solo cuando es
-            real</strong>.
-          </p>
-        </div>
-
-
-        <!-- La secuencia de eventos de la escena que se está mostrando. Antes vivía
-             chica bajo la cámara; ahora ocupa la mitad izquierda y es lo que tiene
-             que impactar. js/main.js la escribe línea a línea; estas de acá son el
-             caso sin JS, y van sin hora porque sin JS no hay forma honesta de saber
-             cuál corresponde.
-
-             Son las de la ESCENA 1, que es la que el contenedor trae puesta con su
-             clase esc-1. Tienen que ser la misma escena: si el <ol> describe una y
-             la cámara muestra otra, sin JS se lee una contradicción. aria-hidden:
-             el aria-label de la cámara ya narra las dos secuencias. -->
-        <!-- El CTA ocupa la mitad derecha a la altura de la cabecera: ese hueco
-             estaba vacio y es el sitio donde el visitante ya leyo de que va la
-             seccion pero todavia no empezo a mirar el bucle.
-
-             Queda uno solo. Un segundo CTA al cierre caeria pegado a los dos
-             botones de la doble puerta, que es la seccion siguiente y cuyo
-             "Verificar compatibilidad" lleva al mismo formulario: seria el
-             tercer llamado a la accion en pantalla y media. -->
-        <div class="demo-cta">
-          <a class="btn-demo-cta" href="#contacto">Programa tu consulta gratuita hoy mismo</a>
-          <a class="demo-cta-tel" href="tel:6009142219">o llámanos: 600 914 2219</a>
-        </div>
-
-        <ol class="linea-tiempo" id="log" aria-hidden="true">
-          <li><span class="lt-txt">MOVIMIENTO DETECTADO → VERIFICANDO CON IA</span></li>
-          <li class="lt-clave"><span class="lt-txt">ANIMAL · FALSA ALARMA DESCARTADA</span></li>
-          <li class="lt-remate"><span class="lt-txt">NO TE INTERRUMPIMOS POR UN PERRO</span></li>
-        </ol>
-
-        <div class="demo">
-          <div class="demo-cab">
-          <span class="demo-id">DEMOSTRACIÓN — REJA FRONTAL</span>
-          <span class="modulo-estado"><span class="modulo-estado-txt">OPERATIVO</span><span class="punto-estado" aria-hidden="true"></span></span>
-          </div>
-
-          <div class="demo-cuerpo">
-            <!-- Vista de cámara: DOS escenas reales que rotan en bucle, cada una
-                 con su fotograma de la reja frontal y las capas del sistema encima.
-                 Los dos JPEG vienen recortados a 16:10 desde el original 4:3, lo que
-                 de paso se lleva el OSD que la cámara quema en el frame —fecha arriba,
-                 "Reja frontal" abajo— que si no chocaría con el del sitio.
-
-                 La escena 2 lleva la cara difuminada de forma irrecuperable. Es una
-                 persona real que pasó por la reja: al sitio va tapada, y punto. -->
-            <div class="camara" id="camara" role="img"
-                 aria-label="Ilustración con dos fotogramas reales de una cámara de seguridad sobre la reja frontal de una casa, que se alternan en bucle. En el primero, de día y en color, un perro claro camina por el sendero: el sistema lo encuadra en gris con la etiqueta ANIMAL, descarta la falsa alarma y no avisa a nadie. En el segundo, también de día, una persona con la cabeza difuminada está de pie en la vereda, al otro lado de la reja, junto a un auto plateado estacionado. El sistema la encuadra en ámbar con la etiqueta PERSONA —la detecta antes de que entre—, verifica que no reconoce su rostro, le emite una advertencia por voz, graba, llama al cliente y avisa a los vecinos conectados. Debajo, un registro de actividad va escribiendo cada paso de las dos escenas.">
-
-              <!-- Dos capas de fondo superpuestas: el fundido entre escenas es un
-                   cambio de opacidad entre ellas, no un cambio de background, que
-                   no se puede animar. -->
-              <span class="cam-fondo cam-fondo-1" aria-hidden="true"></span>
-              <span class="cam-fondo cam-fondo-2" aria-hidden="true"></span>
-              <span class="cam-vineta" aria-hidden="true"></span>
-
-              <!-- Una caja por escena, con posición propia MEDIDA sobre su frame.
-                   Dos cajas y no una que se mueve: son dos sujetos distintos, en
-                   sitios distintos, y una transición de posición entre ellos daría
-                   la idea falsa de que es el mismo que se desplazó. -->
-              <span class="cam-caja cam-caja-1" aria-hidden="true">
-                <span class="cam-caja-etq">ANIMAL</span>
-              </span>
-              <span class="cam-caja cam-caja-2" aria-hidden="true">
-                <span class="cam-caja-etq">PERSONA</span>
-              </span>
-
-              <span class="cam-osd cam-osd-arriba" aria-hidden="true">
-                <span class="cam-fuente"><span class="cam-punto"></span>REJA FRONTAL</span>
-                <span class="cam-hora" id="cam-hora"></span>
-              </span>
-
-              <span class="cam-osd cam-osd-abajo" aria-hidden="true">
-                <!-- Los dos frames son diurnos y en color (15:51 y 15:43), así que
-                     el rótulo no cambia entre escenas. Y no dice "IR": ninguno de
-                     los dos es infrarrojo, y decirlo describiría mal lo que se ve. -->
-                <span>COLOR · DIURNO</span>
-                <span class="cam-rec">REC ●</span>
-              </span>
-            </div>
-
-          </div>
-
-        </div>
-
+    <!-- Dos puntos de partida — destino de #puertas --------------------------
+         La primera tarjeta conserva el deep-link del formulario: al bajar a
+         #contacto deja marcada la respuesta de cámaras (ver js/main.js). -->
+    <section class="path-section" id="puertas" aria-labelledby="path-title"><div class="wrap">
+      <div class="section-heading"><p class="eyebrow">PARTAMOS POR TU REALIDAD</p><h2 id="path-title">Tu hogar primero.<br>La configuración después.</h2></div>
+      <div class="path-options">
+        <article>
+          <span class="path-tag">YA TENGO CÁMARAS</span>
+          <h3>Primero, revisemos<br>tus cámaras.</h3>
+          <p>La compatibilidad se evalúa por vivienda. El equipo revisará marcas, modelos y conexión antes de confirmar una solución.</p>
+          <a class="text-link" href="#contacto" data-camaras="Sí">Consultar sobre mis cámaras <span aria-hidden="true">↗</span></a>
+        </article>
+        <article>
+          <span class="path-tag">ESTOY EMPEZANDO</span>
+          <h3>Cuéntanos qué<br>necesitas resolver.</h3>
+          <p>Puedes consultar aunque aún no tengas cámaras. Ventas revisará tu necesidad y las condiciones de una eventual propuesta.</p>
+          <a class="text-link" href="#contacto">Quiero conocer HOME <span aria-hidden="true">↗</span></a>
+        </article>
       </div>
-    </section>
+      <ol class="steps">
+        <li><span>1</span><div><h4>Conversemos</h4><p>Tu necesidad y tu comuna.</p></div></li>
+        <li><span>2</span><div><h4>Revisemos tu caso</h4><p>Instalación, alcance y compatibilidad.</p></div></li>
+        <li><span>3</span><div><h4>Define con información</h4><p>Propuesta y condiciones antes de contratar.</p></div></li>
+      </ol>
+    </div></section>
 
-    <!-- Cuatro pilares ------------------------------------------------------ -->
-    <section class="seccion seccion-pilares" id="pilares" aria-labelledby="pilares-titulo">
-      <div class="seccion-inner">
-        <p class="seccion-kicker">POR QUÉ PROTECT(IA)</p>
-        <h2 class="seccion-titulo" id="pilares-titulo">Cuatro cosas que nos hacen distintos</h2>
-
-        <ul class="pilares">
-          <li class="pilar">
-            <!-- Los íconos son decorativos: el texto del pilar ya los dice. -->
-            <span class="pilar-icono" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                   stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 8.5h10.5V17H3z"/>
-                <path d="M13.5 11.5 21 8v9l-7.5-3.5z"/>
-              </svg>
-            </span>
-            <h3 class="pilar-titulo">Usa tus cámaras</h3>
-            <p class="pilar-texto">
-              Sin cambiar equipos ni marcas: si entregan video estándar, sirven.
-            </p>
-          </li>
-
-          <li class="pilar">
-            <span class="pilar-icono" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                   stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 13l3.5 3.5L13 10"/>
-                <path d="M11 13l3.5 3.5L21 10"/>
-              </svg>
-            </span>
-            <h3 class="pilar-titulo">IA que verifica, no molesta</h3>
-            <p class="pilar-texto">
-              Cada alerta pasa por doble verificación antes de llegar a ti.
-            </p>
-          </li>
-
-          <li class="pilar">
-            <span class="pilar-icono" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                   stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 3h9l4 4v14H6z"/>
-                <path d="M9 11h7M9 15h7"/>
-                <path d="M4 5.5 20 19"/>
-              </svg>
-            </span>
-            <h3 class="pilar-titulo">Sin contratos de permanencia</h3>
-            <p class="pilar-texto">
-              Nos ganamos tu confianza cada mes; cancela cuando quieras.
-            </p>
-          </li>
-
-          <li class="pilar">
-            <span class="pilar-icono" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                   stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 10.5 12 4l9 6.5V20H3z"/>
-                <path d="M9.5 13.5h5v4h-5z"/>
-              </svg>
-            </span>
-            <h3 class="pilar-titulo">Tu video se queda en tu casa</h3>
-            <p class="pilar-texto">
-              Nadie mira tus cámaras; el análisis es automático y local.
-            </p>
-          </li>
-        </ul>
+    <!-- HOME y Vecinal — destino de #plan ------------------------------------ -->
+    <section class="section wrap plans" id="plan" aria-labelledby="plans-title">
+      <div class="section-heading split-heading">
+        <div><p class="eyebrow">DOS NECESIDADES, DOS PROPUESTAS</p><h2 id="plans-title">Tu casa.<br>También tu barrio.</h2></div>
+        <p>HOME y Comunidad Vecinal tienen alcances distintos. Puedes consultar por cada propuesta por separado.</p>
       </div>
-    </section>
-
-    <!-- Cómo funciona ------------------------------------------------------- -->
-    <section class="seccion seccion-pasos" id="como-funciona" aria-labelledby="pasos-titulo">
-      <div class="seccion-inner">
-        <p class="seccion-kicker">CÓMO FUNCIONA</p>
-        <h2 class="seccion-titulo" id="pasos-titulo">De la llamada a dormir tranquilo</h2>
-
-        <ol class="pasos">
-          <li class="paso">
-            <span class="paso-n" aria-hidden="true">1</span>
-            <h3 class="paso-titulo">Cuéntanos tu caso</h3>
-            <p class="paso-texto">
-              Verificamos gratis la compatibilidad de tus cámaras.
-            </p>
-          </li>
-          <li class="paso">
-            <span class="paso-n" aria-hidden="true">2</span>
-            <h3 class="paso-titulo">Recibe el cerebro Protect(IA)</h3>
-            <p class="paso-texto">
-              Te lo enviamos, lo enchufas al router: dos cables.
-            </p>
-          </li>
-          <li class="paso">
-            <span class="paso-n" aria-hidden="true">3</span>
-            <h3 class="paso-titulo">Activamos todo a distancia</h3>
-            <p class="paso-texto">
-              Integramos tus cámaras, calibramos tu casa y te capacitamos por
-              videollamada.
-            </p>
-          </li>
-          <li class="paso">
-            <span class="paso-n" aria-hidden="true">4</span>
-            <h3 class="paso-titulo">Duerme tranquilo</h3>
-            <p class="paso-texto">
-              Alertas verificadas, disuasión por voz, llamadas automáticas y tu
-              barrio conectado.
-            </p>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- Plan y precios ------------------------------------------------------ -->
-    <section class="seccion seccion-plan" id="plan" aria-labelledby="plan-titulo">
-      <div class="seccion-inner">
-        <p class="seccion-kicker">PLAN Y PRECIOS</p>
-        <h2 class="seccion-titulo" id="plan-titulo">Un solo plan, todo incluido</h2>
-
-        <article class="tarjeta-plan">
-          <span class="esquina esquina-si" aria-hidden="true"></span>
-          <span class="esquina esquina-sd" aria-hidden="true"></span>
-          <span class="esquina esquina-ii" aria-hidden="true"></span>
-          <span class="esquina esquina-id" aria-hidden="true"></span>
-
-          <p class="plan-rotulo">PLAN ÚNICO PROTECT(IA)</p>
-
-          <p class="plan-precio">
-            <span class="plan-monto">$30.000</span><span class="plan-periodo">/mes</span>
-          </p>
-          <p class="plan-bajada">Todo incluido. Sin permanencia.</p>
-
-          <ul class="plan-lista">
-            <li>Alertas verificadas por IA</li>
-            <li>Notificaciones y llamadas en cadena</li>
-            <li>Disuasión por voz al intruso (requiere parlante, opcional)</li>
-            <li>Comunidad Vecinal: mapa del barrio, pánico y reportes</li>
-            <li>Soporte y mejoras continuas</li>
-          </ul>
-
-          <a class="btn-plan" href="#contacto">Comenzar</a>
-
-          <ul class="plan-extras">
-            <li>
-              <strong>Activación única $379.990</strong> — incluye el equipo
-              Protect(IA), tuyo para siempre, envío y puesta en marcha remota.
-            </li>
-            <li>
-              <strong>Parlante exterior para disuasión por voz:</strong> opcional,
-              se cotiza en la activación.
-            </li>
-            <li>
-              <strong>Prepago anual:</strong> 12 meses por el precio de 10.
-            </li>
-          </ul>
+      <div class="plans-grid">
+        <article class="home-plan">
+          <span class="plan-label">PARA TU VIVIENDA</span>
+          <h3>ProtectIA <span>HOME</span></h3>
+          <p>Servicio de pago para integrar componentes de seguridad con IA, con activación y mensualidad.</p>
+          <p>El equipo de Ventas revisa contigo alcance, compatibilidad y condiciones de contratación.</p>
+          <a class="button primary" href="#contacto">Quiero conocer HOME <span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="neighborhood-plan">
+          <span class="plan-label">PARA TU COMUNIDAD</span>
+          <h3>Comunidad<br>Vecinal</h3>
+          <p>La propuesta gratuita para el barrio. No exige contratar ProtectIA HOME.</p>
+          <p>Puedes consultar por las opciones de acceso a Vecinal de forma independiente.</p>
+          <a class="button outline" href="tel:6009142219">Consultar por Vecinal <span aria-hidden="true">↗</span></a>
         </article>
       </div>
     </section>
 
-    <!-- Comparación --------------------------------------------------------- -->
-    <section class="seccion seccion-comparacion" aria-labelledby="comparacion-titulo">
-      <div class="seccion-inner">
-        <p class="seccion-kicker">LA DIFERENCIA</p>
-        <h2 class="seccion-titulo" id="comparacion-titulo">
-          Alarmas tradicionales vs. Protect(IA)
-        </h2>
-
-        <!-- El contenedor scrollea en horizontal por si la tabla no cabe; bajo
-             760px además cada fila se apila y los data-col hacen de rótulo. -->
-        <div class="tabla-marco">
-          <table class="tabla-comp">
-            <caption class="visualmente-oculto">
-              Comparación entre las alarmas tradicionales y Protect(IA) en cinco aspectos.
-            </caption>
-            <thead>
-              <tr>
-                <th scope="col">Aspecto</th>
-                <th scope="col">Alarmas tradicionales</th>
-                <th scope="col" class="col-nuestra">Protect(IA)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Contrato</th>
-                <td data-col="Alarmas tradicionales">Permanencia de 12 a 36 meses</td>
-                <td data-col="Protect(IA)" class="col-nuestra">Sin permanencia</td>
-              </tr>
-              <tr>
-                <th scope="row">Equipo</th>
-                <td data-col="Alarmas tradicionales">En comodato: lo devuelves al irte</td>
-                <td data-col="Protect(IA)" class="col-nuestra">Tuyo, desde el primer día</td>
-              </tr>
-              <tr>
-                <th scope="row">Alertas</th>
-                <td data-col="Alarmas tradicionales">Sin verificar: suenan todas igual</td>
-                <td data-col="Protect(IA)" class="col-nuestra">Verificadas por IA antes de llegar</td>
-              </tr>
-              <tr>
-                <th scope="row">Tu video</th>
-                <td data-col="Alarmas tradicionales">En la nube de ellos</td>
-                <td data-col="Protect(IA)" class="col-nuestra">En tu casa</td>
-              </tr>
-              <tr>
-                <th scope="row">Tu barrio</th>
-                <td data-col="Alarmas tradicionales">Sin red de vecinos</td>
-                <td data-col="Protect(IA)" class="col-nuestra">Comunidad Vecinal incluida</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    <!-- Procesamiento y privacidad -------------------------------------------
+         Resumen de portada: no reemplaza la política de privacidad. -->
+    <section class="privacy-section wrap" aria-labelledby="privacy-title">
+      <div><p class="eyebrow">INFORMACIÓN CLARA</p><h2 id="privacy-title">Dónde se procesa.<br>De qué depende.</h2></div>
+      <div class="privacy-copy">
+        <p>El procesamiento principal del video se realiza en el equipo del hogar. Para ciertas verificaciones se envían imágenes y datos del evento a un proveedor externo de IA.</p>
+        <p>Las llamadas y notificaciones también utilizan proveedores externos. La entrega de avisos depende de energía, conexión y disponibilidad de esos servicios.</p>
+        <a class="text-link" href="/privacidad.html">Conoce la política de privacidad <span aria-hidden="true">↗</span></a>
       </div>
     </section>
 
-    <!-- Garantía ------------------------------------------------------------ -->
-    <section class="seccion seccion-garantia" aria-labelledby="garantia-titulo">
-      <div class="seccion-inner">
-        <div class="garantia">
-          <p class="garantia-sello">30 DÍAS</p>
-          <div>
-            <h2 class="garantia-titulo" id="garantia-titulo">Satisfacción garantizada</h2>
-            <p class="garantia-texto">
-              Si no te convence, devolvemos tu mes. No necesitamos contratos que
-              te amarren.
-            </p>
+    <!-- Consulta — destino de #contacto ---------------------------------------
+         La tarjeta del diseño envuelve al wizard REAL de tres pasos. Sin JS los
+         tres pasos se ven de corrido, el botón de envío nace deshabilitado y la
+         nota deja el teléfono como vía de contacto; js/main.js agrega
+         .wizard-activo y recién ahí se muestra un paso a la vez. -->
+    <section class="contact-section" id="contacto" aria-labelledby="contact-title"><div class="wrap contact-grid">
+      <div>
+        <p class="eyebrow">HABLEMOS DE TU NECESIDAD</p>
+        <h2 id="contact-title">Cuéntanos<br>qué necesitas.</h2>
+        <p>Cuéntanos tu consulta y comuna para evaluar las opciones disponibles. HOME es para la vivienda; las consultas de negocio se reciben para revisión específica.</p>
+        <a class="catalina" href="tel:6009142219"><span class="catalina-mark" aria-hidden="true">C</span><span><small>Habla con Catalina · asistente de voz IA</small><strong>600 914 2219 <span aria-hidden="true">↗</span></strong></span></a>
+        <p class="contact-note">No compartas contraseñas ni datos biométricos en el formulario o por chat.</p>
+      </div>
+
+      <form class="wizard contact-preview" id="wizard" novalidate>
+        <div class="step-caption">
+          <span class="wizard-progreso" id="wizard-progreso" hidden>Paso 1 de 3</span>
+          <span class="step-dots" aria-hidden="true"><i data-punto="1">01</i><b>—</b><i data-punto="2">02</i><b>—</b><i data-punto="3">03</i></span>
+        </div>
+
+        <fieldset class="wizard-paso" data-paso="1">
+          <legend class="wizard-pregunta">¿Casa o negocio?</legend>
+          <p class="wizard-ayuda">Elige el tipo de lugar sobre el que quieres consultar.</p>
+          <div class="wizard-opciones">
+            <label class="opcion">
+              <input type="radio" name="tipo" value="Casa">
+              <span class="opcion-cara">Casa<span class="radio-look" aria-hidden="true"></span></span>
+            </label>
+            <label class="opcion">
+              <input type="radio" name="tipo" value="Negocio">
+              <span class="opcion-cara">Negocio<span class="radio-look" aria-hidden="true"></span></span>
+            </label>
           </div>
-        </div>
-      </div>
-    </section>
+          <!-- Continuar es la única acción de avance de los pasos 1 y 2
+               (decisión MKT del 8-sep). Nace deshabilitado y js/main.js lo
+               habilita cuando hay una opción marcada. -->
+          <button class="button form-next" type="button" data-continuar disabled>Continuar <span aria-hidden="true">→</span></button>
+        </fieldset>
 
-    <!-- Contacto ------------------------------------------------------------ -->
-    <section class="seccion seccion-contacto" id="contacto" aria-labelledby="contacto-titulo">
-      <div class="seccion-inner">
-        <p class="seccion-kicker">HABLEMOS</p>
-        <h2 class="seccion-titulo" id="contacto-titulo">Cotización en minutos, sin presión</h2>
-        <p class="contacto-bajada">Tres preguntas cortas y te llamamos nosotros.</p>
+        <fieldset class="wizard-paso" data-paso="2">
+          <legend class="wizard-pregunta">¿Tienes cámaras instaladas?</legend>
+          <div class="wizard-opciones">
+            <label class="opcion">
+              <input type="radio" name="camaras" value="Sí">
+              <span class="opcion-cara">Sí<span class="radio-look" aria-hidden="true"></span></span>
+            </label>
+            <label class="opcion">
+              <input type="radio" name="camaras" value="No">
+              <span class="opcion-cara">No<span class="radio-look" aria-hidden="true"></span></span>
+            </label>
+          </div>
+          <button class="button form-next" type="button" data-continuar disabled>Continuar <span aria-hidden="true">→</span></button>
+          <button type="button" class="wizard-atras" data-atras>← Volver</button>
+        </fieldset>
 
-        <!-- Sin JS los tres pasos se ven de corrido y el formulario sigue
-             siendo legible; js/main.js le agrega .wizard-activo y recién ahí
-             se muestra un paso a la vez. -->
-        <form class="wizard" id="wizard" novalidate>
-          <p class="wizard-progreso" id="wizard-progreso" hidden>Paso 1 de 3</p>
+        <fieldset class="wizard-paso" data-paso="3">
+          <legend class="wizard-pregunta">¿Cómo te contactamos?</legend>
 
-          <fieldset class="wizard-paso" data-paso="1">
-            <legend class="wizard-pregunta">¿Casa o negocio?</legend>
-            <div class="wizard-opciones">
-              <label class="opcion">
-                <input type="radio" name="tipo" value="Casa">
-                <span class="opcion-cara">Casa</span>
-              </label>
-              <label class="opcion">
-                <input type="radio" name="tipo" value="Negocio">
-                <span class="opcion-cara">Negocio</span>
-              </label>
-            </div>
-          </fieldset>
+          <div class="campo">
+            <label for="campo-nombre">Nombre</label>
+            <input type="text" id="campo-nombre" name="nombre" autocomplete="name"
+                   required maxlength="60" placeholder="Tu nombre">
+          </div>
 
-          <fieldset class="wizard-paso" data-paso="2">
-            <legend class="wizard-pregunta">¿Tienes cámaras instaladas?</legend>
-            <div class="wizard-opciones">
-              <label class="opcion">
-                <input type="radio" name="camaras" value="Sí">
-                <span class="opcion-cara">Sí</span>
-              </label>
-              <label class="opcion">
-                <input type="radio" name="camaras" value="No">
-                <span class="opcion-cara">No</span>
-              </label>
-            </div>
+          <div class="campo">
+            <label for="campo-comuna">Comuna</label>
+            <input type="text" id="campo-comuna" name="comuna"
+                   autocomplete="address-level2"
+                   required maxlength="60" placeholder="Dónde está la propiedad">
+          </div>
+
+          <div class="campo">
+            <label for="campo-telefono">Teléfono</label>
+            <input type="tel" id="campo-telefono" name="telefono" autocomplete="tel"
+                   required maxlength="20" inputmode="tel" placeholder="+56 9 ...">
+          </div>
+
+          <!-- Opcional de verdad: sin `required`, y el paréntesis en la
+               etiqueta para que se sepa antes de llegar al campo. El
+               type="email" no lo vuelve obligatorio —vacío es válido— pero sí
+               hace que reportValidity() atrape el typo antes de enviar. -->
+          <div class="campo">
+            <label for="campo-email">Email (opcional)</label>
+            <input type="email" id="campo-email" name="email" autocomplete="email"
+                   maxlength="120" inputmode="email"
+                   placeholder="Si prefieres que te escribamos">
+          </div>
+
+          <!-- Señuelo: un humano nunca lo ve ni lo llena. Si viene con algo,
+               js/main.js no envía nada. No viaja en el JSON. -->
+          <div class="trampa" aria-hidden="true">
+            <label for="campo-empresa">No llenar</label>
+            <input type="text" id="campo-empresa" name="empresa" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="wizard-cierre">
+            <button type="submit" class="button btn-enviar" id="wizard-enviar" disabled>
+              Solicitar información
+            </button>
             <button type="button" class="wizard-atras" data-atras>← Volver</button>
-          </fieldset>
+          </div>
 
-          <fieldset class="wizard-paso" data-paso="3">
-            <legend class="wizard-pregunta">¿Cómo te contactamos?</legend>
+          <!-- Nota de estado. En el marcado lleva el texto del formulario no
+               habilitado, que es lo que corresponde en los dos casos en que se
+               ve tal cual: sin JavaScript —el botón nace `disabled`— y con
+               ENDPOINT_LEADS en null. Con el envío activo js/main.js la oculta
+               y la reutiliza para los estados de envío. -->
+          <p class="wizard-nota" id="wizard-nota" role="status">
+            Por ahora, puedes consultar con Catalina en el
+            <a href="tel:6009142219">600 914 2219</a>.
+          </p>
+        </fieldset>
 
-            <div class="campo">
-              <label for="campo-nombre">Nombre</label>
-              <input type="text" id="campo-nombre" name="nombre" autocomplete="name"
-                     required maxlength="60" placeholder="Tu nombre">
-            </div>
+        <p class="form-privacy">Consulta nuestra <a href="/privacidad.html">política de privacidad</a>.</p>
+      </form>
+    </div></section>
 
-            <div class="campo">
-              <label for="campo-comuna">Comuna</label>
-              <input type="text" id="campo-comuna" name="comuna"
-                     autocomplete="address-level2"
-                     required maxlength="60" placeholder="Dónde está la propiedad">
-            </div>
-
-            <div class="campo">
-              <label for="campo-telefono">Teléfono</label>
-              <input type="tel" id="campo-telefono" name="telefono" autocomplete="tel"
-                     required maxlength="20" inputmode="tel" placeholder="+56 9 ...">
-            </div>
-
-            <!-- Opcional de verdad: sin `required`, y el paréntesis en la
-                 etiqueta para que se sepa antes de llegar al campo. El
-                 type="email" no lo vuelve obligatorio —vacío es válido— pero sí
-                 hace que reportValidity() atrape el typo antes de enviar. El
-                 backend igual tolera una dirección mala: guarda el lead sin
-                 email en vez de perderlo. -->
-            <div class="campo">
-              <label for="campo-email">Email (opcional)</label>
-              <input type="email" id="campo-email" name="email" autocomplete="email"
-                     maxlength="120" inputmode="email"
-                     placeholder="Si prefieres que te escribamos">
-            </div>
-
-            <!-- Trampa para bots: un humano nunca la ve ni la llena. Queda
-                 puesta desde ya para que, cuando se conecte el envío, no haya
-                 que volver a tocar el marcado. -->
-            <div class="trampa" aria-hidden="true">
-              <label for="campo-empresa">No llenar</label>
-              <input type="text" id="campo-empresa" name="empresa" tabindex="-1" autocomplete="off">
-            </div>
-
-            <div class="wizard-cierre">
-              <button type="submit" class="btn-enviar" id="wizard-enviar" disabled>
-                Pedir mi cotización
-              </button>
-              <button type="button" class="wizard-atras" data-atras>← Volver</button>
-            </div>
-
-            <!-- Nota de respaldo. Aparece en dos casos, y por eso el texto no
-                 nombra ninguno: sin JavaScript —el botón nace `disabled` en el
-                 marcado y lo habilita js/main.js— y con ENDPOINT_LEADS en null.
-                 En ambos la salida es la misma, el teléfono. Con el envío
-                 activo js/main.js la oculta, y la reutiliza para el acuse de
-                 recibo y para el mensaje del 429. -->
-            <p class="wizard-nota" id="wizard-nota">
-              El envío directo no está disponible en este momento. Llámanos al
-              <a href="tel:6009142219">600 914 2219</a>: te contesta
-              Catalina, nuestra asistente con IA, a cualquier hora.
-            </p>
-
-            <a class="btn-llamar" href="tel:6009142219">
-              <span class="btn-llamar-punto" aria-hidden="true"></span>Llamar al 600 914 2219
-            </a>
-          </fieldset>
-        </form>
-      </div>
-    </section>
-
-    <!-- Preguntas frecuentes ------------------------------------------------ -->
-    <section class="seccion seccion-faq" id="faq" aria-labelledby="faq-titulo">
-      <div class="seccion-inner">
-        <p class="seccion-kicker">PREGUNTAS FRECUENTES</p>
-        <h2 class="seccion-titulo" id="faq-titulo">Lo que más nos preguntan</h2>
-
-        <!-- <details> nativo: sin JS y accesible por defecto. -->
-        <div class="faq">
-          <details class="faq-item">
-            <summary class="faq-pregunta">¿Sirven las cámaras que ya tengo?</summary>
-            <div class="faq-respuesta">
-              <p>
-                Casi siempre. Si tus cámaras entregan video estándar por la red
-                de tu casa, Protect(IA) las conecta sin cambiar equipos ni
-                marcas. Antes de que pagues nada verificamos la compatibilidad
-                gratis: nos cuentas qué tienes y te respondemos.
-              </p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary class="faq-pregunta">¿Qué necesito para partir?</summary>
-            <div class="faq-respuesta">
-              <p>
-                Dos cosas: internet en la casa y cámaras. Nada más. Si todavía
-                no tienes cámaras, te decimos exactamente cuál comprar y dónde,
-                al mejor precio del mercado; tú la compras y nosotros la hacemos
-                inteligente.
-              </p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary class="faq-pregunta">¿Tienen que ir a instalar a mi casa?</summary>
-            <div class="faq-respuesta">
-              <p>
-                No. Instalación no hay: te enviamos el equipo Protect(IA), lo
-                enchufas al router — dos cables — y de ahí lo hacemos todo a
-                distancia. Integramos tus cámaras, calibramos tu casa y te
-                capacitamos por videollamada.
-              </p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary class="faq-pregunta">¿Y si me arrepiento?</summary>
-            <div class="faq-respuesta">
-              <p>
-                Tienes 30 días. Si no te convence, devolvemos tu mes. Y como no
-                hay contrato de permanencia, puedes cancelar cuando quieras: nos
-                ganamos tu confianza mes a mes.
-              </p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary class="faq-pregunta">¿Alguien puede ver mis cámaras?</summary>
-            <div class="faq-respuesta">
-              <p>
-                No. Nadie mira tus cámaras: el análisis es automático y ocurre
-                dentro de tu casa, en tu propio equipo. Tu video no se va a una
-                nube ajena ni pasa por los ojos de un operador en una central.
-              </p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary class="faq-pregunta">¿Qué es la Comunidad Vecinal?</summary>
-            <div class="faq-respuesta">
-              <p>
-                Es la red de tu barrio, incluida en el plan: un mapa del sector,
-                botón de pánico y reportes entre vecinos verificados. Cuando
-                Protect(IA) confirma algo real en tu casa, tus vecinos se
-                enteran al tiro.
-              </p>
-            </div>
-          </details>
-        </div>
+    <!-- Preguntas frecuentes — destino de #faq -------------------------------
+         <details> nativo: abre y cierra sin JS y ya trae la semántica puesta. -->
+    <section class="section wrap faq" id="faq" aria-labelledby="faq-title">
+      <div class="section-heading"><p class="eyebrow">ANTES DE DAR EL SIGUIENTE PASO</p><h2 id="faq-title">Tus preguntas,<br>con claridad.</h2></div>
+      <div class="faq-list">
+        <details><summary>¿Puedo usar las cámaras que ya tengo?<span aria-hidden="true">+</span></summary><p>Primero debemos revisar la compatibilidad de modelos, cantidad y conexión para tu vivienda. Consultar no exige confirmar esos datos de antemano ni enviar contraseñas.</p></details>
+        <details><summary>¿Cómo se utiliza el reconocimiento facial?<span aria-hidden="true">+</span></summary><p>Se utiliza con personas previamente registradas y configuración por instalación. Su funcionamiento y disponibilidad se validan para cada hogar; la IA puede equivocarse.</p></details>
+        <details><summary>¿Qué formas de aviso puedo configurar?<span aria-hidden="true">+</span></summary><p>El ecosistema integra avisos en la app, llamadas configuradas y disuasión por voz con un parlante opcional. Disponibilidad y configuración se revisan por hogar. La recepción depende de energía, conexión y servicios disponibles.</p></details>
+        <details><summary>¿Todo el procesamiento ocurre en mi casa?<span aria-hidden="true">+</span></summary><p>El procesamiento principal del video se realiza en el equipo del hogar. Para ciertas verificaciones se envían imágenes y datos del evento a un proveedor externo de IA. Llamadas y notificaciones también usan servicios externos.</p></details>
+        <details><summary>¿Necesito contratar HOME para usar Vecinal?<span aria-hidden="true">+</span></summary><p>No. Comunidad Vecinal es una propuesta gratuita y separada del servicio HOME. Puedes consultar por sus opciones de acceso de forma independiente.</p></details>
+        <details><summary>¿Cómo conozco las condiciones para contratar?<span aria-hidden="true">+</span></summary><p>Consulta al equipo de Ventas. Una eventual propuesta deberá precisar activación, mensualidad, alcance, disponibilidad y condiciones aplicables a tu caso.</p></details>
       </div>
     </section>
 
   </main>
 
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <span>© 2026 PROTECT(IA) — L&amp;F IT CONSULTING SPA</span>
-      <span class="footer-enlaces">
-        <a href="tel:6009142219">600 914 2219</a>
-        <a href="/privacidad.html">POLÍTICA DE PRIVACIDAD</a>
-        <!-- TODO: los términos siguen pendientes; hoy son un marcador sin destino. -->
-        <a href="#" aria-disabled="true">TÉRMINOS Y CONDICIONES</a>
-      </span>
+  <footer>
+    <div class="wrap footer-top">
+      <a class="wordmark wordmark-small" href="#top" aria-label="ProtectIA HOME, inicio"><span>Protect<span class="ia">IA</span></span><span class="home">HOME</span></a>
+      <p>Seguridad integrada con IA.<br>Una configuración para tu hogar.</p>
+      <div><a href="tel:6009142219">600 914 2219</a><span>protectia.cl</span></div>
+    </div>
+    <div class="wrap footer-bottom">
+      <span>© 2026 ProtectIA · L&amp;F IT CONSULTING SpA</span>
+      <div>
+        <a href="/tienda.html">Tienda</a>
+        <a href="/privacidad.html">Privacidad</a>
+        <!-- Términos siguen sin documento acreditado: marcador deshabilitado. -->
+        <span aria-disabled="true">Términos y condiciones</span>
+      </div>
     </div>
   </footer>
-
-  <!-- Barra fija solo móvil -->
-  <a class="barra-movil" href="tel:6009142219">
-    <span class="barra-movil-titulo">Llamar al 600 914 2219</span>
-    <span class="barra-movil-nota">TE CONTESTA CATALINA, NUESTRA IA</span>
-  </a>
 
   <script src="js/main.js"></script>
 </body>

@@ -2266,3 +2266,1191 @@ main {
 @media (max-width: 900px) { .productos-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 760px) { .producto-foto { height: 170px; padding: 14px; } }
 @media (max-width: 520px) { .productos-grid { grid-template-columns: 1fr; } }
+
+/* ============================================================================
+   WEB18 — Portada ProtectIA HOME
+   ============================================================================
+   Composición y medidas de MKT (diseno/styles.css v1.1) aplicadas SOLO a la
+   home. Todo cuelga de `.web18`, la clase del <body> de index.html: tienda,
+   privacidad y eliminar-cuenta no llevan esa clase y siguen leyendo el bloque
+   de arriba tal cual, sin una sola regla nueva encima.
+
+   Ese prefijo hace además el trabajo de conciliación: las reglas compartidas
+   que sí alcanzarían al marcado nuevo —`.site-header`, `a:hover`,
+   `a:focus-visible`, `.wizard*`, `.campo`, `.opcion*`, `.faq`— quedan
+   sobreescritas acá por especificidad (0,2,0 contra 0,1,0) y por orden, porque
+   este bloque va último. Donde el valor heredado servía se dejó a propósito:
+   `.wizard-activo .wizard-paso`, `.wizard-paso-visible`, `.trampa` y el
+   `display` de `.wizard-atras` son los del formulario original y siguen siendo
+   los que gobiernan los tres pasos.
+
+   Quiebres de MKT: 1600 / 1100 / 760 / 374.
+
+   Nota de la regla de radios de la maqueta: allá era
+   `.contact-preview input{position:absolute;opacity:0}`, que acá habría
+   escondido nombre, comuna, teléfono y email. No se portó: el ocultamiento lo
+   sigue haciendo `.opcion input`, que por estructura solo alcanza a los radios.
+   ========================================================================= */
+
+.web18 {
+  --ink: #05121b;
+  --bg: #06121c;
+  --panel: #0b1d29;
+  --edge: #28414b;
+  --aqua: #27d2c5;
+  --white: #f5f5ef;
+  --muted: #b7c8cb;
+  --dark-muted: #3b555e;
+  --paper: #eaf0ed;
+  /* Verde oscuro de las superficies claras (rutas y consulta): el turquesa de
+     marca no llega a AA sobre papel, así que ahí manda este. */
+  --deep: #1b4e42;
+  --w18-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--w18-font);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+/* Base ---------------------------------------------------------------------- */
+
+.web18 a { color: inherit; text-decoration: none; }
+/* El hover verde global es del sistema visual anterior. */
+.web18 a:hover { color: inherit; }
+.web18 button, .web18 input { font: inherit; }
+.web18 button, .web18 a { -webkit-tap-highlight-color: transparent; }
+.web18 button { cursor: pointer; }
+
+.web18 a:focus-visible,
+.web18 button:focus-visible,
+.web18 summary:focus-visible {
+  outline: 3px solid var(--aqua);
+  outline-offset: 6px;
+  border-radius: 0;
+}
+
+.web18 img { max-width: 100%; display: block; }
+.web18 p, .web18 h1, .web18 h2, .web18 h3, .web18 h4, .web18 figure { margin: 0; }
+.web18 p + p { margin-top: 16px; }
+.web18 ::selection { background: rgba(39, 210, 197, 0.3); }
+
+/* El <main> en columna flex es del reorden visual de la home anterior, que ya
+   no existe: acá el orden del DOM es el orden de lectura. */
+.web18 main { display: block; }
+
+.web18 .wrap {
+  width: min(1240px, calc(100% - 112px));
+  margin-inline: auto;
+}
+
+/* La cabecera dejó de ser pegajosa, así que el ancla solo necesita un respiro. */
+.web18 #top,
+.web18 #contenido,
+.web18 #pilares,
+.web18 #como-funciona,
+.web18 #momento,
+.web18 #puertas,
+.web18 #plan,
+.web18 #contacto,
+.web18 #faq { scroll-margin-top: 28px; }
+
+.web18 .skip {
+  position: absolute;
+  top: -60px;
+  left: 20px;
+  z-index: 10;
+  padding: 10px 18px;
+  background: var(--aqua);
+  color: var(--ink);
+}
+
+.web18 .skip:focus { top: 42px; }
+
+/* Cabecera ------------------------------------------------------------------
+   Se neutraliza el sticky claro compartido: acá la cabecera va en el flujo,
+   sobre el fondo oscuro y sin barra propia. */
+
+.web18 .site-header {
+  position: static;
+  z-index: auto;
+  height: 112px;
+  width: min(1368px, calc(100% - 96px));
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 36px;
+  padding: 0;
+  border-bottom: 0;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.web18 .wordmark {
+  font-family: Georgia, "Times New Roman", serif;
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+}
+
+.web18 .ia { color: var(--aqua); }
+
+.web18 .home {
+  font-family: var(--w18-font);
+  font-weight: 500;
+  letter-spacing: 0.56em;
+  padding-left: 0.56em;
+  text-align: center;
+  color: var(--aqua);
+}
+
+.web18 .wordmark-small { font-size: 43px; }
+.web18 .wordmark-small .home { font-size: 11px; margin-top: 9px; }
+
+.web18 .site-header nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  font-size: 13px;
+  color: #dce7e6;
+}
+
+.web18 .site-header nav a { padding-block: 12px; white-space: nowrap; }
+.web18 .no-break { white-space: nowrap; }
+
+.web18 .site-header nav a:hover,
+.web18 .text-link:hover { color: var(--aqua); }
+
+.web18 .header-contact {
+  font-size: 11px;
+  padding-left: 26px;
+  border-left: 1px solid var(--edge);
+  line-height: 1.7;
+}
+
+.web18 .header-contact strong {
+  font-weight: 600;
+  display: block;
+  font-size: 17px;
+  letter-spacing: 0.025em;
+}
+
+.web18 .header-contact strong span { color: var(--aqua); margin-left: 10px; }
+
+/* El botón solo aparece bajo 760px y solo cuando js/main.js pudo tomar el
+   control del menú (.menu-js). Sin JS no hay botón: hay nav. */
+.web18 .menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+  width: 44px;
+  height: 44px;
+  padding: 9px;
+  background: none;
+  border: 1px solid #33505a;
+  border-radius: 3px;
+  color: #fff;
+}
+
+.web18 .menu-toggle span { height: 1px; width: 24px; background: #b9d4d4; }
+
+/* Portada ------------------------------------------------------------------- */
+
+.web18 .hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 672px;
+  display: flex;
+  align-items: center;
+  background: #040c14;
+}
+
+.web18 .hero-scene { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+
+.web18 .hero-scene img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: 70% 58%;
+}
+
+/* El degradado deja el texto sobre zona oscura y la ilustración a la derecha. */
+.web18 .hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, #040c14 0%, rgba(4, 12, 20, 0.97) 23%,
+                    rgba(4, 12, 20, 0.76) 42%, rgba(4, 12, 20, 0) 64%),
+    linear-gradient(0deg, rgba(4, 12, 20, 0.42), transparent 40%);
+}
+
+.web18 .hero-content { padding-block: 58px 70px; }
+
+.web18 .eyebrow {
+  color: var(--aqua);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  font-size: 10px;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.web18 .hero-brand { font-size: 101px; margin: 4px 0 34px; }
+.web18 .hero-brand .home { font-size: 23px; margin-top: 16px; }
+
+.web18 .hero h1 {
+  max-width: 640px;
+  font-weight: 450;
+  font-size: 40px;
+  line-height: 1.18;
+  letter-spacing: -0.035em;
+  margin-bottom: 20px;
+}
+
+.web18 .hero-intro {
+  font-size: 16px;
+  max-width: 470px;
+  color: #d2dedd;
+  line-height: 1.65;
+}
+
+.web18 .hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.web18 .hero-condition {
+  font-size: 11px;
+  color: #b9c8cb;
+  margin-top: 18px !important;
+  max-width: 440px;
+}
+
+.web18 .image-caption {
+  font-size: 9px;
+  color: #a9b5b7;
+  position: absolute;
+  bottom: 22px;
+  right: 32px;
+  letter-spacing: 0.06em;
+}
+
+/* Botones y enlaces --------------------------------------------------------- */
+
+.web18 .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  min-height: 50px;
+  padding: 15px 22px;
+  border: 1px solid transparent;
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.005em;
+  border-radius: 4px;
+}
+
+.web18 .button span { font-size: 19px; font-weight: 400; line-height: 1; }
+
+.web18 .primary { background: var(--aqua); color: var(--ink); }
+.web18 .primary:hover { background: #6be3d8; color: var(--ink); }
+
+.web18 .outline {
+  background: transparent;
+  border-color: #55707a;
+  color: var(--white);
+}
+
+.web18 .outline:hover { border-color: var(--aqua); }
+
+.web18 .text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  min-height: 44px;
+}
+
+.web18 .text-link span { color: var(--aqua); font-size: 19px; }
+
+.web18 .hero-call { gap: 44px; min-width: 234px; }
+.web18 .hero-call .call-label { font-size: 12px; font-weight: 600; line-height: 1.2; flex: 1; }
+
+.web18 .hero-call small {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.035em;
+  margin-top: 5px;
+}
+
+/* Franja de capacidades (#pilares) ------------------------------------------ */
+
+.web18 .capability-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding-block: 32px;
+  border-bottom: 1px solid var(--edge);
+  gap: 28px;
+}
+
+.web18 .capability-strip > div { display: flex; align-items: flex-start; gap: 18px; }
+.web18 .tiny-index { font-size: 10px; color: var(--aqua); padding-top: 5px; }
+.web18 .capability-strip p { font-size: 15px; font-weight: 600; }
+
+.web18 .capability-strip p span {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+/* Ritmo de secciones -------------------------------------------------------- */
+
+.web18 .section { padding-block: 108px; }
+.web18 .section-heading { margin-bottom: 48px; }
+.web18 .section-heading .eyebrow { margin-bottom: 18px; }
+
+.web18 h2 {
+  font-size: 46px;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.14;
+}
+
+.web18 h2 span { color: #99b2b7; }
+
+/* El valor de integrar (#como-funciona) y esquema conceptual (#momento) ------ */
+
+.web18 .ecosystem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: center;
+}
+
+.web18 .ecosystem-copy h3 {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+  max-width: 400px;
+  margin-bottom: 22px;
+}
+
+.web18 .ecosystem-copy p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+  max-width: 475px;
+}
+
+.web18 .ecosystem-copy .condition {
+  font-size: 12px;
+  padding-left: 16px;
+  border-left: 2px solid #315961;
+  margin-top: 24px;
+}
+
+.web18 .ecosystem-copy .text-link { margin-top: 24px; }
+
+.web18 .ecosystem-diagram {
+  border: 1px solid var(--edge);
+  background: linear-gradient(130deg, #102936, #071720);
+  padding: 32px 34px;
+  border-radius: 8px;
+}
+
+.web18 .ecosystem-diagram figcaption {
+  font-size: 9px;
+  letter-spacing: 0.17em;
+  color: #afc5c7;
+  margin-bottom: 26px;
+}
+
+.web18 .flow-node {
+  padding: 19px 20px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  background: #0b202b;
+  border: 1px solid #35505a;
+  border-radius: 5px;
+}
+
+.web18 .node-number {
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  color: var(--aqua);
+  width: 25px;
+  flex-shrink: 0;
+}
+
+.web18 .flow-node h4 { font-size: 15px; font-weight: 600; }
+.web18 .flow-node p { font-size: 11px; color: #b0c4c7; margin-top: 4px; }
+
+.web18 .featured { background: #13363e; border-color: #38a698; }
+.web18 .featured h4 { color: #73e0d7; }
+
+.web18 .flow-line {
+  height: 24px;
+  width: 1px;
+  background: #438580;
+  margin-left: 32px;
+  position: relative;
+}
+
+.web18 .flow-line::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -2px;
+  width: 5px;
+  height: 5px;
+  background: var(--aqua);
+  border-radius: 50%;
+}
+
+.web18 .diagram-note {
+  font-size: 10px;
+  color: #b2c4c7;
+  line-height: 1.6;
+  margin-top: 24px;
+}
+
+/* Dos puntos de partida (#puertas) ------------------------------------------ */
+
+.web18 .path-section {
+  background: var(--paper);
+  color: var(--ink);
+  padding-block: 94px;
+}
+
+.web18 .path-section .eyebrow { color: #17665f; }
+
+.web18 .path-options { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; }
+.web18 .path-options article { border-top: 1px solid #a4bbb6; padding-top: 24px; }
+
+.web18 .path-tag {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: #386860;
+  font-weight: 700;
+}
+
+.web18 .path-options h3 {
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.18;
+  margin-block: 20px;
+}
+
+.web18 .path-options p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--dark-muted);
+  max-width: 460px;
+}
+
+.web18 .path-options .text-link { margin-top: 19px; color: #154d48; }
+.web18 .path-options .text-link span { color: #126b61; }
+.web18 .path-options .text-link:hover { color: #0d3a36; }
+
+.web18 .steps {
+  padding: 32px 0 0;
+  margin: 42px 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  list-style: none;
+  border-top: 1px solid #c6d5d0;
+  gap: 35px;
+}
+
+.web18 .steps li { display: flex; gap: 16px; }
+.web18 .steps li > span { font-size: 11px; padding-top: 3px; color: #147365; }
+.web18 .steps h4 { font-weight: 600; font-size: 14px; }
+.web18 .steps p { font-size: 11px; color: var(--dark-muted); margin-top: 5px; }
+
+/* HOME y Vecinal (#plan) ---------------------------------------------------- */
+
+.web18 .split-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 60px;
+  align-items: flex-end;
+}
+
+.web18 .split-heading > p {
+  max-width: 370px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.web18 .plans-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; }
+
+.web18 .plans-grid article {
+  padding: 44px;
+  border: 1px solid var(--edge);
+  border-radius: 7px;
+}
+
+.web18 .home-plan { background: linear-gradient(120deg, #153a43, #0c242f); }
+.web18 .neighborhood-plan { background: #0b1924; }
+
+.web18 .plan-label {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  color: var(--aqua);
+}
+
+.web18 .plans-grid h3 {
+  font-size: 36px;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-block: 26px;
+}
+
+.web18 .home-plan h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 46px;
+}
+
+.web18 .home-plan h3 span {
+  font-family: var(--w18-font);
+  font-size: 20px;
+  color: var(--aqua);
+  letter-spacing: 0.18em;
+  display: block;
+  margin-top: 10px;
+}
+
+.web18 .plans-grid p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 425px;
+}
+
+.web18 .plans-grid .button { margin-top: 30px; }
+
+/* Procesamiento y privacidad ------------------------------------------------ */
+
+.web18 .privacy-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  border-top: 1px solid var(--edge);
+  padding-block: 58px 100px;
+}
+
+.web18 .privacy-section h2 { font-size: 34px; }
+.web18 .privacy-copy p { font-size: 13px; color: var(--muted); line-height: 1.8; }
+.web18 .privacy-copy .text-link { margin-top: 14px; }
+
+/* Consulta (#contacto) ------------------------------------------------------ */
+
+.web18 .contact-section {
+  background: #dcebe6;
+  color: var(--ink);
+  padding-block: 96px;
+}
+
+.web18 .contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 110px;
+  align-items: center;
+}
+
+.web18 .contact-section .eyebrow { color: #226d64; }
+.web18 .contact-section h2 { font-size: 56px; }
+
+.web18 .contact-grid > div > p:not(.eyebrow) {
+  font-size: 14px;
+  color: var(--dark-muted);
+  line-height: 1.8;
+  max-width: 470px;
+  margin-top: 24px;
+}
+
+/* Sobre papel el turquesa no rinde: el foco de esta zona va en tinta. Los
+   radios quedan fuera a propósito —están ocultos y sin tamaño, así que su
+   anillo sería un punto suelto—: el suyo lo pinta `.opcion-cara`, más abajo. */
+.web18 .path-section a:focus-visible,
+.web18 .contact-section a:focus-visible,
+.web18 .contact-section button:focus-visible,
+.web18 .contact-section input:not([type="radio"]):focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.web18 .catalina { display: flex; align-items: center; gap: 16px; margin-top: 35px; }
+
+.web18 .catalina-mark {
+  width: 48px;
+  height: 48px;
+  border: 1px solid #89afa4;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: Georgia, serif;
+  font-size: 25px;
+  color: #216757;
+}
+
+.web18 .catalina small {
+  font-size: 10px;
+  display: block;
+  color: #315c55;
+  margin-bottom: 3px;
+}
+
+.web18 .catalina strong { font-weight: 550; font-size: 27px; letter-spacing: -0.02em; }
+.web18 .catalina strong span { font-size: 22px; color: #1d6f5d; padding-left: 8px; }
+
+.web18 .contact-grid .contact-note { font-size: 10px !important; max-width: 350px !important; }
+
+/* La tarjeta del diseño envolviendo al wizard real ---------------------------
+   `.contact-preview` pone la caja; `.wizard` conserva su contrato de clases,
+   IDs y estados. */
+
+.web18 .contact-preview {
+  background: #f5f8f3;
+  border: 1px solid #bdd3c9;
+  border-radius: 8px;
+  padding: 36px;
+  box-shadow: 0 12px 40px rgba(22, 62, 48, 0.0625);
+}
+
+.web18 .wizard { max-width: none; margin: 0; }
+
+.web18 .step-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 9px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #3e695f;
+  margin-bottom: 32px;
+}
+
+.web18 .step-caption b { font-weight: 400; color: #a4bdb4; margin-inline: 8px; }
+.web18 .step-dots i { font-style: normal; color: #a4bdb4; }
+.web18 .step-dots i.es-actual { color: var(--deep); font-weight: 700; }
+
+.web18 .wizard-progreso {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  margin: 0;
+}
+
+.web18 .wizard-pregunta {
+  padding: 0;
+  font-size: 24px;
+  font-weight: 550;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  margin-bottom: 0;
+  color: var(--ink);
+}
+
+.web18 .wizard-ayuda {
+  font-size: 12px;
+  color: #49665e;
+  margin-top: 10px;
+  line-height: 1.7;
+}
+
+.web18 .wizard-opciones {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.web18 .opcion { display: block; position: relative; min-width: 0; }
+
+.web18 .opcion-cara {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 22px 18px;
+  border: 1px solid #9dbbb0;
+  border-radius: 4px;
+  background: transparent;
+  color: #234e41;
+  font-size: 13px;
+  font-weight: 400;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.web18 .opcion-cara:hover { border-color: var(--deep); }
+
+.web18 .radio-look {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #658e7d;
+  border-radius: 50%;
+}
+
+.web18 .opcion input:checked + .opcion-cara {
+  border-color: var(--deep);
+  background: #e9f2ec;
+  color: #153b31;
+  font-weight: 600;
+}
+
+.web18 .opcion input:checked + .opcion-cara .radio-look {
+  border-color: var(--deep);
+  background: var(--deep);
+  box-shadow: inset 0 0 0 3px #e9f2ec;
+}
+
+/* El radio real está oculto (`.opcion input`, arriba): el anillo de foco tiene
+   que pintarlo su cara visible o el teclado se queda sin rastro. */
+.web18 .opcion input:focus-visible + .opcion-cara {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* Los <fieldset> no encogen solos dentro de un grid: sin esto la rejilla de
+   opciones desborda la tarjeta en pantallas angostas. */
+.web18 .wizard-paso { min-width: 0; }
+
+/* Continuar: habilitado y deshabilitado bien separados —el de la maqueta vivía
+   siempre apagado porque era una muestra, no un control.
+
+   Igual que "Volver", solo existe con JS: sin él los tres pasos ya están a la
+   vista y un botón de avance no tendría a dónde avanzar. */
+.web18 .form-next {
+  display: none;
+  width: 100%;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 24px;
+  background: var(--deep);
+  border-color: var(--deep);
+  color: #fff;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.web18 .wizard-activo .form-next { display: inline-flex; }
+.web18 .form-next:hover:not(:disabled) { background: #153f36; }
+.web18 .form-next:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.web18 .campo { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
+
+.web18 .campo label {
+  font: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #3e695f;
+}
+
+.web18 .campo input {
+  font: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid #bdd3c9;
+  border-radius: 4px;
+  padding: 13px 14px;
+  min-height: 48px;
+}
+
+.web18 .campo input::placeholder { color: #8aa79c; }
+.web18 .campo input:focus-visible { border-color: var(--deep); }
+
+.web18 .wizard-cierre {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 26px;
+}
+
+.web18 .btn-enviar {
+  width: 100%;
+  justify-content: center;
+  gap: 14px;
+  background: var(--deep);
+  border-color: var(--deep);
+  color: #fff;
+  box-shadow: none;
+}
+
+.web18 .btn-enviar:hover:not(:disabled) { background: #153f36; }
+
+.web18 .btn-enviar:disabled {
+  background: var(--deep);
+  color: #fff;
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.web18 .wizard-atras {
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: #3e695f;
+  background: none;
+  border: 0;
+  padding: 6px 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.web18 .wizard-atras:hover { color: var(--deep); }
+
+.web18 .wizard-nota {
+  margin-top: 18px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #3d5f57;
+  border-left: 2px solid #9dbbb0;
+  padding-left: 14px;
+}
+
+.web18 .wizard-nota a {
+  font-weight: 600;
+  color: var(--deep);
+  border-bottom: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.web18 .form-privacy {
+  font-size: 10px;
+  text-align: center;
+  margin-top: 18px;
+  color: #3e695f;
+}
+
+.web18 .form-privacy a { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Preguntas frecuentes (#faq) ----------------------------------------------- */
+
+.web18 .faq {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 90px;
+  max-width: none;
+}
+
+.web18 .faq details { border-top: 1px solid var(--edge); }
+.web18 .faq details:last-child { border-bottom: 1px solid var(--edge); }
+
+.web18 .faq summary {
+  list-style: none;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-block: 22px;
+}
+
+.web18 .faq summary::-webkit-details-marker { display: none; }
+.web18 .faq summary span { color: var(--aqua); font-size: 19px; line-height: 1; }
+.web18 .faq details[open] summary span { transform: rotate(45deg); }
+
+.web18 .faq details p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.8;
+  padding: 0 24px 22px 0;
+}
+
+/* Pie ------------------------------------------------------------------------ */
+
+.web18 footer { border-top: 1px solid var(--edge); padding-block: 54px 26px; }
+
+.web18 .footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 35px;
+}
+
+.web18 .footer-top p { font-size: 12px; color: var(--muted); line-height: 1.8; }
+
+.web18 .footer-top > div {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.web18 .footer-top > div span { color: var(--aqua); font-size: 12px; }
+
+.web18 .footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+  margin-top: 44px;
+  padding-top: 22px;
+  border-top: 1px solid #21323c;
+  font-size: 9px;
+  color: #a2b4b9;
+}
+
+.web18 .footer-bottom > div { display: flex; gap: 25px; }
+.web18 .footer-bottom [aria-disabled="true"] { color: #8f9ea5; }
+
+/* Quiebres WEB18 ------------------------------------------------------------- */
+
+@media (min-width: 1600px) {
+  .web18 .hero { min-height: 725px; }
+  .web18 .hero-scene img { object-position: 60% 58%; }
+  .web18 .hero h1 { max-width: 665px; font-size: 43px; }
+}
+
+@media (max-width: 1100px) {
+  .web18 .wrap { width: calc(100% - 64px); }
+  .web18 .site-header { width: calc(100% - 56px); gap: 22px; }
+  .web18 .site-header nav { gap: 18px; font-size: 12px; }
+  .web18 .header-contact { padding-left: 18px; }
+  .web18 .wordmark-small { font-size: 35px; }
+  .web18 .hero-brand { font-size: 88px; }
+  .web18 .hero h1 { font-size: 34px; max-width: 510px; }
+  .web18 .hero-intro { max-width: 400px; font-size: 15px; }
+
+  .web18 .hero::after {
+    background: linear-gradient(90deg, #040c14 0%, rgba(4, 12, 20, 0.95) 30%,
+                rgba(4, 12, 20, 0.68) 48%, transparent 80%);
+  }
+
+  .web18 .hero-actions { gap: 18px; }
+  .web18 .hero-actions .text-link { font-size: 12px; }
+  .web18 .ecosystem-grid,
+  .web18 .contact-grid { gap: 50px; }
+  .web18 .privacy-section,
+  .web18 .faq { gap: 60px; }
+  .web18 h2 { font-size: 40px; }
+  .web18 .ecosystem-diagram { padding: 26px; }
+  .web18 .path-options { gap: 46px; }
+  .web18 .plans-grid article { padding: 34px; }
+  .web18 .contact-section h2 { font-size: 48px; }
+  .web18 .contact-preview { padding: 28px; }
+  .web18 .catalina strong { font-size: 24px; }
+}
+
+@media (max-width: 760px) {
+  .web18 .wrap { width: calc(100% - 40px); }
+
+  /* Sin JS la navegación baja a una segunda línea de la cabecera y se queda a
+     la vista. Con JS (.menu-js) vuelve a la altura fija y se colapsa detrás del
+     botón, que es el comportamiento del diseño. */
+  .web18 .site-header {
+    height: auto;
+    min-height: 90px;
+    width: calc(100% - 40px);
+    position: relative;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .web18 .site-header nav {
+    display: flex;
+    flex-wrap: wrap;
+    order: 3;
+    width: 100%;
+    gap: 6px 20px;
+    padding-bottom: 16px;
+    font-size: 14px;
+  }
+
+  .web18 .site-header.menu-js { height: 90px; min-height: 0; flex-wrap: nowrap; }
+  .web18 .site-header.menu-js .menu-toggle { display: flex; }
+
+  .web18 .site-header.menu-js nav {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    top: 79px;
+    left: -20px;
+    right: -20px;
+    width: auto;
+    order: 0;
+    background: #0b202b;
+    padding: 22px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    border-block: 1px solid #294753;
+  }
+
+  .web18 .site-header.menu-js nav.is-open { display: flex; }
+
+  .web18 .wordmark-small { font-size: 34px; }
+  .web18 .wordmark-small .home { font-size: 9px; margin-top: 8px; }
+  .web18 .header-contact { display: none; }
+
+  .web18 .hero { min-height: 0; display: block; padding-bottom: 244px; }
+  .web18 .hero-scene { top: auto; height: 355px; bottom: 0; }
+  .web18 .hero-scene img { object-position: 77% 60%; }
+
+  .web18 .hero::after {
+    background: linear-gradient(180deg, #040c14 0%, #040c14 49%,
+                rgba(4, 12, 20, 0.98) 59%, rgba(4, 12, 20, 0.38) 77%,
+                rgba(4, 12, 20, 0.05) 94%);
+  }
+
+  .web18 .hero-content { padding-top: 32px; padding-bottom: 18px; }
+  .web18 .hero .eyebrow { font-size: 8px; letter-spacing: 0.15em; margin-bottom: 25px; }
+  .web18 .hero-brand { font-size: 78px; margin-bottom: 27px; }
+  .web18 .hero-brand .home { font-size: 18px; margin-top: 13px; }
+
+  .web18 .hero h1 {
+    font-size: 31px;
+    max-width: 100%;
+    line-height: 1.18;
+    margin-bottom: 17px;
+    letter-spacing: -0.04em;
+  }
+
+  .web18 .desktop-break { display: none; }
+  .web18 .hero-intro { font-size: 14px; max-width: 100%; line-height: 1.75; }
+  .web18 .hero-actions { margin-top: 25px; display: flex; gap: 11px; align-items: center; }
+  .web18 .hero-actions .primary { flex: 1; justify-content: center; gap: 22px; }
+  .web18 .hero-actions .text-link { width: 100%; justify-content: center; min-height: 40px; }
+  .web18 .hero-condition { font-size: 10px; margin-top: 12px !important; max-width: 300px; }
+  .web18 .image-caption { font-size: 8px; right: 20px; bottom: 15px; }
+
+  .web18 .capability-strip { grid-template-columns: 1fr; padding-block: 27px; gap: 18px; }
+  .web18 .capability-strip > div { gap: 17px; align-items: center; }
+  .web18 .tiny-index { padding-top: 0; }
+  .web18 .capability-strip p { font-size: 13px; }
+  .web18 .capability-strip p span { font-size: 11px; display: inline; margin-left: 8px; }
+
+  .web18 .section { padding-block: 64px; }
+  .web18 .section-heading { margin-bottom: 32px; }
+  .web18 .eyebrow { font-size: 9px; letter-spacing: 0.15em; margin-bottom: 16px; }
+  .web18 h2 { font-size: 34px; line-height: 1.13; }
+
+  .web18 .ecosystem-grid { grid-template-columns: 1fr; gap: 33px; }
+  .web18 .ecosystem-copy h3 { font-size: 23px; max-width: 300px; margin-bottom: 17px; }
+  .web18 .ecosystem-copy p { font-size: 13px; line-height: 1.85; }
+  .web18 .ecosystem-copy .condition { font-size: 11px; margin-top: 19px; }
+  .web18 .ecosystem-copy .text-link { margin-top: 18px; }
+  .web18 .ecosystem-diagram { padding: 25px 22px; }
+  .web18 .flow-node { padding: 17px 15px; gap: 16px; }
+  .web18 .flow-node h4 { font-size: 14px; }
+  .web18 .flow-node p { font-size: 10px; }
+  .web18 .flow-line { margin-left: 29px; height: 20px; }
+  .web18 .diagram-note { font-size: 10px; }
+
+  .web18 .path-section { padding-block: 62px; }
+  .web18 .path-options { grid-template-columns: 1fr; gap: 37px; }
+  .web18 .path-options h3 { font-size: 28px; margin-block: 18px; }
+  .web18 .path-options p { font-size: 13px; }
+  .web18 .path-options .text-link { font-size: 12px; margin-top: 13px; }
+  .web18 .steps { grid-template-columns: 1fr; margin-top: 35px; padding-top: 27px; gap: 24px; }
+  .web18 .steps h4 { font-size: 14px; }
+  .web18 .steps p { font-size: 12px; }
+  .web18 .steps li > span { font-size: 11px; width: 13px; }
+
+  .web18 .split-heading { display: block; }
+  .web18 .split-heading > p { font-size: 13px; margin-top: 24px; }
+  .web18 .plans-grid { grid-template-columns: 1fr; gap: 20px; }
+  .web18 .plans-grid article { padding: 31px 25px; }
+  .web18 .plans-grid h3 { font-size: 33px; margin-block: 23px; }
+  .web18 .home-plan h3 { font-size: 43px; }
+  .web18 .home-plan h3 span { font-size: 17px; }
+  .web18 .plans-grid p { font-size: 13px; }
+  .web18 .plans-grid .button { width: 100%; justify-content: space-between; margin-top: 26px; }
+
+  .web18 .privacy-section { grid-template-columns: 1fr; gap: 27px; padding-block: 40px 62px; }
+  .web18 .privacy-section h2 { font-size: 31px; }
+  .web18 .privacy-copy p { font-size: 12px; }
+  .web18 .privacy-copy .text-link { font-size: 12px; }
+
+  .web18 .contact-section { padding-block: 62px; }
+  .web18 .contact-grid { grid-template-columns: 1fr; gap: 35px; }
+  .web18 .contact-section h2 { font-size: 45px; }
+  .web18 .contact-grid > div > p:not(.eyebrow) { font-size: 13px; margin-top: 20px; }
+  .web18 .catalina { gap: 13px; margin-top: 29px; }
+  .web18 .catalina-mark { width: 42px; height: 42px; font-size: 23px; }
+  .web18 .catalina small { font-size: 9px; }
+  .web18 .catalina strong { font-size: 26px; }
+  .web18 .catalina strong span { font-size: 19px; }
+  .web18 .contact-grid .contact-note { font-size: 10px !important; margin-top: 18px !important; }
+
+  .web18 .contact-preview { padding: 27px 23px; }
+  .web18 .wizard-pregunta { font-size: 25px; }
+  .web18 .wizard-ayuda { font-size: 12px; }
+  .web18 .opcion-cara { padding: 21px 15px; }
+  .web18 .form-privacy { font-size: 10px; }
+
+  .web18 .faq { display: block; }
+  .web18 .faq summary { font-size: 13px; padding-block: 21px; }
+  .web18 .faq details p { font-size: 12px; }
+  .web18 .faq-list { margin-top: 34px; }
+
+  .web18 footer { padding-block: 41px 25px; }
+  .web18 .footer-top { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+  .web18 .footer-top p { font-size: 10px; }
+
+  .web18 .footer-top > div {
+    font-size: 16px;
+    grid-column: 1 / -1;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .web18 .footer-bottom { margin-top: 28px; padding-top: 20px; flex-direction: column; gap: 17px; font-size: 9px; }
+  .web18 .footer-bottom > div { flex-wrap: wrap; gap: 20px; }
+
+  .web18 .button { font-size: 12px; min-height: 49px; }
+  .web18 .text-link { min-height: 44px; }
+}
+
+@media (max-width: 374px) {
+  .web18 .hero-brand { font-size: 68px; }
+  .web18 .hero h1 { font-size: 28px; }
+  .web18 .hero .eyebrow { font-size: 7px; }
+  .web18 .capability-strip p span { display: block; margin-left: 0; }
+  .web18 .contact-preview { padding: 22px 17px; }
+  .web18 .wizard-opciones { grid-template-columns: 1fr; }
+  .web18 .catalina strong { font-size: 22px; }
+  .web18 .contact-section h2 { font-size: 40px; }
+  .web18 .footer-bottom > div { gap: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .web18 * { transition: none !important; }
+}
+
+@media print {
+  .web18 .menu-toggle { display: none; }
+  .web18 .site-header { height: 90px; }
+  .web18 section,
+  .web18 article { break-inside: avoid; }
+  .web18 { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
