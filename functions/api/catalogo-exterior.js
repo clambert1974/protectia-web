@@ -12,7 +12,7 @@ export async function onRequest({request,waitUntil}) {
   const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),8000);
   let stage='SOURCE_CONNECTION',originStatus=null;
   try {
-    const response=await fetch(`https://www.blustore.cl/products/${handle}.js`,{signal:controller.signal,redirect:'error',headers:{Accept:'application/json'}});
+    const response=await fetch(`https://www.blustore.cl/products/${handle}.js`,{signal:controller.signal,redirect:'manual',headers:{Accept:'application/json'}});
     originStatus=response.status;stage='SOURCE_HTTP';
     if(!response.ok)throw new Error('Supplier unavailable');
     stage='SOURCE_FORMAT';const raw=await response.json();
