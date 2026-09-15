@@ -2,10 +2,12 @@ import {HANDLES} from '../lib/blu-handles.js';
 import {normalizeProduct} from '../lib/catalogo-normalize.js';
 const allowed=new Set(HANDLES);
 const json=(body,status=200)=>new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':status===200?'public, max-age=300':'no-store','X-Content-Type-Options':'nosniff'}});
-export async function onRequest({request,waitUntil}) {
+export async function onRequest({request,waitUntil,env}) {
   if(request.method!=='GET')return new Response(null,{status:405,headers:{Allow:'GET','Cache-Control':'no-store'}});
   const url=new URL(request.url);const handle=url.searchParams.get('modelo');
   if(url.searchParams.size!==1||!allowed.has(handle))return json({error:'Modelo no disponible'},400);
+  // Keep source requests paused until a supported supplier connection is available.
+  if(env?.PROTECTIA_CATALOG_LIVE_REFRESH!=='true')return json({error:'Actualización automática pendiente',code:'UPDATES_PAUSED'},503);
   const cache=globalThis.caches?.default;
   const cacheKey=new Request(`${url.origin}/api/catalogo-exterior?modelo=${encodeURIComponent(handle)}`);
   try {const cached=cache&&await cache.match(cacheKey);if(cached)return cached;}catch {}
