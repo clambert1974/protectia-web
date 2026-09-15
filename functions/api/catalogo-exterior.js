@@ -8,15 +8,17 @@ export async function onRequest({request,waitUntil}) {
   if(url.searchParams.size!==1||!allowed.has(handle))return json({error:'Modelo no disponible'},400);
   const cache=globalThis.caches?.default;
   const cacheKey=new Request(`${url.origin}/api/catalogo-exterior?modelo=${encodeURIComponent(handle)}`);
-  const cached=cache&&await cache.match(cacheKey);
-  if(cached)return cached;
+  try {const cached=cache&&await cache.match(cacheKey);if(cached)return cached;}catch {}
   const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),8000);
+  let stage='SOURCE_CONNECTION',originStatus=null;
   try {
     const response=await fetch(`https://www.blustore.cl/products/${handle}.js`,{signal:controller.signal,redirect:'error',headers:{Accept:'application/json'}});
+    originStatus=response.status;stage='SOURCE_HTTP';
     if(!response.ok)throw new Error('Supplier unavailable');
-    const data=normalizeProduct(await response.json(),handle);
+    stage='SOURCE_FORMAT';const raw=await response.json();
+    stage='SOURCE_DATA';const data=normalizeProduct(raw,handle);
     const result=json(data);
-    if(cache)waitUntil(cache.put(cacheKey,result.clone()));
+    try {if(cache)waitUntil(cache.put(cacheKey,result.clone()).catch(()=>{}));}catch {}
     return result;
-  }catch {return json({error:'No fue posible actualizar este modelo'},503);}finally{clearTimeout(timeout);}
+  }catch {return json({error:'No fue posible actualizar este modelo',code:controller.signal.aborted?'SOURCE_TIMEOUT':stage,...(stage==='SOURCE_HTTP'?{origin_status:originStatus}:{})},503);}finally{clearTimeout(timeout);}
 }
