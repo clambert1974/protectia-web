@@ -1,0 +1,525 @@
+{
+  "schema_version": 1,
+  "currency": "CLP",
+  "observed_at": "2026-09-15T21:42:47.988837+00:00",
+  "products": [
+    {
+      "handle": "camara-de-seguridad-reolink-duo-2-wifi-1",
+      "title": "Cámara de Seguridad 4K Duo 2 WiFi Reolink",
+      "model": "Duo 2 WiFi",
+      "features": [
+        "4K · 8 MP",
+        "WiFi",
+        "Visión 180°"
+      ],
+      "category": "camara",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6975253980857_1.jpg?v=1683658256",
+      "variants": [
+        {
+          "id": "50952124825913",
+          "title": "Unidad",
+          "sku": "6976930222673",
+          "price": 129990,
+          "available": true,
+          "image": null
+        }
+      ]
+    },
+    {
+      "handle": "camara-de-seguridad-e1-outdoor-wifi-reolink-1",
+      "title": "Cámara de Seguridad E1 Outdoor WiFi Reolink",
+      "model": "E1 Outdoor",
+      "features": [
+        "WiFi 2,4 / 5 GHz",
+        "Zoom óptico 3×",
+        "IP65"
+      ],
+      "category": "camara",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6972489773055_1.jpg?v=1762981827",
+      "variants": [
+        {
+          "id": "50952101069113",
+          "title": "Unidad",
+          "sku": "6976930222611",
+          "price": 89990,
+          "available": true,
+          "image": null
+        }
+      ]
+    },
+    {
+      "handle": "camara-de-seguridad-exterior-5mp-poe-p320-reolink",
+      "title": "Cámara de Seguridad Exterior 5MP PoE P320 Reolink",
+      "model": "P320",
+      "features": [
+        "5 MP",
+        "PoE",
+        "Visión nocturna hasta 30 m"
+      ],
+      "category": "camara",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6975253983735_1.jpg?v=1739216603",
+      "variants": [
+        {
+          "id": "50447828779321",
+          "title": "Unidad",
+          "sku": "6975253983735",
+          "price": 49990,
+          "available": true,
+          "image": null
+        }
+      ]
+    },
+    {
+      "handle": "pack-camara-de-seguridad-e1-outdoor-wifi-reolink",
+      "title": "Pack Cámara de Seguridad E1 Outdoor WiFi Reolink",
+      "model": "Pack E1 Outdoor",
+      "features": [
+        "2 o 3 cámaras",
+        "WiFi",
+        "Zoom óptico 3×"
+      ],
+      "category": "kit",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6976930222611X2.jpg?v=1762981827",
+      "variants": [
+        {
+          "id": "51339512906041",
+          "title": "Pack 2x",
+          "sku": "6976930222611X2",
+          "price": 179990,
+          "available": true,
+          "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6976930222611X2.jpg?v=1762981827"
+        },
+        {
+          "id": "51339512938809",
+          "title": "Pack 3x",
+          "sku": "6976930222611X3",
+          "price": 229990,
+          "available": true,
+          "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6976930222611X3.jpg?v=1762959740"
+        }
+      ]
+    },
+    {
+      "handle": "camara-de-seguridad-exterior-argus-3-pro-usb-c-reolink",
+      "title": "Cámara de Seguridad Exterior Argus 3 Pro USB-C Reolink",
+      "model": "Argus 3 Pro USB-C",
+      "features": [
+        "5 MP",
+        "WiFi de doble banda",
+        "Batería · IP65"
+      ],
+      "category": "camara",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/products/6972489773048_1.jpg?v=1671484933",
+      "variants": [
+        {
+          "id": "49323169841465",
+          "title": "Unidad",
+          "sku": "6975253989133",
+          "price": 79990,
+          "available": true,
+          "image": null
+        }
+      ]
+    },
+    {
+      "handle": "camara-de-seguridad-panoramica-5mp-reolink-argus-pt",
+      "title": "Cámara de Seguridad Panorámica 5MP Argus PT Reolink",
+      "model": "Argus PT",
+      "features": [
+        "5 MP",
+        "WiFi",
+        "Giro e inclinación"
+      ],
+      "category": "camara",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6975253989072-1.jpg?v=1751297140",
+      "variants": [
+        {
+          "id": "50952204943673",
+          "title": "Unidad",
+          "sku": "6975253989072",
+          "price": 96990,
+          "available": true,
+          "image": null
+        }
+      ]
+    },
+    {
+      "handle": "camara-de-seguridad-reolink-e1-outdoor-pro",
+      "title": "Cámara de Seguridad E1 Outdoor Pro Reolink",
+      "model": "E1 Outdoor Pro",
+      "features": [
+        "4K",
+        "WiFi 6",
+        "Zoom óptico 3×"
+      ],
+      "category": "camara",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6975253987795_1.jpg?v=1753475318",
+      "variants": [
+        {
+          "id": "51018832773433",
+          "title": "Unidad",
+          "sku": "6975253987795",
+          "price": 109990,
+          "available": true,
+          "image": null
+        }
+      ]
+    },
+    {
+      "handle": "camara-de-seguridad-wifi-argus-eco-ultra-4k-reolink",
+      "title": "Cámara de Seguridad WiFi Argus Eco Ultra 4K Reolink",
+      "model": "Argus Eco Ultra",
+      "features": [
+        "4K",
+        "WiFi",
+        "Inalámbrica"
+      ],
+      "category": "camara",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6975253988907_1.jpg?v=1770747204",
+      "variants": [
+        {
+          "id": "51929353355577",
+          "title": "Unidad",
+          "sku": "6975253988907",
+          "price": 89990,
+          "available": true,
+          "image": null
+        }
+      ]
+    },
+    {
+      "handle": "camara-de-seguridad-4g-lte-2k-go-plus-reolink",
+      "title": "Cámara de Seguridad 4G LTE 2K Go Plus Reolink",
+      "model": "Go Plus",
+      "features": [
+        "2K",
+        "4G LTE",
+        "Batería recargable"
+      ],
+      "category": "camara",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6975253989119_1.jpg?v=1770750945",
+      "variants": [
+        {
+          "id": "51929420169529",
+          "title": "Unidad",
+          "sku": "6975253989119",
+          "price": 129990,
+          "available": true,
+          "image": null
+        }
+      ]
+    },
+    {
+      "handle": "reolink-argus-4-pro",
+      "title": "Cámara de Seguridad 4K Argus 4 Pro Reolink",
+      "model": "Argus 4 Pro",
+      "features": [
+        "4K",
+        "WiFi 6",
+        "Visión 180°"
+      ],
+      "category": "camara",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6976930223601_1.jpg?v=1751295032",
+      "variants": [
+        {
+          "id": "53342456545593",
+          "title": "Solo Cámara",
+          "sku": "6976930223601",
+          "price": 145990,
+          "available": true,
+          "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6976930223601_2.jpg?v=1751295291"
+        },
+        {
+          "id": "53342456578361",
+          "title": "Cámara + panel solar",
+          "sku": "KIT-R601388",
+          "price": 154990,
+          "available": true,
+          "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/KIT-R601388.jpg?v=1766524717"
+        }
+      ]
+    },
+    {
+      "handle": "camara-de-seguridad-argus-eco-reolink-wifi-usb-c",
+      "title": "Cámara de Seguridad Argus Eco WiFi USB-C Reolink",
+      "model": "Argus Eco USB-C",
+      "features": [
+        "1080p",
+        "WiFi",
+        "Batería · IP65"
+      ],
+      "category": "camara",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6972489770320_1_c25ede46-83c2-4bdf-a2be-085cf4055229.jpg?v=1697035946",
+      "variants": [
+        {
+          "id": "49872944070969",
+          "title": "Solo Cámara",
+          "sku": "6975253987733",
+          "price": 59990,
+          "available": true,
+          "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6972489770320_1_c25ede46-83c2-4bdf-a2be-085cf4055229.jpg?v=1697035946"
+        },
+        {
+          "id": "49872943513913",
+          "title": "Con Panel Solar Blanco",
+          "sku": "KIT-R733388",
+          "price": 69990,
+          "available": true,
+          "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/KIT-R733388_1_d624337b-a06e-4bfb-8c45-5c453d09a5ef.jpg?v=1725913380"
+        },
+        {
+          "id": "50457624576313",
+          "title": "Con Panel Solar Negro",
+          "sku": "KIT-R733252",
+          "price": 69990,
+          "available": false,
+          "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/KIT-R733252_1.jpg?v=1739389999"
+        }
+      ]
+    },
+    {
+      "handle": "camara-de-seguridad-4g-argus-go-pt-plus-2k",
+      "title": "Cámara de Seguridad 4G Go PT Plus Reolink",
+      "model": "Go PT Plus",
+      "features": [
+        "2K",
+        "4G LTE",
+        "Giro e inclinación"
+      ],
+      "category": "camara",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6975253989096_1.jpg?v=1753460334",
+      "variants": [
+        {
+          "id": "51474950816057",
+          "title": "Solo cámara",
+          "sku": "6975253989096",
+          "price": 149990,
+          "available": true,
+          "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6975253989096_1.jpg?v=1753460334"
+        },
+        {
+          "id": "51474950848825",
+          "title": "Cámara + panel solar",
+          "sku": "KIT-R096388",
+          "price": 154990,
+          "available": true,
+          "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/KIT-R096388.jpg?v=1766525057"
+        }
+      ]
+    },
+    {
+      "handle": "camara-de-seguridad-4k-panoramica-elite-wifi-reolink",
+      "title": "Cámara de Seguridad 4K Panorámica Elite WiFi Reolink",
+      "model": "Elite WiFi",
+      "features": [
+        "4K",
+        "WiFi 6",
+        "Doble lente · 180°"
+      ],
+      "category": "camara",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6978285031030_1.jpg?v=1778525177",
+      "variants": [
+        {
+          "id": "53286649332025",
+          "title": "Unidad",
+          "sku": "6978285031030",
+          "price": 129990,
+          "available": true,
+          "image": null
+        }
+      ]
+    },
+    {
+      "handle": "camara-de-seguridad-4g-lte-2k-go-plus-reolink-open-box",
+      "title": "Cámara de Seguridad 4G LTE 2K Go Plus Reolink Open Box",
+      "model": "Go Plus · Open Box",
+      "features": [
+        "2K",
+        "4G LTE",
+        "Equipo Open Box"
+      ],
+      "category": "openbox",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6975253989119_1.jpg?v=1770750945",
+      "variants": [
+        {
+          "id": "53730413117753",
+          "title": "Unidad",
+          "sku": "6975253989119OB",
+          "price": 117000,
+          "available": true,
+          "image": null
+        }
+      ]
+    },
+    {
+      "handle": "kit-camara-argus-eco-panel-solar-2-5-8w",
+      "title": "Kit Cámara de Seguridad Argus Eco + Panel Solar 2 de 5,8W Reolink",
+      "model": "Kit Argus Eco + Solar 2",
+      "features": [
+        "1080p",
+        "WiFi",
+        "Panel solar 5,8 W incluido"
+      ],
+      "category": "kit",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/KIT-R733388_1.jpg?v=1710430337",
+      "variants": [
+        {
+          "id": "50457627459897",
+          "title": "Blanco",
+          "sku": "KIT-R733388",
+          "price": 69990,
+          "available": true,
+          "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/KIT-R733388_1.jpg?v=1710430337"
+        },
+        {
+          "id": "50457627492665",
+          "title": "Negro",
+          "sku": "KIT-R733252",
+          "price": 69990,
+          "available": false,
+          "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/KIT-R733252_1_3c120cfb-908c-45b6-ab8f-8a1758220d77.jpg?v=1739390058"
+        }
+      ]
+    },
+    {
+      "handle": "kit-camara-de-seguridad-exterior-argus-3-pro-usb-c-panel-solar-reolink",
+      "title": "Kit Cámara de Seguridad Argus 3 Pro USB-C + Panel Solar Reolink",
+      "model": "Kit Argus 3 Pro + Solar",
+      "features": [
+        "5 MP",
+        "WiFi de doble banda",
+        "Panel solar incluido"
+      ],
+      "category": "kit",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/KIT-R0483133_1.jpg?v=1729714988",
+      "variants": [
+        {
+          "id": "50469470339385",
+          "title": "Blanco",
+          "sku": "KIT-R0483133",
+          "price": 86990,
+          "available": true,
+          "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/KIT-R0483133_1.jpg?v=1729714988"
+        },
+        {
+          "id": "50469470372153",
+          "title": "Negro",
+          "sku": "KIT-R0483388",
+          "price": 85990,
+          "available": false,
+          "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/KIT-R0483388_1.jpg?v=1739799975"
+        }
+      ]
+    },
+    {
+      "handle": "pack-camara-de-seguridad-e1-outdoor-pro-reolink",
+      "title": "Pack Cámaras de Seguridad E1 Outdoor Pro Reolink",
+      "model": "Pack E1 Outdoor Pro",
+      "features": [
+        "2 cámaras",
+        "4K · WiFi 6",
+        "Zoom óptico 3×"
+      ],
+      "category": "kit",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/PACK6975253987795X2_1.jpg?v=1787067665",
+      "variants": [
+        {
+          "id": "54343590740281",
+          "title": "Pack 2x",
+          "sku": "PACK6975253987795X2",
+          "price": 209990,
+          "available": true,
+          "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/PACK6975253987795X2_1.jpg?v=1787067665"
+        }
+      ]
+    },
+    {
+      "handle": "camara-de-seguridad-altas-pt-ultra-4k-color-x-reolink",
+      "title": "Cámara de Seguridad Altas PT Ultra 4K Color X Reolink",
+      "model": "Altas PT Ultra",
+      "features": [
+        "4K",
+        "WiFi 6",
+        "ColorX"
+      ],
+      "category": "camara",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6976930225223_1_28ec88b1-855a-49de-a994-15effe6fea55.jpg?v=1784910431",
+      "variants": [
+        {
+          "id": "54211809870137",
+          "title": "Unidad",
+          "sku": "6976930225223",
+          "price": 319990,
+          "available": true,
+          "image": null
+        }
+      ]
+    },
+    {
+      "handle": "camara-de-seguridad-p324-5mp-poe-reolink",
+      "title": "Cámara de Seguridad Exterior P324 POE Reolink",
+      "model": "P324",
+      "features": [
+        "5 MP",
+        "PoE",
+        "Formato domo"
+      ],
+      "category": "camara",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6975253983742_1.jpg?v=1753395317",
+      "variants": [
+        {
+          "id": "51016735162681",
+          "title": "Unidad",
+          "sku": "6975253983742",
+          "price": 49990,
+          "available": true,
+          "image": null
+        }
+      ]
+    },
+    {
+      "handle": "camara-de-seguridad-ranger-pt-4g-lte-y-panel-solar-2-reolink",
+      "title": "Cámara de Seguridad Ranger PT 4G LTE y Panel Solar 2 Reolink",
+      "model": "Ranger PT + Solar 2",
+      "features": [
+        "4K",
+        "4G LTE",
+        "Panel solar incluido"
+      ],
+      "category": "kit",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6975253989485_1.jpg?v=1778528130",
+      "variants": [
+        {
+          "id": "53286834078009",
+          "title": "Unidad",
+          "sku": "6975253989485",
+          "price": 189990,
+          "available": true,
+          "image": null
+        }
+      ]
+    },
+    {
+      "handle": "camara-de-seguridad-track-mix-4k-wifi-6-reolink",
+      "title": "Cámara de Seguridad Track Mix 4K WiFi 6 Reolink",
+      "model": "TrackMix WiFi 6",
+      "features": [
+        "4K",
+        "WiFi 6",
+        "Doble lente"
+      ],
+      "category": "camara",
+      "image": "https://cdn.shopify.com/s/files/1/0696/0185/3753/files/6976930222666_1.jpg?v=1753468512",
+      "variants": [
+        {
+          "id": "51018565452089",
+          "title": "Unidad",
+          "sku": "6976930222666",
+          "price": 149990,
+          "available": true,
+          "image": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+export const HANDLES = [
+  "camara-de-seguridad-reolink-duo-2-wifi-1",
+  "camara-de-seguridad-e1-outdoor-wifi-reolink-1",
+  "camara-de-seguridad-exterior-5mp-poe-p320-reolink",
+  "pack-camara-de-seguridad-e1-outdoor-wifi-reolink",
+  "camara-de-seguridad-exterior-argus-3-pro-usb-c-reolink",
+  "camara-de-seguridad-panoramica-5mp-reolink-argus-pt",
+  "camara-de-seguridad-reolink-e1-outdoor-pro",
+  "camara-de-seguridad-wifi-argus-eco-ultra-4k-reolink",
+  "camara-de-seguridad-4g-lte-2k-go-plus-reolink",
+  "reolink-argus-4-pro",
+  "camara-de-seguridad-argus-eco-reolink-wifi-usb-c",
+  "camara-de-seguridad-4g-argus-go-pt-plus-2k",
+  "camara-de-seguridad-4k-panoramica-elite-wifi-reolink",
+  "camara-de-seguridad-4g-lte-2k-go-plus-reolink-open-box",
+  "kit-camara-argus-eco-panel-solar-2-5-8w",
+  "kit-camara-de-seguridad-exterior-argus-3-pro-usb-c-panel-solar-reolink",
+  "pack-camara-de-seguridad-e1-outdoor-pro-reolink",
+  "camara-de-seguridad-altas-pt-ultra-4k-color-x-reolink",
+  "camara-de-seguridad-p324-5mp-poe-reolink",
+  "camara-de-seguridad-ranger-pt-4g-lte-y-panel-solar-2-reolink",
+  "camara-de-seguridad-track-mix-4k-wifi-6-reolink"
+];
