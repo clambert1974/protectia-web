@@ -1,8 +1,11 @@
-import {isFresh, initialVariant, verifiedConsultation, referentialConsultation, refDate} from './catalogo-core.js?v=20260917-degradado';
+import {isFresh, initialVariant, refDate, mintReference, whatsappURL} from './catalogo-core.js?v=20260917-conector';
 const money = new Intl.NumberFormat('es-CL', {style:'currency',currency:'CLP',maximumFractionDigits:0});
 const date = new Intl.DateTimeFormat('es-CL', {day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'America/Santiago'});
 const grid = document.querySelector('#products');
 const cards = new Map();
+// idem_key estable por (handle|variante|cantidad) durante la sesión: el doble
+// clic o el reintento reusan el mismo y el servidor NO duplica la referencia.
+const refsSesion = new Map();
 let category = 'all';
 const el = (tag, className, text) => {const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node;};
 function filterCards() {
@@ -63,12 +66,16 @@ function buildCard(product, observedAt) {
   visual.append(el('span','type-badge',({camara:'Exterior',kit:'Kit / pack',openbox:'Open Box'})[product.category]),image);
   const content=el('div','product-content');
   const features=el('ul','features');product.features.forEach(f=>features.append(el('li','',f)));
-  const variantBox=el('div');const sku=el('p','sku');const stock=el('p','stock');const price=el('p','price');const checked=el('p','checked');const action=el('button','button','Verificar stock y consultar');action.type='button';action.style.width='100%';action.setAttribute('aria-label',`Verificar stock de Reolink ${product.model} y consultar por WhatsApp`);action.append(el('span','','↗'));
-  const feedback=el('p','price-note');feedback.setAttribute('role','status');feedback.style.marginTop='12px';feedback.textContent='Comprobamos disponibilidad antes de abrir WhatsApp.';
-  const purchase=el('div','purchase');purchase.append(stock,price,el('p','price-note','Valor de referencia · despacho por confirmar'),checked,action,feedback);
+  const variantBox=el('div');const sku=el('p','sku');const stock=el('p','stock');const price=el('p','price');const checked=el('p','checked');
+  const qtyInput=el('input');qtyInput.type='number';qtyInput.min='1';qtyInput.max='99';qtyInput.step='1';qtyInput.value='1';qtyInput.inputMode='numeric';qtyInput.setAttribute('aria-label',`Cantidad de Reolink ${product.model}`);
+  const qty=el('label','qty','Cantidad');qty.append(qtyInput);
+  const action=el('button','button','Consultar disponibilidad');action.type='button';action.style.width='100%';action.setAttribute('aria-label',`Consultar disponibilidad y precio de Reolink ${product.model} por WhatsApp`);action.append(el('span','','↗'));
+  const feedback=el('p','price-note');feedback.setAttribute('role','status');feedback.style.marginTop='12px';feedback.textContent='Consultamos disponibilidad y precio antes de abrir WhatsApp.';
+  const purchase=el('div','purchase');purchase.append(stock,price,el('p','price-note','Valor de referencia · despacho por confirmar'),checked,qty,action,feedback);
   content.append(el('p','product-brand','REOLINK'),el('h3','',product.model),el('p','product-title',product.title),features,variantBox,sku,purchase);
   card.append(visual,content);
-  const state={product,card,image,variantBox,sku,stock,price,checked,action,feedback,variants:product.variants,selected:initialVariant(product.variants).id,observedAt,refreshFailed:false,checking:false};
+  const state={product,card,image,variantBox,sku,stock,price,checked,action,feedback,variants:product.variants,selected:initialVariant(product.variants).id,observedAt,refreshFailed:false,checking:false,cantidad:1};
+  qtyInput.addEventListener('change',()=>{let n=parseInt(qtyInput.value,10);if(!Number.isFinite(n)||n<1)n=1;if(n>99)n=99;qtyInput.value=String(n);state.cantidad=n;});
   action.addEventListener('click',()=>checkAndOpenWhatsApp(state));
   paintVariants(state);paintOffer(state);grid.append(card);cards.set(product.handle,state);
 }
@@ -86,28 +93,22 @@ async function refresh(state) {
 }
 async function checkAndOpenWhatsApp(state) {
   if(state.checking)return;
-  const selectedId=state.selected;
-  state.checking=true;state.action.disabled=true;state.action.firstChild.textContent='Comprobando stock…';state.feedback.textContent='Verificando la opción seleccionada…';
+  const cantidad=state.cantidad||1;
+  const variant=state.variants.find(v=>v.id===state.selected)||initialVariant(state.variants);
+  state.checking=true;state.action.disabled=true;state.action.firstChild.textContent='Preparando consulta…';state.feedback.textContent='Comprobando con nuestro sistema…';
   const selector=state.variantBox.querySelector('select');if(selector)selector.disabled=true;
   try {
-    const data=await refresh(state);
-    const decision=verifiedConsultation(state.product,selectedId,data);
-    if(decision.ok){
-      // Verificación OK: comportamiento intacto (mensaje con stock verificado).
-      state.feedback.textContent='Stock informado disponible. Abriendo WhatsApp…';
-      window.location.assign(decision.url);
-      return;
-    }
-    if(decision.reason==='unavailable'){
-      // La API respondió y confirmó SIN stock: no es una falla, no abrimos.
-      state.feedback.textContent='Esta opción está sin stock. No se abrió la consulta de compra.';
-      return;
-    }
-    // La verificación falló (503/red/datos no válidos o vencidos): modo
-    // referencial, abrimos WhatsApp para consultar disponibilidad sin bloquear.
-    const ref=referentialConsultation(state.product,selectedId,state.variants,state.observedAt);
-    state.feedback.textContent='Abriendo WhatsApp para consultar disponibilidad…';
-    window.location.assign(ref.url);
+    // El SERVIDOR verifica (con su fuente) y mintea la referencia. El navegador
+    // no manda precio ni stock. Doble clic dedup por idem_key estable.
+    const key=`${state.product.handle}|${variant.id}|${cantidad}`;
+    let idemKey=refsSesion.get(key);
+    if(!idemKey){idemKey=(self.crypto&&crypto.randomUUID)?crypto.randomUUID():`${Date.now()}-${Math.random().toString(16).slice(2)}`;refsSesion.set(key,idemKey);}
+    const srv=await mintReference({idem_key:idemKey,handle:state.product.handle,variant_id:variant.id,variant_title:variant.title,sku:variant.sku,cantidad});
+    // Si ventas no respondió: asesoría sin código, con precio referencial del
+    // seed. Nunca afirma stock; no se bloquea la venta por el registro.
+    const datos=srv||{verificado:false,codigo:null,precio_ref:variant.price,moneda:'CLP',observed_at:state.observedAt};
+    state.feedback.textContent=datos.verificado?'Stock verificado. Abriendo WhatsApp…':'Abriendo WhatsApp para consultar disponibilidad…';
+    window.location.assign(whatsappURL(state.product,variant,cantidad,datos));
   }finally{state.checking=false;state.action.disabled=false;const current=state.variantBox.querySelector('select');if(current)current.disabled=false;paintOffer(state);}
 }
 // Aviso de catálogo: deja claro que el pedido lo opera BLU STORE y ProtectIA
