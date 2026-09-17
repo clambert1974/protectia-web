@@ -1,4 +1,4 @@
-import {isFresh, initialVariant, verifiedConsultation} from './catalogo-core.js?v=20260915-whatsapp-stock';
+import {isFresh, initialVariant, verifiedConsultation, referentialConsultation, refDate} from './catalogo-core.js?v=20260917-degradado';
 const money = new Intl.NumberFormat('es-CL', {style:'currency',currency:'CLP',maximumFractionDigits:0});
 const date = new Intl.DateTimeFormat('es-CL', {day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'America/Santiago'});
 const grid = document.querySelector('#products');
@@ -19,6 +19,17 @@ function filterCards() {
 function paintOffer(state) {
   const variant=state.variants.find(v=>v.id===state.selected)||initialVariant(state.variants);
   state.selected=variant.id;
+  if(state.refreshFailed){
+    // Verificación /api caída: no bloqueamos, mostramos precio referencial.
+    state.stock.dataset.state='unknown';
+    state.stock.textContent='Disponibilidad por confirmar';
+    state.price.textContent=(Number.isSafeInteger(variant.price)&&variant.price>0)?money.format(variant.price):'Precio por confirmar';
+    state.sku.textContent=`SKU: ${variant.sku||'Por confirmar'}`;
+    state.checked.textContent=`Precio referencial del ${refDate(state.observedAt)} · Disponibilidad por confirmar`;
+    state.image.src=variant.image||state.product.image;
+    if(!state.checking)state.action.firstChild.textContent='Consultar disponibilidad';
+    return;
+  }
   const fresh=isFresh(state.observedAt);
   state.stock.dataset.state=fresh?(variant.available?'available':'unavailable'):'unknown';
   state.stock.textContent=fresh?(variant.available?'Disponible por encargo':'Sin stock'):'Disponibilidad por confirmar';
@@ -81,13 +92,28 @@ async function checkAndOpenWhatsApp(state) {
   try {
     const data=await refresh(state);
     const decision=verifiedConsultation(state.product,selectedId,data);
-    if(!decision.ok){
-      state.feedback.textContent=decision.reason==='unavailable'?'Esta opción está sin stock. No se abrió la consulta de compra.':'No pudimos confirmar stock actualizado. La consulta de compra quedará disponible cuando podamos verificarlo.';
+    if(decision.ok){
+      // Verificación OK: comportamiento intacto (mensaje con stock verificado).
+      state.feedback.textContent='Stock informado disponible. Abriendo WhatsApp…';
+      window.location.assign(decision.url);
       return;
     }
-    state.feedback.textContent='Stock informado disponible. Abriendo WhatsApp…';
-    window.location.assign(decision.url);
+    if(decision.reason==='unavailable'){
+      // La API respondió y confirmó SIN stock: no es una falla, no abrimos.
+      state.feedback.textContent='Esta opción está sin stock. No se abrió la consulta de compra.';
+      return;
+    }
+    // La verificación falló (503/red/datos no válidos o vencidos): modo
+    // referencial, abrimos WhatsApp para consultar disponibilidad sin bloquear.
+    const ref=referentialConsultation(state.product,selectedId,state.variants,state.observedAt);
+    state.feedback.textContent='Abriendo WhatsApp para consultar disponibilidad…';
+    window.location.assign(ref.url);
   }finally{state.checking=false;state.action.disabled=false;const current=state.variantBox.querySelector('select');if(current)current.disabled=false;paintOffer(state);}
+}
+// Aviso de catálogo: deja claro que el pedido lo opera BLU STORE y ProtectIA
+// asesora. Usa la clase .catalogue-info ya existente; se inserta una sola vez.
+if(grid&&grid.parentNode&&!document.querySelector('.catalogue-info')){
+  grid.parentNode.insertBefore(el('p','catalogue-info','Los pedidos los cobra, factura y despacha BLU STORE. ProtectIA te asesora en la elección e instalación.'),grid);
 }
 document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListener('click',()=>{category=button.dataset.filter;document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));filterCards();}));
 document.querySelector('#search').addEventListener('input',filterCards);

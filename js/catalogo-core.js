@@ -28,3 +28,24 @@ export function verifiedConsultation(product, variantId, data, now=Date.now()) {
   url.searchParams.set('text',url.searchParams.get('text').replace('\nMe interesa comprar.',`\nStock informado: disponible, verificado ${time} (Chile). Sujeto a confirmación al reservar.\nMe interesa comprar.`));
   return {ok:true,url:url.href,variant,observedAt:data.observed_at};
 }
+// Fecha de referencia en dd-mm-aaaa (hora de Chile) a partir del observed_at.
+export function refDate(observedAt) {
+  const d = new Date(Date.parse(observedAt));
+  if (isNaN(d)) return 'fecha por confirmar';
+  const parts = new Intl.DateTimeFormat('es-CL', {day:'2-digit',month:'2-digit',year:'numeric',timeZone:'America/Santiago'}).formatToParts(d);
+  const g = t => parts.find(p => p.type === t).value;
+  return `${g('day')}-${g('month')}-${g('year')}`;
+}
+// Modo degradado: cuando la verificación /api falla (503/red/datos vencidos) no
+// bloqueamos la compra. Abrimos WhatsApp con un mensaje de ASESORÍA con precio
+// referencial y su fecha, SIN afirmar disponibilidad ("disponible"/"en stock"
+// no aparecen jamás en este modo). Usa el dato semilla del catálogo estático.
+export function referentialConsultation(product, variantId, variants, observedAt) {
+  const list = Array.isArray(variants) ? variants : [];
+  const variant = list.find(v => v.id === variantId) || list[0] || {};
+  const precio = (Number.isSafeInteger(variant.price) && variant.price > 0)
+    ? variant.price.toLocaleString('es-CL') : 'a confirmar';
+  const sku = variant.sku || 'por confirmar';
+  const body = `Hola, quiero asesoría sobre ${product.title} – ${variant.title || 'opción'} (SKU ${sku}). Precio referencial: $${precio} CLP del ${refDate(observedAt)}. ¿Disponibilidad y despacho?`;
+  return {url: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(body)}`, variant};
+}
