@@ -1,6 +1,5 @@
-import {isFresh, initialVariant, refDate, mintReference, whatsappURL} from './catalogo-core.js?v=20260917-conector';
+import {isFresh, initialVariant, refDate, mintReference, whatsappURL, refMatches} from './catalogo-core.js?v=20260917-endurecido';
 const money = new Intl.NumberFormat('es-CL', {style:'currency',currency:'CLP',maximumFractionDigits:0});
-const date = new Intl.DateTimeFormat('es-CL', {day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'America/Santiago'});
 const grid = document.querySelector('#products');
 const cards = new Map();
 // idem_key estable por (handle|variante|cantidad) durante la sesión: el doble
@@ -22,25 +21,18 @@ function filterCards() {
 function paintOffer(state) {
   const variant=state.variants.find(v=>v.id===state.selected)||initialVariant(state.variants);
   state.selected=variant.id;
-  if(state.refreshFailed){
-    // Verificación /api caída: no bloqueamos, mostramos precio referencial.
-    state.stock.dataset.state='unknown';
-    state.stock.textContent='Disponibilidad por confirmar';
-    state.price.textContent=(Number.isSafeInteger(variant.price)&&variant.price>0)?money.format(variant.price):'Precio por confirmar';
-    state.sku.textContent=`SKU: ${variant.sku||'Por confirmar'}`;
-    state.checked.textContent=`Precio referencial del ${refDate(state.observedAt)} · Disponibilidad por confirmar`;
-    state.image.src=variant.image||state.product.image;
-    if(!state.checking)state.action.firstChild.textContent='Consultar disponibilidad';
-    return;
-  }
-  const fresh=isFresh(state.observedAt);
-  state.stock.dataset.state=fresh?(variant.available?'available':'unavailable'):'unknown';
-  state.stock.textContent=fresh?(variant.available?'Disponible por encargo':'Sin stock'):'Disponibilidad por confirmar';
-  state.price.textContent=fresh?money.format(variant.price):'Precio por confirmar';
+  // NUNCA afirmamos "disponible"/"sin stock" desde el catálogo (una fecha + un
+  // booleano): eso es una foto del inventario, no una comprobación en vivo. La
+  // tarjeta muestra siempre precio referencial y "Disponibilidad por confirmar";
+  // el stock real para la variante y la cantidad lo verifica el servidor al
+  // consultar (referencias.py).
+  state.stock.dataset.state='unknown';
+  state.stock.textContent='Disponibilidad por confirmar';
+  state.price.textContent=(Number.isSafeInteger(variant.price)&&variant.price>0)?money.format(variant.price):'Precio por confirmar';
   state.sku.textContent=`SKU: ${variant.sku||'Por confirmar'}`;
-  state.checked.textContent=`Consultado: ${date.format(new Date(state.observedAt))} · hora de Chile${state.refreshFailed?' · actualización pendiente':''}`;
+  state.checked.textContent=`Precio referencial del ${refDate(state.observedAt)} · Disponibilidad por confirmar`;
   state.image.src=variant.image||state.product.image;
-  if(!state.checking)state.action.firstChild.textContent='Verificar stock y consultar';
+  if(!state.checking)state.action.firstChild.textContent='Consultar disponibilidad';
 }
 function paintVariants(state) {
   const signature=JSON.stringify([state.variants,isFresh(state.observedAt)]);
@@ -55,7 +47,7 @@ function paintVariants(state) {
   if(state.variants.length>1) {
     const label=el('label','variant-label','Elige una opción');
     const select=el('select');select.disabled=state.checking;select.setAttribute('aria-label',`Opción de ${state.product.model}`);
-    for(const v of state.variants){const option=el('option','',v.title+(isFresh(state.observedAt)&&!v.available?' · sin stock':''));option.value=v.id;select.append(option);}
+    for(const v of state.variants){const option=el('option','',v.title);option.value=v.id;select.append(option);}
     select.value=state.selected;select.addEventListener('change',()=>{state.selected=select.value;paintOffer(state);});label.append(select);state.variantBox.append(label);
   }else state.variantBox.append(el('p','single-variant',state.variants[0].title));
 }
@@ -104,9 +96,17 @@ async function checkAndOpenWhatsApp(state) {
     let idemKey=refsSesion.get(key);
     if(!idemKey){idemKey=(self.crypto&&crypto.randomUUID)?crypto.randomUUID():`${Date.now()}-${Math.random().toString(16).slice(2)}`;refsSesion.set(key,idemKey);}
     const srv=await mintReference({idem_key:idemKey,handle:state.product.handle,variant_id:variant.id,variant_title:variant.title,sku:variant.sku,cantidad});
-    // Si ventas no respondió: asesoría sin código, con precio referencial del
-    // seed. Nunca afirma stock; no se bloquea la venta por el registro.
-    const datos=srv||{verificado:false,codigo:null,precio_ref:variant.price,moneda:'CLP',observed_at:state.observedAt};
+    let datos=srv;
+    // Discrepancia: lo que registró el servidor (cantidad/variante) debe coincidir
+    // con lo pedido. Si no, no usamos esa referencia (se degrada a asesoría sin
+    // código) para no abrir WhatsApp con datos que no calzan con el registro.
+    if(datos&&!refMatches(variant.id,cantidad,datos)){
+      console.warn('tienda: discrepancia servidor/cliente en la referencia; asesoría sin código.');
+      datos=null;
+    }
+    // Si ventas no respondió (o hubo discrepancia): asesoría sin código, con
+    // precio referencial del seed. Nunca afirma stock; no se bloquea la venta.
+    if(!datos)datos={verificado:false,codigo:null,precio_ref:variant.price,moneda:'CLP',observed_at:state.observedAt};
     state.feedback.textContent=datos.verificado?'Stock verificado. Abriendo WhatsApp…':'Abriendo WhatsApp para consultar disponibilidad…';
     window.location.assign(whatsappURL(state.product,variant,cantidad,datos));
   }finally{state.checking=false;state.action.disabled=false;const current=state.variantBox.querySelector('select');if(current)current.disabled=false;paintOffer(state);}

@@ -43,6 +43,16 @@ export async function mintReference(payload) {
   }
 }
 
+// ¿La referencia que devolvió el servidor corresponde EXACTAMENTE a la variante
+// y cantidad que se pidieron? Si no, no se usa esa referencia (se detecta la
+// discrepancia y se degrada a asesoría sin código).
+export function refMatches(variantId, cantidad, srv) {
+  if (!srv) return false;
+  if (Number.isInteger(srv.cantidad) && srv.cantidad !== cantidad) return false;
+  if (srv.variant_id != null && String(srv.variant_id) !== String(variantId)) return false;
+  return true;
+}
+
 // Arma el link de WhatsApp SIEMPRE con los datos del servidor (`srv`). El
 // navegador solo aporta nombre/variante/SKU para el texto, nunca precio ni
 // stock. `srv` puede ser sintético (fallback si ventas cayó): verificado=false,
@@ -55,7 +65,10 @@ export function whatsappURL(product, variant, cantidad, srv) {
   const sku = (variant && variant.sku) || 'por confirmar';
   const titulo = (product && (product.title || product.model)) || 'producto';
   const vtitulo = (variant && variant.title) || 'opción';
-  const cant = `${cantidad} ${cantidad === 1 ? 'unidad' : 'unidades'}`;
+  // La cantidad del mensaje es la del REGISTRO del servidor cuando existe (el
+  // cliente ya verificó que coincide con lo pedido), no la del navegador suelto.
+  const n = Number.isInteger(s.cantidad) ? s.cantidad : cantidad;
+  const cant = `${n} ${n === 1 ? 'unidad' : 'unidades'}`;
   const refLinea = s.codigo ? ` Referencia: ${s.codigo}.` : '';
   let body;
   if (verificado) {
