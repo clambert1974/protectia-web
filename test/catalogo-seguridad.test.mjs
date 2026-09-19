@@ -97,7 +97,7 @@ const baseURL=new URL('../js/',import.meta.url);
 const source=readFileSync(fileURLToPath(new URL('tienda.js',baseURL)),'utf8')
   .replace(/(['"])\.\/(catalogo-(?:core|seguridad)\.js)(?:\?[^'"]*)?\1/g,(_,quote,name)=>JSON.stringify(new URL(name,baseURL).href));
 let fixtureSequence=0;
-async function runStore({brokenLegacy=false,brokenSecurity=false,priceFeed=feedFor([], {stale:true}),reference=null,referenceFails=false}={},fn) {
+async function runStore({brokenLegacy=false,brokenSecurity=false,priceFeed=feedFor([], {stale:true}),reference=null,referenceFails=false,marketPrice=false}={},fn) {
   const saved=Object.fromEntries(['document','window','self','fetch','setInterval'].map(key=>[key,Object.getOwnPropertyDescriptor(globalThis,key)]));
   const selectors=Object.fromEntries(['#products','#search','#count','#empty','#load-error'].map(key=>[key,new Node()]));
   selectors['#load-error'].append(new Node('#text','Error al cargar '));
@@ -112,7 +112,9 @@ async function runStore({brokenLegacy=false,brokenSecurity=false,priceFeed=feedF
     }
     if(url==='/data/catalogo-seguridad.json'){
       if(brokenSecurity)throw new Error('catálogo no disponible');
-      return {ok:true,json:async()=>({products:structuredClone([alarm,recorder,camera])})};
+      const products=structuredClone([alarm,recorder,camera]);
+      if(marketPrice)Object.assign(products[0].variants[0],{price:115000,observed_at:recent,price_tax_included:true});
+      return {ok:true,json:async()=>({products})};
     }
     if(url==='/api/catalogo-seguridad')return {ok:true,json:async()=>structuredClone(priceFeed)};
     if(url==='https://ventas.protectia.cl/api/tienda/referencia'){
@@ -205,5 +207,17 @@ await check('cantidad editada inmediatamente antes del clic se captura aunque no
   assert.equal(sent.cantidad,2);
   assert.match(textOfURL(fixture.opened),/Cantidad: 2 unidades/);
   assert.match(textOfURL(fixture.opened),/Referencia: PIA-EDITED/);
+}));
+await check('referencia de mercado conserva precio final con IVA y WhatsApp del servidor sin afirmar inventario',()=>runStore({marketPrice:true,reference:{ok:true,verificado:false,codigo:'PIA-MARKET',cantidad:2,variant_id:'alarm-1',precio_ref:115000,observed_at:recent}},async fixture=>{
+  const card=cardByTitle(fixture,alarm.model);
+  assert.match(card.querySelector('.price').textContent,/115[.,]000/);
+  assert.match(card.textContent,/IVA incluido/);
+  assert.equal(card.querySelector('.stock').textContent,'Disponibilidad por confirmar');
+  card.querySelector('input').value='2';
+  await card.querySelector('button').dispatch('click');
+  const body=textOfURL(fixture.opened);
+  assert.match(body,/asesoría/);assert.match(body,/Precio referencial: \$115\.000 CLP/);
+  assert.match(body,/Cantidad: 2 unidades/);assert.match(body,/Referencia: PIA-MARKET/);
+  assert.doesNotMatch(body,/Stock verificado|quiero comprar/);
 }));
 console.log(`\n${passed} escenarios OK (datos sintéticos, sin red).`);

@@ -1,5 +1,5 @@
-import {isFresh, initialVariant, refDate, mintReference, whatsappURL, refMatches} from './catalogo-core.js?v=20260919-seguridad';
-import {CATEGORY_LABELS, matchesProduct, dailyPriceFor} from './catalogo-seguridad.js?v=20260919-seguridad';
+import {isFresh, initialVariant, refDate, mintReference, whatsappURL, refMatches} from './catalogo-core.js?v=20260919-referenciales';
+import {CATEGORY_LABELS, matchesProduct, dailyPriceFor} from './catalogo-seguridad.js?v=20260919-referenciales';
 const money = new Intl.NumberFormat('es-CL', {style:'currency',currency:'CLP',maximumFractionDigits:0});
 const grid = document.querySelector('#products');
 const cards = new Map();
@@ -31,6 +31,7 @@ function paintOffer(state) {
   state.stock.textContent='Disponibilidad por confirmar';
   state.price.textContent=(Number.isSafeInteger(variant.price)&&variant.price>0)?money.format(variant.price):'Precio por confirmar';
   state.sku.textContent=`SKU: ${variant.sku||'Por confirmar'}`;
+  state.priceNote.textContent=variant.price_tax_included===true?'Valor de referencia · IVA incluido · despacho por confirmar':'Valor de referencia · despacho por confirmar';
   const observedAt=variant.observed_at||state.observedAt;
   const hasPrice=Number.isSafeInteger(variant.price)&&variant.price>0;
   state.checked.textContent=hasPrice ? `Precio referencial del ${refDate(observedAt)}${isFresh(observedAt)&&!variant.price_stale?'':' · Requiere actualización'}` : 'Te enviamos una cotización con el precio vigente.';
@@ -67,10 +68,11 @@ function buildCard(product, observedAt) {
   const qty=el('label','qty','Cantidad');qty.append(qtyInput);
   const action=el('button','button','Cotizar por WhatsApp');action.type='button';action.style.width='100%';action.setAttribute('aria-label',`Consultar disponibilidad y precio de ${product.brand||'Reolink'} ${product.model} por WhatsApp`);action.append(el('span','','↗'));
   const feedback=el('p','price-note');feedback.setAttribute('role','status');feedback.style.marginTop='12px';feedback.textContent='Te asesoramos y confirmamos precio y disponibilidad al cotizar.';
-  const purchase=el('div','purchase');purchase.append(stock,price,el('p','price-note','Valor de referencia · despacho por confirmar'),checked,qty,action,feedback);
+  const priceNote=el('p','price-note','Valor de referencia · despacho por confirmar');
+  const purchase=el('div','purchase');purchase.append(stock,price,priceNote,checked,qty,action,feedback);
   content.append(el('p','product-brand',product.brand||'REOLINK'),el('h3','',product.model),el('p','product-title',product.title),features,variantBox,sku,purchase);
   card.append(visual,content);
-  const state={product,card,image,qtyInput,variantBox,sku,stock,price,checked,action,feedback,variants:product.variants,selected:initialVariant(product.variants).id,observedAt,refreshFailed:false,checking:false,cantidad:1};
+  const state={product,card,image,qtyInput,variantBox,sku,stock,price,priceNote,checked,action,feedback,variants:product.variants,selected:initialVariant(product.variants).id,observedAt,refreshFailed:false,checking:false,cantidad:1};
   qtyInput.addEventListener('change',()=>{let n=parseInt(qtyInput.value,10);if(!Number.isFinite(n)||n<1)n=1;if(n>99)n=99;qtyInput.value=String(n);state.cantidad=n;});
   action.addEventListener('click',()=>checkAndOpenWhatsApp(state));
   paintVariants(state);paintOffer(state);grid.append(card);cards.set(product.handle,state);

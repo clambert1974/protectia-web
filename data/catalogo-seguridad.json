@@ -22,8 +22,11 @@
           "id": "ES225HIK63",
           "sku": "ES225HIK63",
           "title": "Estándar",
-          "price": null,
-          "available": null
+          "price": 74739,
+          "available": null,
+          "observed_at": "2026-09-19T16:24:15.990692+00:00",
+          "price_tax_included": true,
+          "price_source": "mercado_referencial"
         }
       ]
     },
@@ -47,8 +50,11 @@
           "id": "ES224HIK66",
           "sku": "ES224HIK66",
           "title": "Estándar",
-          "price": null,
-          "available": null
+          "price": 51739,
+          "available": null,
+          "observed_at": "2026-09-19T16:24:00Z",
+          "price_tax_included": true,
+          "price_source": "mercado_referencial"
         }
       ]
     },
@@ -96,8 +102,11 @@
           "id": "MM001TPL96",
           "sku": "MM001TPL96",
           "title": "Estándar",
-          "price": null,
-          "available": null
+          "price": 114989,
+          "available": null,
+          "observed_at": "2026-09-19T16:24:15.422077+00:00",
+          "price_tax_included": true,
+          "price_source": "mercado_referencial"
         }
       ]
     },
@@ -121,8 +130,11 @@
           "id": "ES400HIK82",
           "sku": "ES400HIK82",
           "title": "Estándar",
-          "price": null,
-          "available": null
+          "price": 186289,
+          "available": null,
+          "observed_at": "2026-09-19T16:24:00Z",
+          "price_tax_included": true,
+          "price_source": "mercado_referencial"
         }
       ]
     },
@@ -146,8 +158,11 @@
           "id": "IN001HIK36",
           "sku": "IN001HIK36",
           "title": "Estándar",
-          "price": null,
-          "available": null
+          "price": 274735,
+          "available": null,
+          "observed_at": "2026-09-19T16:24:15.131755+00:00",
+          "price_tax_included": true,
+          "price_source": "mercado_referencial"
         }
       ]
     },
@@ -170,8 +185,11 @@
           "id": "IN001HIK46",
           "sku": "IN001HIK46",
           "title": "Estándar",
-          "price": null,
-          "available": null
+          "price": 43922,
+          "available": null,
+          "observed_at": "2026-09-19T16:24:07Z",
+          "price_tax_included": true,
+          "price_source": "mercado_referencial"
         }
       ]
     },
@@ -195,8 +213,11 @@
           "id": "MM000HIK21",
           "sku": "MM000HIK21",
           "title": "Estándar",
-          "price": null,
-          "available": null
+          "price": 65977,
+          "available": null,
+          "observed_at": "2026-09-19T16:24:07Z",
+          "price_tax_included": true,
+          "price_source": "mercado_referencial"
         }
       ]
     },
@@ -219,8 +240,11 @@
           "id": "IN000HIK74",
           "sku": "IN000HIK74",
           "title": "Estándar",
-          "price": null,
-          "available": null
+          "price": 39089,
+          "available": null,
+          "observed_at": "2026-09-19T16:24:07Z",
+          "price_tax_included": true,
+          "price_source": "mercado_referencial"
         }
       ]
     },
@@ -243,8 +267,11 @@
           "id": "IN004HIK19",
           "sku": "IN004HIK19",
           "title": "Estándar",
-          "price": null,
-          "available": null
+          "price": 20056,
+          "available": null,
+          "observed_at": "2026-09-19T16:24:07Z",
+          "price_tax_included": true,
+          "price_source": "mercado_referencial"
         }
       ]
     },
@@ -268,8 +295,11 @@
           "id": "IN002HIK39",
           "sku": "IN002HIK39",
           "title": "Estándar",
-          "price": null,
-          "available": null
+          "price": 16409,
+          "available": null,
+          "observed_at": "2026-09-19T16:24:07Z",
+          "price_tax_included": true,
+          "price_source": "mercado_referencial"
         }
       ]
     },
@@ -293,8 +323,11 @@
           "id": "EC001HIK04",
           "sku": "EC001HIK04",
           "title": "Estándar",
-          "price": null,
-          "available": null
+          "price": 11489,
+          "available": null,
+          "observed_at": "2026-09-19T16:25:08Z",
+          "price_tax_included": true,
+          "price_source": "mercado_referencial"
         }
       ]
     },
@@ -317,8 +350,11 @@
           "id": "EC003ZKT28",
           "sku": "EC003ZKT28",
           "title": "Estándar",
-          "price": null,
-          "available": null
+          "price": 153939,
+          "available": null,
+          "observed_at": "2026-09-19T16:24:00Z",
+          "price_tax_included": true,
+          "price_source": "mercado_referencial"
         }
       ]
     },
@@ -341,8 +377,11 @@
           "id": "EC001ZKT17",
           "sku": "EC001ZKT17",
           "title": "Estándar",
-          "price": null,
-          "available": null
+          "price": 146140,
+          "available": null,
+          "observed_at": "2026-09-19T16:25:06Z",
+          "price_tax_included": true,
+          "price_source": "mercado_referencial"
         }
       ]
     },
@@ -366,8 +405,11 @@
           "id": "EC003HIK10",
           "sku": "EC003HIK10",
           "title": "Estándar",
-          "price": null,
-          "available": null
+          "price": 220601,
+          "available": null,
+          "observed_at": "2026-09-19T16:24:00Z",
+          "price_tax_included": true,
+          "price_source": "mercado_referencial"
         }
       ]
     },
@@ -390,8 +432,11 @@
           "id": "FI001HIK44",
           "sku": "FI001HIK44",
           "title": "Estándar",
-          "price": null,
-          "available": null
+          "price": 52728,
+          "available": null,
+          "observed_at": "2026-09-19T16:24:07Z",
+          "price_tax_included": true,
+          "price_source": "mercado_referencial"
         }
       ]
     },
