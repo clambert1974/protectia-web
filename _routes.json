@@ -1,1 +1,1 @@
-{"version":1,"include":["/api/catalogo-exterior"],"exclude":[]}
+{"version": 1, "include": ["/api/catalogo-exterior", "/api/catalogo-seguridad"], "exclude": []}

@@ -1,4 +1,5 @@
-import {isFresh, initialVariant, refDate, mintReference, whatsappURL, refMatches} from './catalogo-core.js?v=20260917-endurecido';
+import {isFresh, initialVariant, refDate, mintReference, whatsappURL, refMatches} from './catalogo-core.js?v=20260919-seguridad';
+import {CATEGORY_LABELS, matchesProduct, dailyPriceFor} from './catalogo-seguridad.js?v=20260919-seguridad';
 const money = new Intl.NumberFormat('es-CL', {style:'currency',currency:'CLP',maximumFractionDigits:0});
 const grid = document.querySelector('#products');
 const cards = new Map();
@@ -12,7 +13,7 @@ function filterCards() {
   let visible=0;
   for(const state of cards.values()) {
     const p=state.product;
-    state.card.hidden = !(category==='all'||p.category===category) || !`${p.model} ${p.title} ${p.features.join(' ')}`.toLocaleLowerCase('es').includes(query);
+    state.card.hidden = !matchesProduct(p,category,query);
     if(!state.card.hidden)visible++;
   }
   document.querySelector('#count').textContent=`${visible} ${visible===1?'producto':'productos'}`;
@@ -30,9 +31,11 @@ function paintOffer(state) {
   state.stock.textContent='Disponibilidad por confirmar';
   state.price.textContent=(Number.isSafeInteger(variant.price)&&variant.price>0)?money.format(variant.price):'Precio por confirmar';
   state.sku.textContent=`SKU: ${variant.sku||'Por confirmar'}`;
-  state.checked.textContent=`Precio referencial del ${refDate(state.observedAt)} · Disponibilidad por confirmar`;
-  state.image.src=variant.image||state.product.image;
-  if(!state.checking)state.action.firstChild.textContent='Consultar disponibilidad';
+  const observedAt=variant.observed_at||state.observedAt;
+  const hasPrice=Number.isSafeInteger(variant.price)&&variant.price>0;
+  state.checked.textContent=hasPrice ? `Precio referencial del ${refDate(observedAt)}${isFresh(observedAt)&&!variant.price_stale?'':' · Requiere actualización'}` : 'Te enviamos una cotización con el precio vigente.';
+  state.image.src=variant.image||state.product.image||'/img/producto-seguridad.svg';
+  if(!state.checking)state.action.firstChild.textContent='Cotizar por WhatsApp';
 }
 function paintVariants(state) {
   const signature=JSON.stringify([state.variants,isFresh(state.observedAt)]);
@@ -54,40 +57,31 @@ function paintVariants(state) {
 function buildCard(product, observedAt) {
   const card=el('article','product-card');
   const visual=el('div','product-visual');
-  const image=el('img');image.alt=`Reolink ${product.model}`;image.loading='lazy';image.decoding='async';image.width=320;image.height=240;
-  visual.append(el('span','type-badge',({camara:'Exterior',kit:'Kit / pack',openbox:'Open Box'})[product.category]),image);
+  const image=el('img');image.alt=`${product.brand||'Reolink'} ${product.model}`;image.loading='lazy';image.decoding='async';image.width=320;image.height=240;
+  image.addEventListener('error',()=>{if(!image.src.endsWith('/img/producto-seguridad.svg'))image.src='/img/producto-seguridad.svg';});
+  visual.append(el('span','type-badge',CATEGORY_LABELS[product.category]||'Seguridad'),image);
   const content=el('div','product-content');
   const features=el('ul','features');product.features.forEach(f=>features.append(el('li','',f)));
   const variantBox=el('div');const sku=el('p','sku');const stock=el('p','stock');const price=el('p','price');const checked=el('p','checked');
-  const qtyInput=el('input');qtyInput.type='number';qtyInput.min='1';qtyInput.max='99';qtyInput.step='1';qtyInput.value='1';qtyInput.inputMode='numeric';qtyInput.setAttribute('aria-label',`Cantidad de Reolink ${product.model}`);
+  const qtyInput=el('input');qtyInput.type='number';qtyInput.min='1';qtyInput.max='99';qtyInput.step='1';qtyInput.required=true;qtyInput.value='1';qtyInput.inputMode='numeric';qtyInput.setAttribute('aria-label',`Cantidad de ${product.brand||'Reolink'} ${product.model}`);
   const qty=el('label','qty','Cantidad');qty.append(qtyInput);
-  const action=el('button','button','Consultar disponibilidad');action.type='button';action.style.width='100%';action.setAttribute('aria-label',`Consultar disponibilidad y precio de Reolink ${product.model} por WhatsApp`);action.append(el('span','','↗'));
-  const feedback=el('p','price-note');feedback.setAttribute('role','status');feedback.style.marginTop='12px';feedback.textContent='Consultamos disponibilidad y precio antes de abrir WhatsApp.';
+  const action=el('button','button','Cotizar por WhatsApp');action.type='button';action.style.width='100%';action.setAttribute('aria-label',`Consultar disponibilidad y precio de ${product.brand||'Reolink'} ${product.model} por WhatsApp`);action.append(el('span','','↗'));
+  const feedback=el('p','price-note');feedback.setAttribute('role','status');feedback.style.marginTop='12px';feedback.textContent='Te asesoramos y confirmamos precio y disponibilidad al cotizar.';
   const purchase=el('div','purchase');purchase.append(stock,price,el('p','price-note','Valor de referencia · despacho por confirmar'),checked,qty,action,feedback);
-  content.append(el('p','product-brand','REOLINK'),el('h3','',product.model),el('p','product-title',product.title),features,variantBox,sku,purchase);
+  content.append(el('p','product-brand',product.brand||'REOLINK'),el('h3','',product.model),el('p','product-title',product.title),features,variantBox,sku,purchase);
   card.append(visual,content);
-  const state={product,card,image,variantBox,sku,stock,price,checked,action,feedback,variants:product.variants,selected:initialVariant(product.variants).id,observedAt,refreshFailed:false,checking:false,cantidad:1};
+  const state={product,card,image,qtyInput,variantBox,sku,stock,price,checked,action,feedback,variants:product.variants,selected:initialVariant(product.variants).id,observedAt,refreshFailed:false,checking:false,cantidad:1};
   qtyInput.addEventListener('change',()=>{let n=parseInt(qtyInput.value,10);if(!Number.isFinite(n)||n<1)n=1;if(n>99)n=99;qtyInput.value=String(n);state.cantidad=n;});
   action.addEventListener('click',()=>checkAndOpenWhatsApp(state));
   paintVariants(state);paintOffer(state);grid.append(card);cards.set(product.handle,state);
 }
-async function refresh(state) {
-  const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),12000);
-  try {
-    const response=await fetch(`/api/catalogo-exterior?modelo=${encodeURIComponent(state.product.handle)}`,{signal:controller.signal,credentials:'omit',cache:'no-store'});
-    if(!response.ok)throw new Error('Sin actualización');
-    const data=await response.json();
-    if(data.handle!==state.product.handle||data.currency!=='CLP'||!isFresh(data.observed_at)||!Array.isArray(data.variants)||!data.variants.length||!data.variants.every(v=>typeof v.id==='string'&&typeof v.title==='string'&&typeof v.available==='boolean'&&Number.isSafeInteger(v.price)&&v.price>0))throw new Error('Datos no válidos');
-    state.variants=data.variants;state.observedAt=data.observed_at;state.refreshFailed=false;
-    if(!state.variants.some(v=>v.id===state.selected))state.selected=initialVariant(state.variants).id;
-    paintVariants(state);paintOffer(state);return data;
-  } catch {state.refreshFailed=true;paintOffer(state);return null;} finally {clearTimeout(timeout);}
-}
 async function checkAndOpenWhatsApp(state) {
   if(state.checking)return;
-  const cantidad=state.cantidad||1;
+  const cantidad=Number(state.qtyInput.value);
+  if(!Number.isInteger(cantidad)||cantidad<1||cantidad>99){state.feedback.textContent='Indica una cantidad entera entre 1 y 99.';state.qtyInput.focus();return;}
+  state.cantidad=cantidad;
   const variant=state.variants.find(v=>v.id===state.selected)||initialVariant(state.variants);
-  state.checking=true;state.action.disabled=true;state.action.firstChild.textContent='Preparando consulta…';state.feedback.textContent='Comprobando con nuestro sistema…';
+  state.checking=true;state.qtyInput.disabled=true;state.action.disabled=true;state.action.firstChild.textContent='Preparando consulta…';state.feedback.textContent='Comprobando con nuestro sistema…';
   const selector=state.variantBox.querySelector('select');if(selector)selector.disabled=true;
   try {
     // El SERVIDOR verifica (con su fuente) y mintea la referencia. El navegador
@@ -106,25 +100,46 @@ async function checkAndOpenWhatsApp(state) {
     }
     // Si ventas no respondió (o hubo discrepancia): asesoría sin código, con
     // precio referencial del seed. Nunca afirma stock; no se bloquea la venta.
-    if(!datos)datos={verificado:false,codigo:null,precio_ref:variant.price,moneda:'CLP',observed_at:state.observedAt};
+    if(!datos)datos={verificado:false,codigo:null,precio_ref:variant.price,moneda:'CLP',observed_at:variant.observed_at||state.observedAt};
     state.feedback.textContent=datos.verificado?'Stock verificado. Abriendo WhatsApp…':'Abriendo WhatsApp para consultar disponibilidad…';
     window.location.assign(whatsappURL(state.product,variant,cantidad,datos));
-  }finally{state.checking=false;state.action.disabled=false;const current=state.variantBox.querySelector('select');if(current)current.disabled=false;paintOffer(state);}
-}
-// Aviso de catálogo: deja claro que el pedido lo opera BLU STORE y ProtectIA
-// asesora. Usa la clase .catalogue-info ya existente; se inserta una sola vez.
-if(grid&&grid.parentNode&&!document.querySelector('.catalogue-info')){
-  grid.parentNode.insertBefore(el('p','catalogue-info','Los pedidos los cobra, factura y despacha BLU STORE. ProtectIA te asesora en la elección e instalación.'),grid);
+  }finally{state.checking=false;state.qtyInput.disabled=false;state.action.disabled=false;const current=state.variantBox.querySelector('select');if(current)current.disabled=false;paintOffer(state);}
 }
 document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListener('click',()=>{category=button.dataset.filter;document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));filterCards();}));
 document.querySelector('#search').addEventListener('input',filterCards);
-try {
-  const response=await fetch('/data/catalogo-exterior.json',{credentials:'omit'});
+async function loadCatalogue(path) {
+  const response=await fetch(path,{credentials:'omit'});
   if(!response.ok)throw new Error('Catálogo no disponible');
   const data=await response.json();
-  for(const p of data.products)buildCard(p,data.observed_at);
-  grid.setAttribute('aria-busy','false');filterCards();
-  const queue=[...cards.values()];
-  await Promise.all(Array.from({length:4},async()=>{while(queue.length)await refresh(queue.shift());}));
-  setInterval(()=>{for(const state of cards.values()){paintVariants(state);paintOffer(state);}},60000);
-}catch {grid.setAttribute('aria-busy','false');document.querySelector('#load-error').hidden=false;document.querySelector('#count').textContent='Catálogo no disponible';}
+  if(!Array.isArray(data.products))throw new Error('Catálogo no válido');
+  for(const p of data.products){
+    if(p.handle && p.variants?.length && !cards.has(p.handle))buildCard(p,p.provider==='intcomex'?null:data.observed_at);
+  }
+}
+async function refreshDailyPrices() {
+  const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),6000);
+  try {
+    const response=await fetch('/api/catalogo-seguridad',{credentials:'omit',cache:'no-store',signal:controller.signal});
+    if(!response.ok)return;
+    const feed=await response.json();
+    for(const state of cards.values()){
+      if(state.product.provider!=='intcomex')continue;
+      for(const variant of state.variants){
+        const offer=dailyPriceFor(variant.sku,feed);
+        if(offer){variant.price=offer.price;variant.observed_at=offer.observed_at;variant.price_stale=offer.stale;}
+      }
+      paintOffer(state);
+    }
+  }catch {}finally{clearTimeout(timeout);}
+}
+const results=await Promise.allSettled(['/data/catalogo-exterior.json','/data/catalogo-seguridad.json'].map(loadCatalogue));
+grid.setAttribute('aria-busy','false');filterCards();
+if(results.some(r=>r.status==='rejected')){
+  const error=document.querySelector('#load-error');error.hidden=false;
+  if(cards.size)error.firstChild.textContent='Parte del catálogo no pudo cargarse. Puedes consultar los productos visibles o ';
+  else document.querySelector('#count').textContent='Catálogo no disponible';
+}
+await refreshDailyPrices();
+// El conector Reolink continúa desactivado hasta disponer de acceso autorizado.
+// No consultar al proveedor por cada tarjeta: la cotización usa el servidor.
+setInterval(()=>{for(const state of cards.values()){paintVariants(state);paintOffer(state);}},60000);

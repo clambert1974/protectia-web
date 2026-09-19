@@ -28,11 +28,14 @@ export function refDate(observedAt) {
 //  observed_at} o null si no se pudo (ventas caído / rechazo). idem_key da
 // idempotencia contra el doble clic.
 export async function mintReference(payload) {
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),8000);
   try {
     const r = await fetch(`${VENTAS_URL}/api/tienda/referencia`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'omit',
+      signal: controller.signal,
       body: JSON.stringify(payload),
     });
     if (!r.ok) return null;
@@ -40,7 +43,7 @@ export async function mintReference(payload) {
     return (d && d.ok) ? d : null;
   } catch {
     return null;
-  }
+  } finally { clearTimeout(timeout); }
 }
 
 // ¿La referencia que devolvió el servidor corresponde EXACTAMENTE a la variante

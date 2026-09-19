@@ -1,0 +1,447 @@
+{
+  "observed_at": "2026-09-19T14:25:27.588552+00:00",
+  "source": "catalogo_publico",
+  "products": [
+    {
+      "handle": "intcomex-es225hik63",
+      "provider": "intcomex",
+      "brand": "Hikvision",
+      "category": "videovigilancia",
+      "model": "DS-2CD1147G3-LIU",
+      "title": "Cámara domo IP 4 MP ColorVu",
+      "features": [
+        "4 MP",
+        "ColorVu 3.0",
+        "Luz híbrida",
+        "IP67"
+      ],
+      "image": "https://store.intcomex.com/images/products/ES225HIK63%20m.jpg",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/635932",
+      "variants": [
+        {
+          "id": "ES225HIK63",
+          "sku": "ES225HIK63",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    },
+    {
+      "handle": "intcomex-es224hik66",
+      "provider": "intcomex",
+      "brand": "Hikvision",
+      "category": "videovigilancia",
+      "model": "DS-2CD1027G3-LIU",
+      "title": "Cámara bullet IP 2 MP ColorVu",
+      "features": [
+        "2 MP",
+        "Lente 2,8 mm",
+        "PoE",
+        "IP67"
+      ],
+      "image": "https://store.intcomex.com/images/products/ES224HIK66%20m.jpg",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/622949",
+      "variants": [
+        {
+          "id": "ES224HIK66",
+          "sku": "ES224HIK66",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    },
+    {
+      "handle": "intcomex-mm000tpl46",
+      "provider": "intcomex",
+      "brand": "TP-Link",
+      "category": "videovigilancia",
+      "model": "Tapo C530WS",
+      "title": "Cámara exterior Wi-Fi Tapo C530WS",
+      "features": [
+        "Vista 3K",
+        "Giro de 360°",
+        "Wi-Fi",
+        "Exterior"
+      ],
+      "image": "https://static.tp-link.com/upload/image-header/Tapo_C530WS_EU_2.0_overview_01_normal_20250307092745g.png",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/581369",
+      "variants": [
+        {
+          "id": "MM000TPL46",
+          "sku": "MM000TPL46",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    },
+    {
+      "handle": "intcomex-mm001tpl96",
+      "provider": "intcomex",
+      "brand": "TP-Link",
+      "category": "videovigilancia",
+      "model": "Tapo C400 KIT",
+      "title": "Kit cámara exterior Tapo C400 con panel solar",
+      "features": [
+        "Panel solar incluido",
+        "Wi-Fi",
+        "Exterior"
+      ],
+      "image": "https://static.tp-link.com/upload/image-header/C400_KIT_GI_normal_20260630185055q.png",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/649256",
+      "variants": [
+        {
+          "id": "MM001TPL96",
+          "sku": "MM001TPL96",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    },
+    {
+      "handle": "intcomex-es400hik82",
+      "provider": "intcomex",
+      "brand": "Hikvision",
+      "category": "videovigilancia",
+      "model": "DS-7608NI-Q2-8P",
+      "title": "Grabador NVR de 8 canales con PoE",
+      "features": [
+        "8 canales",
+        "8 puertos PoE",
+        "4K",
+        "2 bahías HDD"
+      ],
+      "image": "https://store.intcomex.com/images/products/HIK%20NVR%208C%20M.jpg",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/323945",
+      "variants": [
+        {
+          "id": "ES400HIK82",
+          "sku": "ES400HIK82",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    },
+    {
+      "handle": "intcomex-in001hik36",
+      "provider": "intcomex",
+      "brand": "Hikvision",
+      "category": "intrusion",
+      "model": "DS-PWA96-Kit-WB",
+      "title": "Kit de alarma AX PRO de 96 zonas",
+      "features": [
+        "96 zonas",
+        "Wi-Fi",
+        "Ethernet",
+        "3G/4G"
+      ],
+      "image": "https://store.intcomex.com/images/products/DS-PWA96-Kit-WB-200.jpg",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/433474",
+      "variants": [
+        {
+          "id": "IN001HIK36",
+          "sku": "IN001HIK36",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    },
+    {
+      "handle": "intcomex-in001hik46",
+      "provider": "intcomex",
+      "brand": "Hikvision",
+      "category": "intrusion",
+      "model": "DS-PK1-E-WB",
+      "title": "Teclado inalámbrico AX PRO",
+      "features": [
+        "Teclado LED",
+        "Inalámbrico",
+        "AX PRO"
+      ],
+      "image": "https://store.intcomex.com/images/products/DS-PK1-E-WB-200.jpg",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/439149",
+      "variants": [
+        {
+          "id": "IN001HIK46",
+          "sku": "IN001HIK46",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    },
+    {
+      "handle": "intcomex-mm000hik21",
+      "provider": "intcomex",
+      "brand": "Hikvision",
+      "category": "intrusion",
+      "model": "DS-PDP18-HM-WB",
+      "title": "Detector PIR de doble tecnología",
+      "features": [
+        "Alcance 18 m",
+        "Inalámbrico",
+        "IP65",
+        "Ángulo 90°"
+      ],
+      "image": "https://store.intcomex.com/images/products/MM000HIK21%20m.jpg",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/496615",
+      "variants": [
+        {
+          "id": "MM000HIK21",
+          "sku": "MM000HIK21",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    },
+    {
+      "handle": "intcomex-in000hik74",
+      "provider": "intcomex",
+      "brand": "Hikvision",
+      "category": "intrusion",
+      "model": "DS-PDP15P-EG2-WB",
+      "title": "Detector PIR inalámbrico AX PRO",
+      "features": [
+        "Alcance 15 m",
+        "Inalámbrico",
+        "AX PRO"
+      ],
+      "image": "https://store.intcomex.com/images/products/DS-PDP15P-EG2-WB-200.jpg",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/391492",
+      "variants": [
+        {
+          "id": "IN000HIK74",
+          "sku": "IN000HIK74",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    },
+    {
+      "handle": "intcomex-in004hik19",
+      "provider": "intcomex",
+      "brand": "Hikvision",
+      "category": "intrusion",
+      "model": "DS-PD201MC-WB",
+      "title": "Sensor magnético inalámbrico AX Home",
+      "features": [
+        "Contacto magnético",
+        "Inalámbrico",
+        "AX Home"
+      ],
+      "image": "https://store.intcomex.com/images/products/IN004HIK19%20M.jpg",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/546645",
+      "variants": [
+        {
+          "id": "IN004HIK19",
+          "sku": "IN004HIK19",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    },
+    {
+      "handle": "intcomex-in002hik39",
+      "provider": "intcomex",
+      "brand": "Hikvision",
+      "category": "intrusion",
+      "model": "DS-PDEBP1-EG2-WB",
+      "title": "Botón de pánico inalámbrico AX PRO",
+      "features": [
+        "Portátil",
+        "Inalámbrico",
+        "IP54",
+        "Indicador LED"
+      ],
+      "image": "https://store.intcomex.com/images/products/IN002HIK39.jpg",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/521167",
+      "variants": [
+        {
+          "id": "IN002HIK39",
+          "sku": "IN002HIK39",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    },
+    {
+      "handle": "intcomex-ec001hik04",
+      "provider": "intcomex",
+      "brand": "Hikvision",
+      "category": "acceso",
+      "model": "DS-K1801MK",
+      "title": "Lector de tarjetas y PIN",
+      "features": [
+        "Mifare",
+        "PIN",
+        "Wiegand",
+        "IP65"
+      ],
+      "image": "https://store.intcomex.com/images/products/EC001HIK04M.jpg",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/321668",
+      "variants": [
+        {
+          "id": "EC001HIK04",
+          "sku": "EC001HIK04",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    },
+    {
+      "handle": "intcomex-ec003zkt28",
+      "provider": "intcomex",
+      "brand": "ZKTeco",
+      "category": "acceso",
+      "model": "QR500-B-CL",
+      "title": "Lector QR para cédula chilena",
+      "features": [
+        "Lectura QR",
+        "Cédula chilena",
+        "Wiegand"
+      ],
+      "image": "https://store.intcomex.com/images/products/QR500-B-CL-200.jpg",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/399387",
+      "variants": [
+        {
+          "id": "EC003ZKT28",
+          "sku": "EC003ZKT28",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    },
+    {
+      "handle": "intcomex-ec001zkt17",
+      "provider": "intcomex",
+      "brand": "ZKTeco",
+      "category": "acceso",
+      "model": "FR1500-WP",
+      "title": "Lector de huella para InBio",
+      "features": [
+        "Huella dactilar",
+        "RS-485",
+        "IP65"
+      ],
+      "image": "https://cdn.cs.1worldsync.com/03/8f/038fef87-5ab6-4269-9d62-59c35708d710.jpg",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/255656",
+      "variants": [
+        {
+          "id": "EC001ZKT17",
+          "sku": "EC001ZKT17",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    },
+    {
+      "handle": "intcomex-ec003hik10",
+      "provider": "intcomex",
+      "brand": "Hikvision",
+      "category": "acceso",
+      "model": "DS-K1T642MFW",
+      "title": "Terminal de acceso con pantalla táctil",
+      "features": [
+        "Wi-Fi",
+        "Rostro y huella",
+        "Tarjeta M1",
+        "Código QR"
+      ],
+      "image": "https://store.intcomex.com/images/products/EC003HIK10M.jpg",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/400765",
+      "variants": [
+        {
+          "id": "EC003HIK10",
+          "sku": "EC003HIK10",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    },
+    {
+      "handle": "intcomex-fi001hik44",
+      "provider": "intcomex",
+      "brand": "Hikvision",
+      "category": "incendio",
+      "model": "DS-PDSMK-S-WB",
+      "title": "Detector fotoeléctrico de humo AX PRO",
+      "features": [
+        "Detección de humo",
+        "Fotoeléctrico",
+        "Inalámbrico"
+      ],
+      "image": "https://store.intcomex.com/images/products/DS-PDSMK-S-WB-200.jpg",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/439666",
+      "variants": [
+        {
+          "id": "FI001HIK44",
+          "sku": "FI001HIK44",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    },
+    {
+      "handle": "intcomex-fi000fir63",
+      "provider": "intcomex",
+      "brand": "Firelite",
+      "category": "incendio",
+      "model": "SD365",
+      "title": "Detector de humo direccionable Fire-Lite",
+      "features": [
+        "Fotoeléctrico",
+        "Direccionable",
+        "Protocolo LiteSpeed"
+      ],
+      "image": "https://store.intcomex.com/images/products/H365%20Series%20-2001.jpg",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/320224",
+      "variants": [
+        {
+          "id": "FI000FIR63",
+          "sku": "FI000FIR63",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    },
+    {
+      "handle": "intcomex-fi000fir64",
+      "provider": "intcomex",
+      "brand": "Firelite",
+      "category": "incendio",
+      "model": "H365",
+      "title": "Detector térmico direccionable Fire-Lite",
+      "features": [
+        "Detección térmica",
+        "Direccionable",
+        "Protocolo LiteSpeed"
+      ],
+      "image": "https://store.intcomex.com/images/products/H365%20Series%20-200.jpg",
+      "source_url": "https://store.intcomex.com/es-XCL/Product/Detail/320230",
+      "variants": [
+        {
+          "id": "FI000FIR64",
+          "sku": "FI000FIR64",
+          "title": "Estándar",
+          "price": null,
+          "available": null
+        }
+      ]
+    }
+  ]
+}
