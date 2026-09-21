@@ -38,10 +38,14 @@ export async function mintReference(payload) {
       signal: controller.signal,
       body: JSON.stringify(payload),
     });
-    if (!r.ok) return null;
+    if (!r.ok) {
+      console.warn(`tienda: la referencia falló (HTTP ${r.status}); WhatsApp con "Referencia: pendiente".`);
+      return null;
+    }
     const d = await r.json();
     return (d && d.ok) ? d : null;
-  } catch {
+  } catch (e) {
+    console.warn('tienda: no se pudo registrar la referencia; WhatsApp con "Referencia: pendiente".', e);
     return null;
   } finally { clearTimeout(timeout); }
 }
@@ -72,7 +76,11 @@ export function whatsappURL(product, variant, cantidad, srv) {
   // cliente ya verificó que coincide con lo pedido), no la del navegador suelto.
   const n = Number.isInteger(s.cantidad) ? s.cantidad : cantidad;
   const cant = `${n} ${n === 1 ? 'unidad' : 'unidades'}`;
-  const refLinea = s.codigo ? ` Referencia: ${s.codigo}.` : '';
+  // Sin código (ventas caído, rechazo o discrepancia) el mensaje dice
+  // "Referencia: pendiente" para que el vendedor sepa que la consulta vino de
+  // la tienda y que NO quedó registrada. MITIGACIÓN, no solución: esa consulta
+  // no existe en el panel ni genera aviso; hay que atribuirla a mano.
+  const refLinea = ` Referencia: ${s.codigo || 'pendiente'}.`;
   let body;
   if (verificado) {
     const precioTxt = precio != null ? `$${precio.toLocaleString('es-CL')} CLP` : 'a confirmar';
