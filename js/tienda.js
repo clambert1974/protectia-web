@@ -1,4 +1,4 @@
-import {isFresh, initialVariant, refDate, mintReference, whatsappURL, refMatches} from './catalogo-core.js?v=20260917-endurecido';
+import {isFresh, initialVariant, refDate, mintReference, whatsappURL, refMatches} from './catalogo-core.js?v=20260921-ref-pendiente';
 const money = new Intl.NumberFormat('es-CL', {style:'currency',currency:'CLP',maximumFractionDigits:0});
 const grid = document.querySelector('#products');
 const cards = new Map();
@@ -106,6 +106,10 @@ async function checkAndOpenWhatsApp(state) {
     }
     // Si ventas no respondió (o hubo discrepancia): asesoría sin código, con
     // precio referencial del seed. Nunca afirma stock; no se bloquea la venta.
+    // Sin código (fallo del POST, tope diario o discrepancia): WhatsApp igual,
+    // con "Referencia: pendiente". Es una MITIGACIÓN: esa consulta no queda en
+    // el panel ni avisa al vendedor. Se deja rastro en consola.
+    if(datos&&!datos.codigo)console.warn('tienda: el servidor no devolvió código; WhatsApp con "Referencia: pendiente".');
     if(!datos)datos={verificado:false,codigo:null,precio_ref:variant.price,moneda:'CLP',observed_at:state.observedAt};
     state.feedback.textContent=datos.verificado?'Stock verificado. Abriendo WhatsApp…':'Abriendo WhatsApp para consultar disponibilidad…';
     window.location.assign(whatsappURL(state.product,variant,cantidad,datos));
