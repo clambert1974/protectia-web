@@ -196,7 +196,10 @@ await check('si falla ventas, WhatsApp sigue como asesoría sin inventar referen
   await card.querySelector('button').dispatch('click');
   const body=textOfURL(fixture.opened);
   assert.match(body,/asesoría/);assert.match(body,/Cantidad: 2 unidades/);
-  assert.doesNotMatch(body,/Referencia:|Stock verificado|quiero comprar/);
+  // Sin inventar referencia: nunca un código PIA; sí "Referencia: pendiente"
+  // (mitigación 2026-09-21: el vendedor sabe que la consulta no quedó registrada).
+  assert.match(body,/Referencia: pendiente\./);
+  assert.doesNotMatch(body,/Referencia: PIA-|Stock verificado|quiero comprar/);
   assert.equal(input.disabled,false);assert.equal(card.querySelector('button').disabled,false);
 }));
 await check('cantidad editada inmediatamente antes del clic se captura aunque no haya evento change',()=>runStore({reference:{ok:true,verificado:false,codigo:'PIA-EDITED',cantidad:2,variant_id:'alarm-1',precio_ref:null}},async fixture=>{

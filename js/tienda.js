@@ -105,8 +105,8 @@ async function checkAndOpenWhatsApp(state) {
     // Sin código (fallo del POST, tope diario o discrepancia): WhatsApp igual,
     // con "Referencia: pendiente". Es una MITIGACIÓN: esa consulta no queda en
     // el panel ni avisa al vendedor. Se deja rastro en consola.
-    if(datos&&!datos.codigo)console.warn('tienda: el servidor no devolvió código; WhatsApp con "Referencia: pendiente".');
-    if(!datos)datos={verificado:false,codigo:null,precio_ref:variant.price,moneda:'CLP',observed_at:variant.observed_at||state.observedAt};
+    if(datos&&!datos.codigo){console.warn('tienda: el servidor no devolvió código; WhatsApp con "Referencia: pendiente".');datos={...datos,referencia_pendiente:true};}
+    if(!datos)datos={verificado:false,codigo:null,referencia_pendiente:true,precio_ref:variant.price,moneda:'CLP',observed_at:variant.observed_at||state.observedAt};
     state.feedback.textContent=datos.verificado?'Stock verificado. Abriendo WhatsApp…':'Abriendo WhatsApp para consultar disponibilidad…';
     window.location.assign(whatsappURL(state.product,variant,cantidad,datos));
   }finally{state.checking=false;state.qtyInput.disabled=false;state.action.disabled=false;const current=state.variantBox.querySelector('select');if(current)current.disabled=false;paintOffer(state);}

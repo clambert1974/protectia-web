@@ -31,9 +31,11 @@ ok(t.includes('quiero comprar') && t.includes('Cantidad: 2 unidades') && t.inclu
 t = waText(whatsappURL(product, variant, 1, { verificado: false, precio_ref: 129990, codigo: 'PIA-B', observed_at: obs, cantidad: 1 }));
 ok(t.includes('asesoría') && t.includes(`Precio referencial: $129.990 CLP del ${refDate(obs)}`) && t.includes('Referencia: PIA-B'), 'asesoría con precio referencial + fecha + referencia');
 ok(!/\bdisponible\b/i.test(t) && !/en stock/i.test(t), 'asesoría sin "disponible" ni "en stock"');
+t = waText(whatsappURL(product, variant, 3, { verificado: false, codigo: null, referencia_pendiente: true, precio_ref: variant.price, observed_at: obs, cantidad: 3 }));
+ok(t.includes('Referencia: pendiente.') && t.includes('Cantidad: 3 unidades'), 'registro fallido: "Referencia: pendiente" y cantidad');
 t = waText(whatsappURL(product, variant, 3, { verificado: false, codigo: null, precio_ref: variant.price, observed_at: obs, cantidad: 3 }));
-ok(t.includes('Referencia: pendiente.') && t.includes('Cantidad: 3 unidades'), 'fallback sin código: "Referencia: pendiente" y cantidad');
-t = waText(whatsappURL(product, variant, 1, null));
+ok(!t.includes('Referencia:') && t.includes('Cantidad: 3 unidades'), 'codigo null sin marca de fallo -> no inventa referencia');
+t = waText(whatsappURL(product, variant, 1, { referencia_pendiente: true }));
 ok(t.includes('Referencia: pendiente.') && t.includes('Solicito precio actualizado'), 'sin respuesta del servidor -> "Referencia: pendiente"');
 
 console.log('mintReference tolera fallos (no rompe la venta)');
@@ -53,7 +55,8 @@ await mintReference({});
 console.warn = warnOrig;
 ok(avisos.length === 2 && avisos[0].includes('HTTP 503') && avisos.every(x => x.includes('Referencia: pendiente')), 'fallos del POST quedan en consola');
 const tiendaJs = readFileSync(join(HERE, '..', 'js', 'tienda.js'), 'utf8');
-ok(/datos&&!datos\.codigo\)console\.warn/.test(tiendaJs), 'respuesta sin código queda en consola');
+ok(/datos&&!datos\.codigo\)\{console\.warn\(.*datos=\{\.\.\.datos,referencia_pendiente:true\}/.test(tiendaJs), 'respuesta sin código: consola + marca "pendiente"');
+ok(/if\(!datos\)datos=\{[^}]*referencia_pendiente:true/.test(tiendaJs), 'fallo del POST: marca "pendiente"');
 
 console.log('#7 la tarjeta NUNCA afirma disponibilidad desde el catálogo (fecha + booleano)');
 const tienda = readFileSync(join(HERE, '..', 'js', 'tienda.js'), 'utf8');

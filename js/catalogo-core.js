@@ -76,11 +76,14 @@ export function whatsappURL(product, variant, cantidad, srv) {
   // cliente ya verificó que coincide con lo pedido), no la del navegador suelto.
   const n = Number.isInteger(s.cantidad) ? s.cantidad : cantidad;
   const cant = `${n} ${n === 1 ? 'unidad' : 'unidades'}`;
-  // Sin código (ventas caído, rechazo o discrepancia) el mensaje dice
-  // "Referencia: pendiente" para que el vendedor sepa que la consulta vino de
-  // la tienda y que NO quedó registrada. MITIGACIÓN, no solución: esa consulta
-  // no existe en el panel ni genera aviso; hay que atribuirla a mano.
-  const refLinea = ` Referencia: ${s.codigo || 'pendiente'}.`;
+  // "Referencia: pendiente" SOLO si quien llama marca que el registro falló
+  // (srv.referencia_pendiente === true: ventas caído, rechazo o discrepancia),
+  // para que el vendedor sepa que la consulta vino de la tienda y NO quedó
+  // registrada. Un codigo null a secas no inventa referencia (contrato del
+  // catálogo de seguridad). MITIGACIÓN, no solución: esa consulta no existe en
+  // el panel ni genera aviso; hay que atribuirla a mano.
+  const refLinea = s.codigo ? ` Referencia: ${s.codigo}.`
+    : (s.referencia_pendiente === true ? ' Referencia: pendiente.' : '');
   let body;
   if (verificado) {
     const precioTxt = precio != null ? `$${precio.toLocaleString('es-CL')} CLP` : 'a confirmar';
