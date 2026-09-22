@@ -1,0 +1,6 @@
+# La tienda sale del sitio público (22-sep-2026). El código y el backend de
+# referencias quedan intactos, solo inactivos: basta borrar estas dos líneas
+# para volver a publicarla. En Cloudflare Pages las reglas de _redirects se
+# aplican SIEMPRE, incluso cuando existe el archivo estático (tienda.html).
+/tienda.html  /  302
+/tienda       /  302
