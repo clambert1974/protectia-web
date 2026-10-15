@@ -75,8 +75,8 @@
      como vía de conversión. */
   var ENDPOINT_LEADS = 'https://ventas.protectia.cl/api/lead-web';
 
-  var TELEFONO_TEXTO = '600 914 2219';
-  var TELEFONO_HREF = 'tel:6009142219';
+  var TELEFONO_TEXTO = '+56 2 2914 9650';
+  var TELEFONO_HREF = 'tel:+56229149650';
 
   /* Estados de la interfaz, textuales de COPY-FINAL-MKT v1.0.
 

@@ -91,12 +91,12 @@ COPY-FINAL-MKT: «Enviando consulta…», «No podemos confirmar que tu consulta
 quedado registrada…» para el 2xx, «No se pudo completar la solicitud en este
 momento…» para el 429, «No pudimos confirmar el registro de tu consulta…» para
 el resto de los errores y «Por ahora, puedes consultar con Catalina en el
-600 914 2219» cuando el formulario no está habilitado. Los cuatro últimos
++56 2 2914 9650» cuando el formulario no está habilitado. Los cuatro últimos
 ofrecen el teléfono. No hay reintento automático y no se permite un segundo
 envío mientras hay uno en curso.
 
 Si `ENDPOINT_LEADS` vuelve a `null`, el botón se queda deshabilitado y el sitio
-sigue siendo usable: la conversión se va al teléfono **600 914 2219**, que
+sigue siendo usable: la conversión se va al teléfono **+56 2 2914 9650**, que
 contesta Catalina.
 
 ## Cómo se publica
